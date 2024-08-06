@@ -9,6 +9,17 @@
   let isLogged = false;
   let signUp = false;
 
+  let walletConnected = false;
+  let walletAddress;
+  function connectWallet() {
+    if(walletConnected) {
+      walletConnected = false;
+    } else {
+      walletConnected = true;
+      alert('Wallet connected.')
+      walletAddress = '0xeb0a...60c1';
+    }
+  }
 </script>
 
 
@@ -26,7 +37,14 @@
 
       <div class="log-in">
         <button class="close-button" on:click|stopPropagation={() => dialog.close()}>Close</button>
-        <button class="how-button" on:click={() => window.open('https://degenerousdao.gitbook.io/wiki', '_blank')}>How to sign up?</button>
+        {#if isLogged}
+          <button class="login-button" on:click={() => {
+            isLogged = false;
+            signUp = false;
+          }}>Log out</button>
+        {:else if !isLogged}
+          <button class="how-button" on:click={() => window.open('https://degenerousdao.gitbook.io/wiki', '_blank')}>How to sign up?</button>
+        {/if}
       </div>
   
       <hr>
@@ -53,8 +71,12 @@
         <div class="wallet-connect">
           <p class="user-prop">Your wallet:</p>
 
-          <button class="wallet-button">
+          <button class="wallet-button" on:click={connectWallet}>
+            {#if !walletConnected}
               Connect wallet
+            {:else if walletConnected}
+              {walletAddress}
+            {/if}
           </button>
           
         </div>
@@ -76,7 +98,7 @@
           <label class="input-label" for="user-password">Password</label>
           <input class="user-input" type="password" id="user-password" placeholder="Enter your password" minlength="8" required>
           <p class="validation-check">Invalid credentials!</p>
-          <button class="submit-button" type="submit">Log-in</button>
+          <button class="submit-button" type="submit" on:click={() => isLogged = true}>Log-in</button>
         </form>
 
         <hr>
@@ -84,7 +106,7 @@
         <form class="ref-code-form">
           <input class="user-input" type="text" id="refferal-code" placeholder="Enter your refferal code" minlength="16" maxlength="16" required>
           <p class="validation-check">This code is not valid!</p>
-          <button class="submit-button" type="submit">Sign-up</button>
+          <button class="submit-button" type="submit" on:click={() => signUp = true}>Sign-up</button>
         </form>
   
       {:else if !isLogged && signUp}
@@ -100,7 +122,7 @@
           <label class="input-label" for="user-last-name">Last name</label>
           <input class="user-input" type="text" id="user-last-name" placeholder="Your Last name">
           <p class="validation-check">Fill in all required fields!</p>
-          <button class="submit-button" type="submit">Create account</button>
+          <button class="submit-button" type="submit" on:click={() => isLogged = true}>Create account</button>
         </form>
 
       {/if}
