@@ -22,10 +22,9 @@
 <div class="tile" id="{storyName}"
   on:mouseenter={tileHover}
   on:mouseleave={tileHover}
-  on:mouseup={() => (showModal = true)}
+  on:click|stopPropagation={() => (showModal = true)}
   on:touchstart={tileHover}
   on:touchend={tileHover}
-  on:touchend={() => (showModal = true)}
 >
   <img class="tile-picture {isPrimary ? 'visible' : ''}" src={primaryThumbnail} alt="{storyName}"/>
   <img class="tile-picture {!isPrimary ? 'visible' : ''}" src={secondaryThumbnail} alt="{storyName}"/>
