@@ -10,14 +10,14 @@ const footerText = ['The AI swiftly adapts to your decision between each step an
 const menuText = ['A new world with no limits awaits you.', 'Within CoNexus, you will transcend the boundaries of reality as we know it.'];
 const arrow = false;
 
-const sectionNames = ['Collabs', 'Dischordian Saga', 'Community Picks'];
+const sections = ['Collabs', 'Dischordian Saga', 'Community Picks'];
 ---
 
 
 <Layout {title} {header} {subheading} {menuText} {footerText} {arrow}>
 
-	{sectionNames.map(section => 
-		<MenuTile sectionName={section} client:load/>
+	{sections.map(sectionName => 
+		<MenuTile {sectionName} slot="menuTiles" client:load/>
 	)}
 
 </Layout>

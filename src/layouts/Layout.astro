@@ -16,24 +16,27 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
 	<body>
 
 		<section class="container">
-			{arrow && <a class="icon arrow" href="../CoNexus" aria-label="back-arrow" />} 
+			{arrow && <a class="icon arrow" href="../" aria-label="back-arrow" />} 
 			{!arrow && <a class="icon logo" href="https://degenerousdao.com/" target="_blank" aria-label="dgrs-logo" />}
 			<p class="header">{ header }</p>
 		</section>
 		<p class="subheading">{ subheading }</p>
 
 
-    <section class="conexus-menu-tiles">
+    <slot />
+
+
+    {menuText && <section class="conexus-menu-tiles">
       <p class="menu-text-0">{menuText[0]}</p>
   
       
-      <slot />
+      <slot name="menuTiles"/>
 
   
       <p class="menu-text-1">{menuText[1]}</p>
-    </section>
+    </section>}
   
-    {footerText.map((text) => (
+    {footerText && footerText.map((text) => (
       <p class="footer-text">{text}</p>
     ))}
 
