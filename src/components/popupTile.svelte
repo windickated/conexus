@@ -49,7 +49,6 @@
     border-radius: 2.5vw;
     -webkit-backdrop-filter: blur(1vw);
     backdrop-filter: blur(1vw);
-    overflow-y: hidden;
 	}
 
 	.description-tile::backdrop {
