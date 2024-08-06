@@ -1,7 +1,6 @@
 ---
 import "../styles/global.css";
 import Profile from "../components/profile.svelte";
-import { user, codes } from "../userData.js"
 
 
 const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
@@ -22,7 +21,7 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
 			{arrow && <a class="icon arrow" href="../" aria-label="back-arrow" />} 
 			{!arrow && <a class="icon logo" href="https://degenerousdao.com/" target="_blank" aria-label="dgrs-logo" />}
 			<p class="header">{ header }</p>
-      <Profile {user} {codes} client:load />
+      <Profile client:load/>
 		</section>
 		<p class="subheading">{ subheading }</p>
 
@@ -138,6 +137,24 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
 				opacity: 0.9;
 			}
 
+      .profile-icon {
+        position: absolute;
+        top: 2vw;
+        right: 2vw;
+        height: 7vw;
+        width: 7vw;
+        cursor: pointer;
+        background-image: url('/profileIcon.avif');
+        background-size: contain;
+        opacity: 0.4;
+        z-index: 1;
+      }
+
+      .profile-icon:hover, .profile-icon:active {
+        filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.5));
+        opacity: 0.75;
+      }
+
 
 			@media only screen and (max-width: 600px) {
 				html {
@@ -206,6 +223,13 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
 					top: 1em;
 					left: 0.5em;
 				}
+
+        .profile-icon {
+          width: 3em;
+          height: 3em;
+          top: 1em;
+          right: 0.5em;
+        }
 			}
 		</style>
   </body>
