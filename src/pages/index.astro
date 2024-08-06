@@ -1,16 +1,16 @@
 ---
+import Layout from "../layouts/Layout.astro"
 
+const title = 'CoNexus | DeGenerous';
+const header = 'CoNexus';
+const subheading = `
+CoNexus is the gateway to a boundless multiverse with immersive and dynamic interactive Choose-Your-Adventure stories. Powered by cutting-edge artificial intelligence, CoNexus generates captivating narratives in real time, offering you an unparalleled journey into infinite and one-of-a-kind experiences.`;
+const footerText = ['The AI swiftly adapts to your decision between each step and generates a new story text, set of options, and picture in real-time.', 'This live factor ensures that nobody can predict or manipulate the games, and endless unique possibilities exist.', 'Your choices and actions will shape the course of your unique narrative.'];
+const menuText = ['A new world with no limits awaits you.', 'Within CoNexus, you will transcend the boundaries of reality as we know it.'];
+const arrow = false;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+
+<Layout {title} {header} {subheading} {menuText} {footerText} {arrow}>
+
+</Layout>
