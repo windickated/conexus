@@ -83,7 +83,7 @@
 
         <hr>
 
-        <p class="refferal-codes-legend">Your refferal codes</p>
+        <p class="refferal-codes-legend">Your referral codes</p>
         <div class="refferal-codes">
           {#each codes as code}
             <p class="ref-code" class:used={code.is_used} class:not-used={!code.is_used}>{code.code}</p>
