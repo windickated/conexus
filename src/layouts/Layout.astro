@@ -1,5 +1,8 @@
 ---
-import "../styles/global.css"
+import "../styles/global.css";
+import Profile from "../components/profile.svelte";
+import { user, codes } from "../userData.js"
+
 
 const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
 ---
@@ -19,6 +22,7 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
 			{arrow && <a class="icon arrow" href="../" aria-label="back-arrow" />} 
 			{!arrow && <a class="icon logo" href="https://degenerousdao.com/" target="_blank" aria-label="dgrs-logo" />}
 			<p class="header">{ header }</p>
+      <Profile {user} {codes} client:load />
 		</section>
 		<p class="subheading">{ subheading }</p>
 
