@@ -1,5 +1,5 @@
 <script>
-  // import PopupTile from "./popupTile.svelte";
+  import PopupTile from "./popupTile.svelte";
 
   export let storyName;
   export let storyDescription;
@@ -7,6 +7,7 @@
   export let primaryThumbnail;
   export let secondaryThumbnail;
   export let descriptionPicture;
+  export let playButton;
 
   let isPrimary = true;
   function tileHover() {
@@ -21,20 +22,23 @@
 <div class="tile" id="{storyName}"
   on:mouseenter={tileHover}
   on:mouseleave={tileHover}
+  on:mouseup={() => (showModal = true)}
   on:touchstart={tileHover}
   on:touchend={tileHover}
+  on:touchend={() => (showModal = true)}
 >
   <img class="tile-picture {isPrimary ? 'visible' : ''}" src={primaryThumbnail} alt="{storyName}"/>
   <img class="tile-picture {!isPrimary ? 'visible' : ''}" src={secondaryThumbnail} alt="{storyName}"/>
   <p class="title">{ storyName }</p>
 </div>
 
-<!-- <PopupTile
+<PopupTile
   {storyLink}
   {storyDescription}
   {descriptionPicture}
+  {playButton}
   bind:showModal
-/> -->
+/>
 
 
 <style>

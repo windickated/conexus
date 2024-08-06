@@ -137,7 +137,7 @@ const stories = [
         story: [
           {
             title: 'Upcoming',
-            description: '',
+            description: 'Upcoming story description text',
             storyLink: '',
             primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
             secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
