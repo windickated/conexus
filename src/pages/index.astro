@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro"
+import MenuTile from "../components/menuTile.svelte";
 
 const title = 'CoNexus | DeGenerous';
 const header = 'CoNexus';
@@ -8,9 +9,15 @@ CoNexus is the gateway to a boundless multiverse with immersive and dynamic inte
 const footerText = ['The AI swiftly adapts to your decision between each step and generates a new story text, set of options, and picture in real-time.', 'This live factor ensures that nobody can predict or manipulate the games, and endless unique possibilities exist.', 'Your choices and actions will shape the course of your unique narrative.'];
 const menuText = ['A new world with no limits awaits you.', 'Within CoNexus, you will transcend the boundaries of reality as we know it.'];
 const arrow = false;
+
+const sectionNames = ['Collabs', 'Dischordian Saga', 'Community Picks'];
 ---
 
 
 <Layout {title} {header} {subheading} {menuText} {footerText} {arrow}>
+
+	{sectionNames.map(section => 
+		<MenuTile sectionName={section} client:load/>
+	)}
 
 </Layout>
