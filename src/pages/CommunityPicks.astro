@@ -1,5 +1,7 @@
 ---
-import Layout from "../layouts/Layout.astro"
+import Layout from "../layouts/Layout.astro";
+import stories from "../components/tilesData";
+import StoryTile from "../components/storyTile.svelte";
 
 const title = 'Community Picks | CoNexus';
 const header = 'Community Picks';
@@ -10,5 +12,28 @@ const arrow = true;
 
 
 <Layout {title} {header} {subheading} {arrow}>
+
+  {stories.filter(section => section.section === header).map(section => 
+    <>
+      {
+        section.subsection.map(subsection => 
+          <p class="tiles-collection-legend">{subsection.name}</p>
+          <section class="tiles-collection">
+            {subsection.story.map(story => 
+              <StoryTile 
+                storyName={story.title}
+                storyDescription={story.description}
+                storyLink={story.storyLink}
+                primaryThumbnail={story.primaryThumbnail}
+                secondaryThumbnail={story.secondaryThumbnail}
+                descriptionPicture={story.descriptionImage}
+                client:load
+              />
+            )}
+          </section>
+        )
+      }
+    </>
+  )}
 
 </Layout>

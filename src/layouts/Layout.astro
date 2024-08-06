@@ -10,7 +10,7 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
 		<title>{ title }</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/x-icon" href="/favicon.png" />
 		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	</head>
 	<body>
@@ -28,10 +28,8 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
 
     {menuText && <section class="conexus-menu-tiles">
       <p class="menu-text-0">{menuText[0]}</p>
-  
       
       <slot name="menuTiles"/>
-
   
       <p class="menu-text-1">{menuText[1]}</p>
     </section>}
