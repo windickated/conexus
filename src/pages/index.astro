@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro"
+import stories from "../components/tilesData.js";
 import MenuTile from "../components/menuTile.svelte";
 
 const title = 'CoNexus | DeGenerous';
@@ -10,7 +11,8 @@ const footerText = ['The AI swiftly adapts to your decision between each step an
 const menuText = ['A new world with no limits awaits you.', 'Within CoNexus, you will transcend the boundaries of reality as we know it.'];
 const arrow = false;
 
-const sections = ['Collabs', 'Dischordian Saga', 'Community Picks'];
+const sections = [];
+stories.map((story, i) => sections[i] = story.section)
 ---
 
 
