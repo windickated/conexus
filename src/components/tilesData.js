@@ -1,19 +1,17 @@
 const stories = [
   {
-    section: 'Collabs',
+    section: 'Community Picks',
     subsection: [
       {
         name: '',
         story: [
           {
-            title: 'GLMR Apes',
-            description: `
-              Play as a hyper-intelligent Ape that's been captured by an AI Archon known as The Collector, and try to escape the Dark Zoo, surrounded by the Jailer, and other animals, threats, and allies.
-            `,
+            title: 'North Pole Inc.',
+            description: 'Some description for this story game.',
             storyLink: '',
-            primaryThumbnail: '/titlePicture/Collabs/GLMRApes1.avif',
-            secondaryThumbnail: '/titlePicture/Collabs/GLMRApes2.avif',
-            descriptionImage: '/descriptionPicture/Collabs/GLMRApes.avif'
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
           }
         ]
       }
@@ -23,7 +21,7 @@ const stories = [
     section: 'Dischordian Saga',
     subsection: [
       {
-        name: 'GENERAL',
+        name: 'FALL OF REALITY (prequel)',
         story: [
           {
             title: 'Escape',
@@ -44,11 +42,51 @@ const stories = [
             primaryThumbnail: '/titlePicture/DischordianSaga/Arena1.avif',
             secondaryThumbnail: '/titlePicture/DischordianSaga/Arena2.avif',
             descriptionImage: '/descriptionPicture/DischordianSaga/Arena.avif'
+          },
+          {
+            title: 'Inception Ark',
+            description: `
+              Play as a prisoner going through experiments in a guarded prison and try to escape the planet by defeating or fleeing from The Warden.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/DischordianSaga/InceptionArk1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/InceptionArk2.avif',
+            descriptionImage: '/descriptionPicture/DischordianSaga/InceptionArk.avif'
+          },
+          {
+            title: 'Halloween: The Collector',
+            description: `
+              Some description for this story game.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+          },
+          {
+            title: 'The Mascoteers',
+            description: `
+              Some description for this story game.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+          },
+          {
+            title: 'The Detective',
+            description: `
+              Some description for this story game.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
           }
         ]
       },
       {
-        name: 'CLASS GATED',
+        name: 'CLASSES',
         story: [
           {
             title: 'Assassin',
@@ -113,31 +151,63 @@ const stories = [
         ]
       },
       {
-        name: 'TRAIT GATED',
+        name: 'DISCHORDIAN SAGA',
         story: [
           {
-            title: 'Inception Ark',
+            title: 'The Terminus Swarm',
             description: `
-              Play as a prisoner going through experiments in a guarded prison and try to escape the planet by defeating or fleeing from The Warden.
+              Some description for this story game.
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/DischordianSaga/InceptionArk1.avif',
-            secondaryThumbnail: '/titlePicture/DischordianSaga/InceptionArk2.avif',
-            descriptionImage: '/descriptionPicture/DischordianSaga/InceptionArk.avif'
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+          },
+          {
+            title: 'Awaken the Clone',
+            description: `
+              Some description for this story game.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+          },
+          {
+            title: 'The Host',
+            description: `
+              Some description for this story game.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
           }
         ]
       }
     ]
   },
   {
-    section: 'Community Picks',
+    section: 'Collabs',
     subsection: [
       {
         name: '',
         story: [
           {
-            title: 'Upcoming',
-            description: 'Upcoming story description text',
+            title: 'GLMR Apes',
+            description: `
+              Play as a hyper-intelligent Ape that's been captured by an AI Archon known as The Collector, and try to escape the Dark Zoo, surrounded by the Jailer, and other animals, threats, and allies.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/Collabs/GLMRApes1.avif',
+            secondaryThumbnail: '/titlePicture/Collabs/GLMRApes2.avif',
+            descriptionImage: '/descriptionPicture/Collabs/GLMRApes.avif'
+          },
+          {
+            title: 'AyyLmao',
+            description: `
+              Some description for this story game.
+            `,
             storyLink: '',
             primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
             secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',

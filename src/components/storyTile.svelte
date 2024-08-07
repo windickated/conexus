@@ -47,9 +47,7 @@
     align-items: center;
     justify-content: space-between;
     width: 20vw;
-    height: 22vw;
     margin: 1vw;
-    padding-bottom: 3%;
     background-color: rgba(36, 65, 189, 0.75);
     color: rgba(255, 255, 255, 0.6);
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
@@ -70,11 +68,12 @@
     display: none;
     object-fit: cover;
     width: 95%;
-    height: 80%;
+    height: 19vw;
     margin: 2.5%;
     margin-bottom: 0;
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
     border-radius: 1vw;
+    flex: 1;
   }
 
   .visible {
@@ -82,22 +81,26 @@
   }
 
   .title {
-    font-size: 2.8vw;
-    line-height: 1vw;
-    white-space: nowrap;
+    text-align: center;
+    padding: 1vw;
+    font-size: 2vw;
+    line-height: 3vw;
     text-shadow: 0 0 1vw rgba(1, 0, 32, 0.4);
   }
 
 
   @media only screen and (max-width: 600px) {
     .tile {
-      width: 35vw;
-      height: 40vw;
+      width: 40vw;
+    }
+
+    .tile-picture {
+      height: 38vw;
     }
 
     .title {
-      font-size: 1.2em;
-      line-height: inherit;
+      font-size: 1em;
+      line-height: 1.5em;
     }
   }
 </style>
