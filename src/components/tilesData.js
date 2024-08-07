@@ -6,7 +6,7 @@ const stories = [
         name: '',
         story: [
           {
-            title: 'North Pole Inc.',
+            title: 'Upcoming',
             description: 'Some description for this story game.',
             storyLink: '',
             primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
@@ -52,36 +52,6 @@ const stories = [
             primaryThumbnail: '/titlePicture/DischordianSaga/InceptionArk1.avif',
             secondaryThumbnail: '/titlePicture/DischordianSaga/InceptionArk2.avif',
             descriptionImage: '/descriptionPicture/DischordianSaga/InceptionArk.avif'
-          },
-          {
-            title: 'Halloween: The Collector',
-            description: `
-              Some description for this story game.
-            `,
-            storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
-          },
-          {
-            title: 'The Mascoteers',
-            description: `
-              Some description for this story game.
-            `,
-            storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
-          },
-          {
-            title: 'The Detective',
-            description: `
-              Some description for this story game.
-            `,
-            storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
           }
         ]
       },
@@ -184,6 +154,61 @@ const stories = [
             descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
           }
         ]
+      },
+      {
+        name: 'VISIONS',
+        story: [
+          {
+            title: 'AyyLmao',
+            description: `
+              Some description for this story game.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+          },
+          {
+            title: 'North Pole Inc.',
+            description: `
+              Some description for this story game.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+          },
+          {
+            title: 'The Mascoteers',
+            description: `
+              Some description for this story game.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+          },
+          {
+            title: 'Halloween: The Collector',
+            description: `
+              Some description for this story game.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+          },
+          {
+            title: 'The Detective',
+            description: `
+              Some description for this story game.
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+          }
+        ]
       }
     ]
   },
@@ -202,16 +227,6 @@ const stories = [
             primaryThumbnail: '/titlePicture/Collabs/GLMRApes1.avif',
             secondaryThumbnail: '/titlePicture/Collabs/GLMRApes2.avif',
             descriptionImage: '/descriptionPicture/Collabs/GLMRApes.avif'
-          },
-          {
-            title: 'AyyLmao',
-            description: `
-              Some description for this story game.
-            `,
-            storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
           }
         ]
       }
