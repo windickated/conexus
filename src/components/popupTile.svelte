@@ -86,8 +86,8 @@
   }
 
   .description-text {
-    font-size: 2.5vw;
-    line-height: 5vw;
+    font-size: 2vw;
+    line-height: 3.5vw;
     height: 80%;
     overflow-y: scroll;
     color: rgba(51, 226, 230, 0.9);
@@ -122,7 +122,7 @@
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
     border-radius: 1.75vw;
     outline: none;
-    font-size: 2.75vw;
+    font-size: 2.4vw;
     line-height: 5vw;
     color: rgba(51, 226, 230, 0.75);
     background-color: rgba(51, 226, 230, 0.1);
