@@ -170,7 +170,7 @@
 <style>
 	.profile-container {
     padding: 1.5vw;
-    width: 60vw;
+    width: 65vw;
     height: 90%;
     background-color: rgba(1, 0, 32, 0.75);
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
@@ -299,7 +299,7 @@
 
   .user-prop-value{
     text-align: center;
-    width: 40vw;
+    width: 45vw;
     height: 5vw;
     font-size: 2vw;
     line-height: 4vw;
@@ -334,15 +334,16 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.1);
     border: 0.05vw solid rgba(51, 226, 230, 0.25);
-    border-radius: 1vw;
+    border-radius: 1.5vw;
     padding: 0.5vw 1vw;
     margin: 0.5vw 0;
   }
 
   .ref-code {
-    text-align: center;
+    text-align: ridht;
     font-size: 1.8vw;
     line-height: 4vw;
     color: rgba(255, 255, 255, 0.5);
@@ -458,6 +459,7 @@
     .ref-code-container {
       padding: 0 1em;
       margin: 0.5em 0;
+      border-radius: 0.5em;
     }
 
     .ref-code {
