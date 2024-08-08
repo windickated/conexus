@@ -170,7 +170,7 @@
 <style>
 	.profile-container {
     padding: 1.5vw;
-    width: 55vw;
+    width: 60vw;
     height: 90%;
     background-color: rgba(1, 0, 32, 0.75);
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
@@ -299,7 +299,7 @@
 
   .user-prop-value{
     text-align: center;
-    width: 35vw;
+    width: 40vw;
     height: 5vw;
     font-size: 2vw;
     line-height: 4vw;
@@ -309,17 +309,6 @@
     color: rgba(255, 255, 255, 0.7);
     background-color: rgba(51, 226, 230, 0.05);
     margin-bottom: 1vw;
-  }
-
-  .ref-code-container {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 0.05vw solid rgba(51, 226, 230, 0.25);
-    border-radius: 1vw;
-    padding: 0.5vw 1vw;
-    margin: 0.5vw 0;
   }
 
   .refferal-codes-legend {
@@ -339,6 +328,17 @@
     border: 0.1vw solid rgba(51, 226, 230, 0.5);
     border-radius: 2.5vw;
     background-color: rgba(51, 226, 230, 0.1);
+  }
+
+  .ref-code-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 0.05vw solid rgba(51, 226, 230, 0.25);
+    border-radius: 1vw;
+    padding: 0.5vw 1vw;
+    margin: 0.5vw 0;
   }
 
   .ref-code {
@@ -452,6 +452,7 @@
     .refferal-codes {
       flex-direction: column;
       align-items: center;
+      width: 95%;
     }
 
     .ref-code-container {
