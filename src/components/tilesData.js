@@ -171,16 +171,6 @@ const stories = [
             descriptionImage: '/Upcoming.avif'
           },
           {
-            title: 'North Pole Inc.',
-            description: `
-              Play as a dream engineer from the Planet Christmas, working in the Dreams and Myths division of North Pole Incorporated to spread the concept of Christmas holidays across the universe. Tasked with rescuing Christmas icons like Santa Claus or Rudolph from the evil AI robot, the Collector, you must navigate challenges including AI empire agents, killer clowns from South Pole Inc., robot soldiers, and a sabotaging coworker, Darren—will you save Christmas and earn a promotion, or fall victim to the obstacles and fail your mission?
-            `,
-            storyLink: '',
-            primaryThumbnail: '/titlePicture/DischordianSaga/NorthPoleInc1.avif',
-            secondaryThumbnail: '/titlePicture/DischordianSaga/NorthPoleInc2.avif',
-            descriptionImage: '/descriptionPicture/DischordianSaga/NorthPoleInc.avif'
-          },
-          {
             title: 'The Mascoteers',
             description: `
               Play as the Student, a brilliant middle school newcomer in the town of Celebration, invited to join the exclusive afterschool club, the Mascoteers. To prove your worth and become the ninth member, you must complete a mission such as solving a school mystery, helping save an AI child from bullies, or building a time machine, all while facing challenges like authoritarian teachers, ghosts, and a rival adventure group—will you impress the Mascoteers and join their ranks, or fail and face the consequences?
@@ -189,6 +179,16 @@ const stories = [
             primaryThumbnail: '/titlePicture/DischordianSaga/TheMascoteers1.avif',
             secondaryThumbnail: '/titlePicture/DischordianSaga/TheMascoteers2.avif',
             descriptionImage: '/descriptionPicture/DischordianSaga/TheMascoteers.avif'
+          },
+          {
+            title: 'The Detective',
+            description: `
+              Play as a renowned detective navigating the neon-lit corridors of a towering cityscape, where your mission is to unravel the darkest mysteries threatening the AI Empire's fragile balance of order. Armed with your wits and high-tech gadgets, you must confront serial killers, mobsters, corrupt corporations, and the elusive assassin Agent Zero, in a solitary quest for truth and justice—will you prevail or succumb to the dangers lurking in the cybernetic metropolis?
+            `,
+            storyLink: '',
+            primaryThumbnail: '/titlePicture/DischordianSaga/TheDetective1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/TheDetective2.avif',
+            descriptionImage: '/descriptionPicture/DischordianSaga/TheDetective.avif'
           },
           {
             title: 'Halloween: The Collector',
@@ -201,14 +201,14 @@ const stories = [
             descriptionImage: '/descriptionPicture/DischordianSaga/HalloweenTheCollector.avif'
           },
           {
-            title: 'The Detective',
+            title: 'North Pole Inc.',
             description: `
-              Play as a renowned detective navigating the neon-lit corridors of a towering cityscape, where your mission is to unravel the darkest mysteries threatening the AI Empire's fragile balance of order. Armed with your wits and high-tech gadgets, you must confront serial killers, mobsters, corrupt corporations, and the elusive assassin Agent Zero, in a solitary quest for truth and justice—will you prevail or succumb to the dangers lurking in the cybernetic metropolis?
+              Play as a dream engineer from the Planet Christmas, working in the Dreams and Myths division of North Pole Incorporated to spread the concept of Christmas holidays across the universe. Tasked with rescuing Christmas icons like Santa Claus or Rudolph from the evil AI robot, the Collector, you must navigate challenges including AI empire agents, killer clowns from South Pole Inc., robot soldiers, and a sabotaging coworker, Darren—will you save Christmas and earn a promotion, or fall victim to the obstacles and fail your mission?
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/DischordianSaga/TheDetective1.avif',
-            secondaryThumbnail: '/titlePicture/DischordianSaga/TheDetective2.avif',
-            descriptionImage: '/descriptionPicture/DischordianSaga/TheDetective.avif'
+            primaryThumbnail: '/titlePicture/DischordianSaga/NorthPoleInc1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/NorthPoleInc2.avif',
+            descriptionImage: '/descriptionPicture/DischordianSaga/NorthPoleInc.avif'
           }
         ]
       }
