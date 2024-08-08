@@ -6,8 +6,13 @@
 
 	$: if (dialog && showModal) dialog.showModal();
 
-  let isLogged = false;
+  let isLogged = true; //remember change to false
   let signUp = false;
+
+  function copyRefCode(code) {
+    let copyCode = document.getElementById(code);
+    console.log(copyCode.value)
+  }
 
   let walletConnected = false;
   let walletAddress;
@@ -52,17 +57,37 @@
       {#if isLogged}
 
         <div class="user-profile-info">
-          <div class="user-property">
-            <p class="user-prop">Mail:</p>
-            <p class="user-prop">Password:</p>
-            <p class="user-prop">First name:</p>
-            <p class="user-prop">Last name:</p>
-          </div>
-          <div class="property-value">
-            <p class="user-prop-value mail">{user.mail}</p>
-            <p class="user-prop-value password">{user.password}</p>
-            <p class="user-prop-value first-name">{user.first_name}</p>
-            <p class="user-prop-value last-name">{user.last_name}</p>
+          <div class="user-properties">
+            <label for="mail" class="user-prop">Mail</label>
+            <input
+              class="user-prop-value"
+              id="mail"
+              type="email"
+              value={user.mail}
+              disabled
+            />
+            <label for="password" class="user-prop">Password</label>
+            <input
+              class="user-prop-value"
+              id="password"
+              type="password"
+              value={user.password}
+              disabled
+            />
+            <label for="first-name" class="user-prop">First name</label>
+            <input
+              class="user-prop-value"
+              id="first-name"
+              type="text"
+              value={user.first_name}
+            />
+            <label for="last-name" class="user-prop">Last name</label>
+            <input 
+              class="user-prop-value"
+              id="last-name"
+              type="text"
+              value={user.last_name}
+            />
           </div>
         </div>
 
@@ -86,7 +111,19 @@
         <p class="refferal-codes-legend">Your referral codes</p>
         <div class="refferal-codes">
           {#each codes as code}
-            <p class="ref-code" class:used={code.is_used} class:not-used={!code.is_used}>{code.code}</p>
+            <div class="ref-code-container">
+              <input
+                class="ref-code"
+                id="{code.code}"
+                class:used={code.is_used}
+                class:not-used={!code.is_used}
+                value={code.code}
+                disabled
+              />
+              <button class="copy-button" on:click={copyRefCode(code.code)}>
+                <img class="copy-icon" src="/copyicon.avif" alt="Copy">
+              </button>
+            </div>
           {/each}
         </div>
 
@@ -134,7 +171,7 @@
 <style>
 	.profile-container {
     padding: 1.5vw;
-    width: 50vw;
+    width: 55vw;
     height: 90%;
     background-color: rgba(1, 0, 32, 0.75);
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
@@ -232,14 +269,10 @@
     justify-content: space-between;
   }
 
-  .user-property, .property-value {
+  .user-properties {
     display: flex;
     flex-flow: column nowrap;
-    align-items: start;
-  }
-
-  .user-property {
-    align-items: end;
+    align-items: center;
   }
 
   button {
@@ -262,18 +295,39 @@
   .user-prop {
     font-size: 2vw;
     line-height: 4vw;
-    margin-right: 5vw;
     color: rgba(255, 255, 255, 0.5);
   }
 
-  .user-prop-value, .refferal-codes-legend {
+  .user-prop-value{
+    text-align: center;
+    width: 35vw;
+    height: 5vw;
     font-size: 2vw;
     line-height: 4vw;
+    border: 0.05vw solid rgba(51, 226, 230, 0.5);
+    border-radius: 2.5vw;
+    outline: none;
     color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(51, 226, 230, 0.05);
+    margin-bottom: 1vw;
+  }
+
+  .ref-code-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 0.05vw solid rgba(51, 226, 230, 0.25);
+    border-radius: 1vw;
+    padding: 0.5vw 1vw;
+    margin: 0.5vw 0;
   }
 
   .refferal-codes-legend {
     text-align: center;
+    font-size: 2vw;
+    line-height: 4vw;
+    color: rgba(255, 255, 255, 0.7);
   }
 
   .refferal-codes {
@@ -289,9 +343,33 @@
   }
 
   .ref-code {
+    text-align: center;
     font-size: 1.8vw;
     line-height: 4vw;
     color: rgba(255, 255, 255, 0.5);
+    border: none;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .copy-icon {
+    width: 100%;
+  }
+
+  .copy-button {
+    width: 2vw;
+    height: 2vw;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    opacity: 0.75;
+  }
+
+  .copy-button:hover, .copy-button:active {
+    filter: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
   }
 
   .used {
@@ -364,14 +442,30 @@
       line-height: 2.5em;
     }
 
+    .user-prop-value {
+      width: 70vw;
+      height: 2.5em;
+      margin-bottom: 0.5em;
+    }
+
     .refferal-codes {
       flex-direction: column;
       align-items: center;
     }
 
+    .ref-code-container {
+      padding: 0 1em;
+      margin: 0.5em 0;
+    }
+
     .ref-code {
-      font-size: 1.1em;
+      font-size: 1.2em;
       line-height: 3em;
+    }
+
+    .copy-button {
+      width: 1em;
+      height: 1em;
     }
 
     .profile-icon {
