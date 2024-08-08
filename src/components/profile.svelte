@@ -353,6 +353,7 @@
 
   .copy-icon {
     width: 100%;
+    background-color: rgba(0, 0, 0, 0);
   }
 
   .copy-button {
@@ -361,6 +362,7 @@
     padding: 0;
     background-color: rgba(0, 0, 0, 0);
     border: none;
+    border-radius: 0;
     opacity: 0.75;
   }
 
