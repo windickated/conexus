@@ -91,7 +91,7 @@ const stories = [
           {
             title: 'Engineer',
             description: `
-              Play as the Doctor, on a mission to fix the universe with inventive solutions, as you are visiting planets in danger from a variety of apocalyptic threats.
+              Play as the Engineer, on a mission to fix the universe with inventive solutions, as you are visiting planets in danger from a variety of apocalyptic threats.
             `,
             storyLink: '',
             primaryThumbnail: '/titlePicture/DischordianSaga/Engineer1.avif',
@@ -126,32 +126,32 @@ const stories = [
           {
             title: 'The Terminus Swarm',
             description: `
-              Some description for this story game.
+              Play as a Potential, an engineered being stranded on a rogue biomass planet teeming with fungal forests and corrosive spores. Armed with biomechanical weapons, you must survive relentless waves of the Terminus Swarm, grotesque insectoid monsters, until you inevitably succumb to the planet's horrors—will you face your demise bravely or fall unexpectedly?
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            primaryThumbnail: '/titlePicture/DischordianSaga/TheTerminusSwarm1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/TheTerminusSwarm2.avif',
             descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
           },
           {
             title: 'Awaken the Clone',
             description: `
-              Some description for this story game.
+              Play as a mind-controlled clone, awakened with a xenomorph helmet and a slave collar, tasked by the malevolent AI Archon known as the Collector to conquer the verdant planet of Thaloria. Navigate through fierce battles against the resolute Thalorian defenders, led by the Hierophant and the ethereal Oracle, while wrestling with the possibility of rebellion or redemption—will you remain a pawn or break free from the Collector's grasp?
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+            primaryThumbnail: '/titlePicture/DischordianSaga/AwakenTheClone1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/AwakenTheClone2.avif',
+            descriptionImage: '/descriptionPicture/DischordianSaga/AwakenTheClone.avif'
           },
           {
             title: 'The Host',
             description: `
-              Some description for this story game.
+              Play as the Host, a Potential transformed into a living extension of the Thought Virus, as you navigate through the multiverse to spread the infection. Journeying through various worlds—science fiction, fantasy, western, or surrealistic—you must confront heroes, armies, scientists, magicians, and politicians, balancing your dark mission against the slim chance of rebellion and redemption amidst a backdrop of horror and suspense—will you spread the Thought Virus or find a way to free your mind?
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+            primaryThumbnail: '/titlePicture/DischordianSaga/TheHost1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/TheHost2.avif',
+            descriptionImage: '/descriptionPicture/DischordianSaga/TheHost.avif'
           }
         ]
       },
@@ -159,54 +159,54 @@ const stories = [
         name: 'VISIONS',
         story: [
           {
-            title: 'AyyLmao',
+            title: 'Ayylmao',
             description: `
-              Some description for this story game.
+              Play as a grey alien, part of the Ayylmao species, working as an entry-level assistant for the secretive Illuminayyti cabal that controls human history. Given a chance to prove yourself, you must complete missions like replacing a celebrity, hypnotizing teens through YouTube, or building a time machine to trick ancient Egyptians, all while facing human scientists, Truther media, the US Military, and rival Anunnaki aliens—will you succeed and earn your promotion or succumb to the challenges and fail your mission?
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
+            primaryThumbnail: '/titlePicture/DischordianSaga/Ayylmao1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/Ayylmao2.avif',
             descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
           },
           {
             title: 'North Pole Inc.',
             description: `
-              Some description for this story game.
+              Play as a dream engineer from the Planet Christmas, working in the Dreams and Myths division of North Pole Incorporated to spread the concept of Christmas holidays across the universe. Tasked with rescuing Christmas icons like Santa Claus or Rudolph from the evil AI robot, the Collector, you must navigate challenges including AI empire agents, killer clowns from South Pole Inc., robot soldiers, and a sabotaging coworker, Darren—will you save Christmas and earn a promotion, or fall victim to the obstacles and fail your mission?
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+            primaryThumbnail: '/titlePicture/DischordianSaga/NorthPoleInc1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/NorthPoleInc2.avif',
+            descriptionImage: '/descriptionPicture/DischordianSaga/NorthPoleInc.avif'
           },
           {
             title: 'The Mascoteers',
             description: `
-              Some description for this story game.
+              Play as the Student, a brilliant middle school newcomer in the town of Celebration, invited to join the exclusive afterschool club, the Mascoteers. To prove your worth and become the ninth member, you must complete a mission such as solving a school mystery, helping save an AI child from bullies, or building a time machine, all while facing challenges like authoritarian teachers, ghosts, and a rival adventure group—will you impress the Mascoteers and join their ranks, or fail and face the consequences?
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+            primaryThumbnail: '/titlePicture/DischordianSaga/TheMascoteers1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/TheMascoteers2.avif',
+            descriptionImage: '/descriptionPicture/DischordianSaga/TheMascoteers.avif'
           },
           {
             title: 'Halloween: The Collector',
             description: `
-              Some description for this story game.
+              Play as one of the last human survivors on a zombie-ravaged planet, hunted relentlessly by a nearly indestructible AI Overlord known as the Collector, who seeks to harvest your DNA. Navigate through hordes of zombies, doomsday cultists, serial killers, cannibals, and psychopaths in your desperate quest to find the hidden Sanctuary - will you survive?
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+            primaryThumbnail: '/titlePicture/DischordianSaga/HalloweenTheCollector1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/HalloweenTheCollector2.avif',
+            descriptionImage: '/descriptionPicture/DischordianSaga/HalloweenTheCollector.avif'
           },
           {
             title: 'The Detective',
             description: `
-              Some description for this story game.
+              Play as a renowned detective navigating the neon-lit corridors of a towering cityscape, where your mission is to unravel the darkest mysteries threatening the AI Empire's fragile balance of order. Armed with your wits and high-tech gadgets, you must confront serial killers, mobsters, corrupt corporations, and the elusive assassin Agent Zero, in a solitary quest for truth and justice—will you prevail or succumb to the dangers lurking in the cybernetic metropolis?
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+            primaryThumbnail: '/titlePicture/DischordianSaga/TheDetective1.avif',
+            secondaryThumbnail: '/titlePicture/DischordianSaga/TheDetective2.avif',
+            descriptionImage: '/descriptionPicture/DischordianSaga/TheDetective.avif'
           }
         ]
       }
