@@ -6,12 +6,14 @@ const stories = [
         name: '',
         story: [
           {
-            title: 'Upcoming',
-            description: 'Some description for this story game.',
+            title: 'Trojan War',
+            description: `
+              Play as Achilles to shape the destiny of the Greeks and Trojans while fighting to claim justice for your fallen comrade Patroclus, and avenge the slight against your honor when the beautiful Helen is stolen.
+            `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            secondaryThumbnail: '/titlePicture/CommunityPicks/Upcoming.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+            primaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar1.avif',
+            secondaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar2.avif',
+            descriptionImage: '/descriptionPicture/CommunityPicks/TrojanWar.avif'
           }
         ]
       }
@@ -131,7 +133,7 @@ const stories = [
             storyLink: '',
             primaryThumbnail: '/titlePicture/DischordianSaga/TheTerminusSwarm1.avif',
             secondaryThumbnail: '/titlePicture/DischordianSaga/TheTerminusSwarm2.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+            descriptionImage: '/Upcoming.avif'
           },
           {
             title: 'Awaken the Clone',
@@ -166,7 +168,7 @@ const stories = [
             storyLink: '',
             primaryThumbnail: '/titlePicture/DischordianSaga/Ayylmao1.avif',
             secondaryThumbnail: '/titlePicture/DischordianSaga/Ayylmao2.avif',
-            descriptionImage: '/titlePicture/CommunityPicks/Upcoming.avif'
+            descriptionImage: '/Upcoming.avif'
           },
           {
             title: 'North Pole Inc.',
