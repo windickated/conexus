@@ -9,9 +9,8 @@
   let isLogged = true; //remember change to false
   let signUp = false;
 
-  function copyRefCode(code) {
-    let copyCode = document.getElementById(code);
-    console.log(copyCode.value)
+  function copyRefCode(event) {
+    navigator.clipboard.writeText(event.target.id)
   }
 
   let walletConnected = false;
@@ -120,8 +119,8 @@
                 value={code.code}
                 disabled
               />
-              <button class="copy-button" on:click={copyRefCode(code.code)}>
-                <img class="copy-icon" src="/copyicon.avif" alt="Copy">
+              <button class="copy-button" on:click={copyRefCode}>
+                <img id={code.code} class="copy-icon" src="/copyicon.avif" alt="Copy">
               </button>
             </div>
           {/each}
