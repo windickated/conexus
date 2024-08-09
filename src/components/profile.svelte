@@ -119,9 +119,15 @@
                 value={code.code}
                 disabled
               />
-              <button class="copy-button" on:click={copyRefCode}>
-                <img id={code.code} class="copy-icon" src="/copyicon.avif" alt="Copy">
-              </button>
+              <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
+              <img
+                id={code.code}
+                class="copy-button"
+                src="/copyicon.avif"
+                alt="Copy"
+                role="button"
+                on:click={copyRefCode}
+              />
             </div>
           {/each}
         </div>

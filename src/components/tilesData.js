@@ -20,7 +20,7 @@ const stories = [
     ]
   },
   {
-    section: 'Dischordian Saga',
+    section: 'The Dischordian Saga',
     subsection: [
       {
         name: 'FALL OF REALITY (prequel)',

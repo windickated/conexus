@@ -65,7 +65,7 @@
   }
 
   .title {
-    font-size: 3vw;
+    font-size: 2.3vw;
     line-height: 3vw;
     white-space: nowrap;
     text-shadow: 0 0 1vw #010020;
