@@ -10,7 +10,7 @@
   let signUp = false;
 
   function copyRefCode(event) {
-    navigator.clipboard.writeText(event.target.id)
+    navigator.clipboard.writeText(event.target.id);
   }
 
   let walletConnected = false;
@@ -120,12 +120,9 @@
                 disabled
               />
               <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
-              <img
+              <button
                 id={code.code}
                 class="copy-button"
-                src="/copyicon.avif"
-                alt="Copy"
-                role="button"
                 on:click={copyRefCode}
               />
             </div>
@@ -367,6 +364,9 @@
     height: 2vw;
     padding: 0;
     background-color: rgba(0, 0, 0, 0);
+    background-image: url('/copyicon.avif');
+    background-size: contain;
+    background-repeat: no-repeat;
     border: none;
     border-radius: 0;
     opacity: 0.75;
@@ -377,6 +377,10 @@
     background-color: rgba(0, 0, 0, 0);
     color: rgba(0, 0, 0, 0);
     opacity: 1;
+  }
+
+  .copy-button:active {
+    background-image: url('/checkmark.avif');
   }
 
   .used {
