@@ -326,11 +326,12 @@
 
   .refferal-codes {
     width: 90%;
-    padding: 1vw 2vw;
+    padding: 2vw;
     margin-inline: auto;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-content: center;
+    gap: 1vw;
     border: 0.1vw solid rgba(51, 226, 230, 0.5);
     border-radius: 2.5vw;
     background-color: rgba(51, 226, 230, 0.1);
@@ -345,7 +346,6 @@
     border: 0.05vw solid rgba(51, 226, 230, 0.25);
     border-radius: 1.5vw;
     padding: 0.5vw 1vw;
-    margin: 0.5vw 0;
   }
 
   .ref-code {
@@ -355,11 +355,6 @@
     color: rgba(255, 255, 255, 0.5);
     border: none;
     outline: none;
-    background-color: rgba(0, 0, 0, 0);
-  }
-
-  .copy-icon {
-    width: 100%;
     background-color: rgba(0, 0, 0, 0);
   }
 
@@ -457,14 +452,14 @@
     }
 
     .refferal-codes {
-      flex-direction: column;
-      align-items: center;
+      grid-template-columns: 100%;
+      gap: 0.5em;
+      padding: 0.5em;
       width: 95%;
     }
 
     .ref-code-container {
       padding: 0 1em;
-      margin: 0.5em 0;
       border-radius: 0.5em;
     }
 
