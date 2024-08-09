@@ -48,7 +48,7 @@ const stories = [
           {
             title: 'Inception Ark',
             description: `
-              Play as a prisoner going through experiments in a guarded prison and try to escape the planet by defeating or fleeing from The Warden.
+              Having escaped from the Prison Planet in a spaceship known as an Inception Ark, a galactic adventure of exploration awaits.  Play as the captain of a spaceship seeking a new  home, allied against the AI overlords, and ways to defeat the Architect.
             `,
             storyLink: '',
             primaryThumbnail: '/titlePicture/DischordianSaga/InceptionArk1.avif',
@@ -73,7 +73,7 @@ const stories = [
           {
             title: 'Soldier',
             description: `
-              Play as the Iron Lion, a legendary veteran fighting the AI empire.
+              Play add the Iron Lion - the greatest general humanity has ever known.  Control armies, make tactical decisions, and lead the fight for humanity’s freedom.
             `,
             storyLink: '',
             primaryThumbnail: '/titlePicture/DischordianSaga/Soldier1.avif',
