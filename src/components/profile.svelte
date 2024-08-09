@@ -114,6 +114,13 @@
 
         <div class="user-profile-info">
           <div class="user-properties">
+            <p class="story-games-number-label">
+              You have used
+                <span class="story-games-number">
+                  0 / 7 weekly
+                </span>
+              stories
+              </p>
             <label for="mail" class="user-prop">Mail</label>
             <input
               class="user-prop-value"
@@ -355,6 +362,17 @@
     justify-content: space-between;
   }
 
+  .story-games-number-label {
+    margin: 1vw 0 2vw 0;
+    color: rgba(51, 226, 230, 0.65);
+    font-size: 1.5vw;
+  }
+
+  .story-games-number {
+    color: rgba(51, 226, 230, 0.9);
+    font-size: 1.6vw;
+  }
+
   .user-properties {
     display: flex;
     flex-flow: column nowrap;
@@ -500,6 +518,10 @@
     background-color: rgba(0, 0, 0, 0);
   }
 
+  .ref-code:disabled {
+    opacity: 1; /* for iOS */
+  }
+
   .copy-button {
     width: 2vw;
     height: 2vw;
@@ -587,6 +609,15 @@
       font-size: 1.4em;
       line-height: 1.4em;
       padding: 0.25em 1em;
+    }
+
+    .story-games-number-label {
+      margin: 0.5em 0 1em 0;
+      font-size: 0.9em;
+    }
+
+    .story-games-number {
+      font-size: 1em;
     }
 
     .user-prop, .user-prop-value, .refferal-codes-legend {
