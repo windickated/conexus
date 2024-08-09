@@ -13,6 +13,11 @@
     navigator.clipboard.writeText(event.target.id);
   }
 
+  const passwordVisible = () =>
+    document.getElementById('password').type = 'text';
+  const passwordInvisible = () =>
+    document.getElementById('password').type = 'password';
+
   let walletConnected = false;
   let walletAddress;
   function connectWallet() {
@@ -66,19 +71,29 @@
               disabled
             />
             <label for="password" class="user-prop">Password</label>
-            <input
-              class="user-prop-value"
-              id="password"
-              type="password"
-              value={user.password}
-              disabled
-            />
+            <div class="password-container">
+              <input
+                class="user-prop-value"
+                id="password"
+                type="password"
+                value={user.password}
+                disabled
+              />
+              <button
+                class="password-visibility-button"
+                on:mousedown={passwordVisible}
+                on:mouseup={passwordInvisible}
+                on:touchstart={passwordVisible}
+                on:touchend={passwordInvisible}
+              />
+            </div>
             <label for="first-name" class="user-prop">First name</label>
             <input
               class="user-prop-value"
               id="first-name"
               type="text"
               value={user.first_name}
+              disabled
             />
             <label for="last-name" class="user-prop">Last name</label>
             <input 
@@ -86,6 +101,7 @@
               id="last-name"
               type="text"
               value={user.last_name}
+              disabled
             />
           </div>
         </div>
@@ -318,6 +334,43 @@
     opacity: 1; /* for iOS */
   }
 
+  .password-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 4vw;
+    margin-bottom: 1vw;
+  }
+
+  #password {
+    margin-bottom: 0;
+  }
+
+  .password-visibility-button {
+    padding: 0;
+    margin-left: 1vw;
+    width: 3vw;
+    height: 3vw;
+    border: none;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url('/invisibleicon.avif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+  }
+
+  .password-visibility-button:hover, .password-visibility-button:active {
+    filter: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+  }
+
+  .password-visibility-button:active {
+    background-image: url('/visibleicon.avif');
+  }
+
   .refferal-codes-legend {
     text-align: center;
     font-size: 2vw;
@@ -457,6 +510,17 @@
       width: 70vw;
       height: 2.5em;
       margin-bottom: 0.5em;
+    }
+
+    .password-container {
+      margin-left: 1.75em;
+      margin-bottom: 0.5em;
+    }
+
+    .password-visibility-button {
+      width: 1em;
+      height: 1em;
+      margin-left: 0.25em;
     }
 
     .refferal-codes {
