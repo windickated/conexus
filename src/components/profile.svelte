@@ -25,15 +25,17 @@
     let firstNameInput = document.getElementById('first-name');
     let lastNameInput = document.getElementById('last-name');
     let passwordInput = document.getElementById('password');
+    let passwordConfirmLabel = document.getElementById('password-confirmation-label');
+    let passwordConfirmInput = document.getElementById('password-confirmation');
     if (event.target.className.match('username')) {
       if (!isEditing) {
         isEditing = true;
         editUsernameBtn.innerHTML = 'Save';
         editPasswordBtn.style.display = 'none';
         firstNameInput.disabled = false;
-        firstNameInput.style.border = '0.2vw solid rgba(51, 226, 230, 0.75)';
+        firstNameInput.style.border = '0.2vw solid rgba(51, 226, 230, 0.9)';
         lastNameInput.disabled = false;
-        lastNameInput.style.border = '0.2vw solid rgba(51, 226, 230, 0.75)';
+        lastNameInput.style.border = '0.2vw solid rgba(51, 226, 230, 0.9)';
       } else {
         isEditing = false;
         editUsernameBtn.innerHTML = 'Change name';
@@ -50,12 +52,20 @@
         editPasswordBtn.innerHTML = 'Save';
         passwordInput.disabled = false;
         passwordInput.style.border = '0.2vw solid rgba(51, 226, 230, 0.75)';
+        passwordConfirmInput.style.display = 'block';
+        passwordConfirmLabel.style.display = 'block';
       } else {
-        isEditing = false;
-        editUsernameBtn.style.display = 'block';
-        editPasswordBtn.innerHTML = 'Change password';
-        passwordInput.disabled = true;
-        passwordInput.style.border = '0.05vw solid rgba(51, 226, 230, 0.5)';
+        if (passwordInput.value != passwordConfirmInput.value) {
+          event.prevent();
+        } else {
+          isEditing = false;
+          editUsernameBtn.style.display = 'block';
+          editPasswordBtn.innerHTML = 'Change password';
+          passwordInput.disabled = true;
+          passwordInput.style.border = '0.05vw solid rgba(51, 226, 230, 0.5)';
+          passwordConfirmInput.style.display = 'none';
+          passwordConfirmLabel.style.display = 'none';
+        }
       }
     }
   }
@@ -129,6 +139,12 @@
                 on:touchend={passwordInvisible}
               />
             </div>
+            <label for="first-name" class="user-prop" id="password-confirmation-label">Confirm password</label>
+            <input
+              class="user-prop-value"
+              id="password-confirmation"
+              type="password"
+            />
             <label for="first-name" class="user-prop">First name</label>
             <input
               class="user-prop-value"
@@ -396,6 +412,14 @@
 
   #password {
     margin-bottom: 0;
+  }
+
+  #password-confirmation-label, #password-confirmation {
+    display: none;
+  }
+
+  #password-confirmation {
+    border: 0.2vw solid rgba(51, 226, 230, 0.75);
   }
 
   .password-visibility-button {
