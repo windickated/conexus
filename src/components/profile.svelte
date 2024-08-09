@@ -18,6 +18,48 @@
   const passwordInvisible = () =>
     document.getElementById('password').type = 'password';
 
+  let isEditing = false;
+  function changeUserData(event) {
+    let editUsernameBtn = document.querySelector('.edit-username');
+    let editPasswordBtn = document.querySelector('.edit-password');
+    let firstNameInput = document.getElementById('first-name');
+    let lastNameInput = document.getElementById('last-name');
+    let passwordInput = document.getElementById('password');
+    if (event.target.className.match('username')) {
+      if (!isEditing) {
+        isEditing = true;
+        editUsernameBtn.innerHTML = 'Save';
+        editPasswordBtn.style.display = 'none';
+        firstNameInput.disabled = false;
+        firstNameInput.style.border = '0.2vw solid rgba(51, 226, 230, 0.75)';
+        lastNameInput.disabled = false;
+        lastNameInput.style.border = '0.2vw solid rgba(51, 226, 230, 0.75)';
+      } else {
+        isEditing = false;
+        editUsernameBtn.innerHTML = 'Change name';
+        editPasswordBtn.style.display = 'block';
+        firstNameInput.disabled = true;
+        firstNameInput.style.border = '0.05vw solid rgba(51, 226, 230, 0.5)';
+        lastNameInput.disabled = true;
+        lastNameInput.style.border = '0.05vw solid rgba(51, 226, 230, 0.5)';
+      }
+    } else if (event.target.className.match('password')) {
+      if (!isEditing) {
+        isEditing = true;
+        editUsernameBtn.style.display = 'none';
+        editPasswordBtn.innerHTML = 'Save';
+        passwordInput.disabled = false;
+        passwordInput.style.border = '0.2vw solid rgba(51, 226, 230, 0.75)';
+      } else {
+        isEditing = false;
+        editUsernameBtn.style.display = 'block';
+        editPasswordBtn.innerHTML = 'Change password';
+        passwordInput.disabled = true;
+        passwordInput.style.border = '0.05vw solid rgba(51, 226, 230, 0.5)';
+      }
+    }
+  }
+
   let walletConnected = false;
   let walletAddress;
   function connectWallet() {
@@ -107,10 +149,11 @@
         </div>
 
         <div class="edit-buttons">
-          <button class="edit-username">
+          <button
+            class="edit-username" on:click={changeUserData}>
             Change name
           </button>
-          <button class="edit-password">
+          <button class="edit-password" on:click={changeUserData}>
             Change password
           </button>
         </div>
@@ -381,14 +424,13 @@
   }
 
   .edit-buttons {
-    width: 45vw;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-inline: auto;
   }
 
   .edit-username, .edit-password {
-    margin: 2vw 0;
+    margin: 2vw 1vw;
     font-size: 1.75vw;
     line-height: 2vw;
   }
@@ -545,12 +587,8 @@
       margin-left: 0.25em;
     }
 
-    .edit-buttons {
-      width: 95%;
-    }
-
     .edit-username, .edit-password {
-      margin: 1em 0 0 0;
+      margin: 1em 0.5em;
       font-size: 1em;
       line-height: 2em;
     }
