@@ -106,6 +106,15 @@
           </div>
         </div>
 
+        <div class="edit-buttons">
+          <button class="edit-username">
+            Change name
+          </button>
+          <button class="edit-password">
+            Change password
+          </button>
+        </div>
+
         <hr>
 
         <div class="wallet-connect">
@@ -371,6 +380,19 @@
     background-image: url('/visibleicon.avif');
   }
 
+  .edit-buttons {
+    width: 45vw;
+    display: flex;
+    justify-content: space-between;
+    margin-inline: auto;
+  }
+
+  .edit-username, .edit-password {
+    margin: 2vw 0;
+    font-size: 1.75vw;
+    line-height: 2vw;
+  }
+
   .refferal-codes-legend {
     text-align: center;
     font-size: 2vw;
@@ -521,6 +543,16 @@
       width: 1em;
       height: 1em;
       margin-left: 0.25em;
+    }
+
+    .edit-buttons {
+      width: 95%;
+    }
+
+    .edit-username, .edit-password {
+      margin: 1em 0 0 0;
+      font-size: 1em;
+      line-height: 2em;
     }
 
     .refferal-codes {
