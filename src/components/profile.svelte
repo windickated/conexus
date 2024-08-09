@@ -303,7 +303,7 @@
     color: rgba(255, 255, 255, 0.5);
   }
 
-  .user-prop-value{
+  .user-prop-value {
     text-align: center;
     width: 45vw;
     height: 5vw;
@@ -315,6 +315,10 @@
     color: rgba(255, 255, 255, 0.7);
     background-color: rgba(51, 226, 230, 0.05);
     margin-bottom: 1vw;
+  }
+
+  .user-prop-value:disabled {
+    opacity: 1; /* for iOS */
   }
 
   .refferal-codes-legend {
