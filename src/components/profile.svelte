@@ -591,6 +591,10 @@
 
   #continue-shaping option {
     text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .continue-shaping-delete, .continue-shaping-play {
