@@ -223,14 +223,25 @@
         <hr>
 
         <div class="wallet-connect">
-          <p class="user-prop">Your wallet:</p>
+          <p class="user-prop">Web3 account:</p>
 
           <button class="wallet-button" on:click={connectWallet}>
             {#if !walletConnected}
-              Connect wallet
+              Connect Wallet
             {:else if walletConnected}
               {walletAddress}
             {/if}
+          </button>
+          
+        </div>
+
+        <hr>
+
+        <div class="google-connect">
+          <p class="user-prop">Web2 account:</p>
+
+          <button class="google-button">
+              Connect Google
           </button>
           
         </div>
@@ -440,7 +451,7 @@
     cursor: pointer;
   }
 
-  .user-profile-info, .log-in, .wallet-connect {
+  .user-profile-info, .log-in, .wallet-connect, .google-connect {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-around;
