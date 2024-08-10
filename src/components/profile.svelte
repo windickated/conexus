@@ -581,11 +581,11 @@
     padding: 1vw 2vw;
     font-size: 2vw;
     line-height: 3vw;
-    color: rgba(51, 226, 230, 0.9);
+    color: rgba(1, 0, 32, 0.9);
     outline: none;
     border: 0.1vw solid rgba(51, 226, 230, 0.5);
     border-radius: 2vw;
-    background-color: rgba(51, 226, 230, 0.1);
+    background-color: rgba(51, 226, 230, 0.5);
     margin: 0 1vw;
   }
 
