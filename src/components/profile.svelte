@@ -585,7 +585,7 @@
     outline: none;
     border: 0.1vw solid rgba(51, 226, 230, 0.5);
     border-radius: 2vw;
-    background-color: rgba(51, 226, 230, 0.25);
+    background-color: rgba(51, 226, 230, 0.1);
     margin: 0 1vw;
   }
 
