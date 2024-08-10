@@ -350,6 +350,7 @@
   .continue-shaping-delete,
   .continue-shaping-play {
     padding: 0;
+    margin: 0;
     border: none;
     border-radius: 0;
     background-color: rgba(0, 0, 0, 0);
@@ -586,7 +587,6 @@
     border: 0.1vw solid rgba(51, 226, 230, 0.5);
     border-radius: 2vw;
     background-color: rgba(51, 226, 230, 0.5);
-    margin: 0 1vw;
     cursor: pointer;
   }
 
@@ -598,12 +598,14 @@
   .continue-shaping-delete, .continue-shaping-play {
     width: 5vw;
     height: 5vw;
+    margin: 0 1vw;
     background-size: contain;
     background-repeat: no-repeat;
   }
 
   .continue-shaping-delete {
     background-image: url('/icons/delete.avif');
+    margin-right: 0.75vw;
   }
 
   .continue-shaping-play {
