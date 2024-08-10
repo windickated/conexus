@@ -27,6 +27,7 @@
     let passwordInput = document.getElementById('password');
     let passwordConfirmLabel = document.getElementById('password-confirmation-label');
     let passwordConfirmInput = document.getElementById('password-confirmation');
+    let validationWarn = document.querySelector('.validation-check');
     if (event.target.className.match('username')) {
       if (!isEditing) {
         isEditing = true;
@@ -56,7 +57,8 @@
         passwordConfirmLabel.style.display = 'block';
       } else {
         if (passwordInput.value != passwordConfirmInput.value) {
-          event.prevent();
+          validationWarn.style.display = 'block';
+          event.preventDefault();
         } else {
           isEditing = false;
           editUsernameBtn.style.display = 'block';
@@ -65,6 +67,7 @@
           passwordInput.style.border = '0.05vw solid rgba(51, 226, 230, 0.5)';
           passwordConfirmInput.style.display = 'none';
           passwordConfirmLabel.style.display = 'none';
+          validationWarn.style.display = 'none';
         }
       }
     }
@@ -205,6 +208,8 @@
           </div>
         </div>
 
+        <p class="validation-check">Passwords do not match!</p>
+
         <div class="edit-buttons">
           <button
             class="edit-username" on:click={changeUserData}>
@@ -320,8 +325,10 @@
 
   .validation-check {
     display: none;
+    text-align: center;
     font-size: 1.5vw;
     margin-bottom: 2vw;
+    margin-top: 1vw;
     color: rgba(255, 50, 50, 0.8);
   }
 
@@ -677,6 +684,21 @@
   
 
   @media only screen and (max-width: 600px) {
+    hr {
+      margin: 2em 0;
+    }
+
+    button {
+      font-size: 1.4em;
+      line-height: 1.4em;
+      padding: 0.25em 1em;
+    }
+
+    .validation-check {
+      font-size: 0.9em;
+      margin: 0.5em 0;
+    }
+
     .profile-container {
       padding: 1em;
       width: 85vw;
@@ -700,16 +722,6 @@
 
     .submit-button {
       width: 50vw;
-    }
-
-    hr {
-      margin: 2em 0;
-    }
-
-    button {
-      font-size: 1.4em;
-      line-height: 1.4em;
-      padding: 0.25em 1em;
     }
 
     .story-games-number-label {
