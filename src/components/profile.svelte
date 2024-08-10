@@ -587,14 +587,21 @@
     border-radius: 2vw;
     background-color: rgba(51, 226, 230, 0.5);
     margin: 0 1vw;
+    cursor: pointer;
+  }
+
+  #continue-shaping:hover, #continue-shaping:active {
+    background-color: rgba(51, 226, 230, 0.75);
   }
 
   #continue-shaping option {
+    display: block;
     text-align: center;
     padding-left: 0;
     padding-right: 0;
     margin-left: 0;
     margin-right: 0;
+    cursor: pointer;
   }
 
   .continue-shaping-delete, .continue-shaping-play {
