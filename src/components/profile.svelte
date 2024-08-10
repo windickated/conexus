@@ -70,6 +70,12 @@
     }
   }
 
+  function removeShapingStory() {
+    let shapingStory = document.getElementById('continue-shaping');
+    if (shapingStory.value != "") shapingStory.remove(shapingStory.selectedIndex);
+    if (shapingStory.length === 1) shapingStory.value = "";
+  }
+
   let walletConnected = false;
   let walletAddress;
   function connectWallet() {
@@ -81,6 +87,8 @@
       walletAddress = '0xeb0a...60c1';
     }
   }
+
+  const continueShapingStories = ['Escape', 'Inception Ark', 'Mascoteers', 'North Pole Inc.', 'GLMR Apes', 'The Terminus Swarm']
 </script>
 
 
@@ -112,15 +120,41 @@
   
       {#if isLogged}
 
+        <div class="story-games-container">
+          <p class="story-games-number-label">
+            You have used
+              <span class="story-games-number">
+                0 / 7 weekly
+              </span>
+            stories
+          </p>
+
+          <form class="continue-shaping-container">
+            <label class="continue-shaping-label" for="continue-shaping">
+              Continue shaping:
+            </label>
+            <div>
+              <button
+                class="continue-shaping-delete"
+                on:click|preventDefault={removeShapingStory}
+              />
+              <select value="" id="continue-shaping" placeholder="nothing">
+                <option value="" disabled selected>Select story</option>
+                {#each continueShapingStories as story}
+                  <option value={story}>{story}</option>
+                {/each}
+              </select>
+              <button
+                class="continue-shaping-play"
+              />
+            </div>
+          </form>
+        </div>
+
+        <hr>
+
         <div class="user-profile-info">
           <div class="user-properties">
-            <p class="story-games-number-label">
-              You have used
-                <span class="story-games-number">
-                  0 / 7 weekly
-                </span>
-              stories
-              </p>
             <label for="mail" class="user-prop">Mail</label>
             <input
               class="user-prop-value"
@@ -262,6 +296,64 @@
 
 
 <style>
+  button {
+    padding: 1vw 2vw;
+    border: 0.05vw solid rgba(51, 226, 230, 0.75);
+    border-radius: 2vw;
+    font-size: 2vw;
+    line-height: 3vw;
+    color: rgba(51, 226, 230, 0.75);
+    background-color: rgba(51, 226, 230, 0.1);
+    filter: drop-shadow(0 0 0.1vw rgba(51, 226, 230, 0.4));
+  }
+
+  button:hover, button:active {
+    color: rgba(51, 226, 230, 1);
+    background-color: rgba(51, 226, 230, 0.5);
+    filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.4));
+  }
+
+  hr {
+    margin: 2vw 0;
+    border: 0.1vw solid rgba(51, 226, 230, 0.5);
+  }
+
+  .validation-check {
+    display: none;
+    font-size: 1.5vw;
+    margin-bottom: 2vw;
+    color: rgba(255, 50, 50, 0.8);
+  }
+
+  /* Reset button styling for icons */
+
+  .password-visibility-button,
+  .copy-button,
+  .continue-shaping-delete,
+  .continue-shaping-play {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0.75;
+  }
+
+  .password-visibility-button:hover,
+  .password-visibility-button:active,
+  .copy-button:hover,
+  .copy-button:active,
+  .continue-shaping-delete:hover,
+  .continue-shaping-delete:active,
+  .continue-shaping-play:hover,
+  .continue-shaping-play:active {
+    filter: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+  }
+
+  /* Profile dialog window */
+
 	.profile-container {
     padding: 1.5vw;
     width: 65vw;
@@ -304,6 +396,8 @@
     flex-flow: column nowrap;
   }
 
+  /* User logged out */
+
   .login-form, .signup-form, .ref-code-form {
     display: flex;
     flex-flow: column nowrap;
@@ -339,18 +433,6 @@
     cursor: pointer;
   }
 
-  .validation-check {
-    display: none;
-    font-size: 1.5vw;
-    margin-bottom: 2vw;
-    color: rgba(255, 50, 50, 0.8);
-  }
-
-  hr {
-    margin: 2vw 0;
-    border: 0.1vw solid rgba(51, 226, 230, 0.5);
-  }
-
   .user-profile-info, .log-in, .wallet-connect {
     display: flex;
     flex-flow: row nowrap;
@@ -361,39 +443,13 @@
   .log-in {
     justify-content: space-between;
   }
-
-  .story-games-number-label {
-    margin: 1vw 0 2vw 0;
-    color: rgba(51, 226, 230, 0.65);
-    font-size: 1.5vw;
-  }
-
-  .story-games-number {
-    color: rgba(51, 226, 230, 0.9);
-    font-size: 1.6vw;
-  }
+  
+  /* User logged in */
 
   .user-properties {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-  }
-
-  button {
-    padding: 1vw 2vw;
-    border: 0.05vw solid rgba(51, 226, 230, 0.75);
-    border-radius: 2vw;
-    font-size: 2vw;
-    line-height: 3vw;
-    color: rgba(51, 226, 230, 0.75);
-    background-color: rgba(51, 226, 230, 0.1);
-    filter: drop-shadow(0 0 0.1vw rgba(51, 226, 230, 0.4));
-  }
-
-  button:hover, button:active {
-    color: rgba(51, 226, 230, 1);
-    background-color: rgba(51, 226, 230, 0.5);
-    filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.4));
   }
 
   .user-prop {
@@ -441,28 +497,16 @@
   }
 
   .password-visibility-button {
-    padding: 0;
     margin-left: 1vw;
     width: 3vw;
     height: 3vw;
-    border: none;
-    border-radius: 0;
-    background-color: rgba(0, 0, 0, 0);
-    background-image: url('/invisibleicon.avif');
+    background-image: url('/icons/invisibleicon.avif');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.75;
-  }
-
-  .password-visibility-button:hover, .password-visibility-button:active {
-    filter: none;
-    background-color: rgba(0, 0, 0, 0);
-    color: rgba(0, 0, 0, 0);
-    opacity: 1;
   }
 
   .password-visibility-button:active {
-    background-image: url('/visibleicon.avif');
+    background-image: url('/icons/visibleicon.avif');
   }
 
   .edit-buttons {
@@ -476,6 +520,73 @@
     font-size: 1.75vw;
     line-height: 2vw;
   }
+
+  /* Continue shaping */
+
+  .story-games-container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
+  .story-games-number-label {
+    margin: 1vw 0 2vw 0;
+    color: rgba(51, 226, 230, 0.65);
+    font-size: 1.5vw;
+  }
+
+  .story-games-number {
+    color: rgba(51, 226, 230, 0.9);
+    font-size: 1.6vw;
+  }
+
+  .continue-shaping-container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
+  .continue-shaping-label {
+    color: rgba(51, 226, 230, 0.75);
+    font-size: 2vw;
+  }
+
+  .continue-shaping-container > div {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-top: 1vw;
+  }
+
+  #continue-shaping {
+    text-align: center;
+    padding: 1vw 2vw;
+    font-size: 2vw;
+    line-height: 3vw;
+    color: rgba(51, 226, 230, 0.9);
+    outline: none;
+    border: 0.1vw solid rgba(51, 226, 230, 0.5);
+    border-radius: 2vw;
+    background-color: rgba(51, 226, 230, 0.25);
+    margin: 0 1vw;
+  }
+
+  .continue-shaping-delete, .continue-shaping-play {
+    width: 5vw;
+    height: 5vw;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .continue-shaping-delete {
+    background-image: url('/icons/delete.avif');
+  }
+
+  .continue-shaping-play {
+    background-image: url('/icons/play.avif');
+  }
+
+  /* Referral codes container */
 
   .refferal-codes-legend {
     text-align: center;
@@ -525,25 +636,13 @@
   .copy-button {
     width: 2vw;
     height: 2vw;
-    padding: 0;
-    background-color: rgba(0, 0, 0, 0);
-    background-image: url('/copyicon.avif');
+    background-image: url('/icons/copyicon.avif');
     background-size: contain;
     background-repeat: no-repeat;
-    border: none;
-    border-radius: 0;
-    opacity: 0.75;
-  }
-
-  .copy-button:hover, .copy-button:active {
-    filter: none;
-    background-color: rgba(0, 0, 0, 0);
-    color: rgba(0, 0, 0, 0);
-    opacity: 1;
   }
 
   .copy-button:active {
-    background-image: url('/checkmark.avif');
+    background-image: url('/icons/checkmark.avif');
   }
 
   .used {
@@ -556,6 +655,8 @@
     filter: drop-shadow(0 0 0.1vw rgba(51, 226, 230, 0.9));
   }
 
+  /* Profile icon */
+
   .profile-icon {
     position: absolute;
     top: 2vw;
@@ -563,7 +664,7 @@
     height: 7vw;
     width: 7vw;
     cursor: pointer;
-    background-image: url('/profileIcon.avif');
+    background-image: url('/icons/profileIcon.avif');
     background-size: contain;
     opacity: 0.4;
     z-index: 1;
@@ -618,6 +719,26 @@
 
     .story-games-number {
       font-size: 1em;
+    }
+
+    .continue-shaping-label {
+      font-size: 1em;
+    }
+
+    .continue-shaping-container > div {
+      margin-top: 0.5em;
+    }
+
+    #continue-shaping {
+      font-size: 1.1em;
+      line-height: 1.1em;
+      padding: 0.5em 1em;
+      margin: 0 0.5em;
+    }
+
+    .continue-shaping-delete, .continue-shaping-play {
+      width: 1.5em;
+      height: 1.5em;
     }
 
     .user-prop, .user-prop-value, .refferal-codes-legend {
