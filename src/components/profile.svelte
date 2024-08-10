@@ -578,7 +578,7 @@
 
   #continue-shaping {
     text-align: center;
-    padding: 1vw 2vw;
+    padding: 1vw 0;
     font-size: 2vw;
     line-height: 3vw;
     color: rgba(1, 0, 32, 0.9);
@@ -591,7 +591,7 @@
   }
 
   #continue-shaping option {
-    text-align: left;
+    text-align: center;
     cursor: pointer;
   }
 
