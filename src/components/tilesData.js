@@ -236,9 +236,9 @@ const stories = [
               In the heart of the vast azure ocean lies the Enchanted Private Island, a hidden paradise ruled by the majestic Lazy Lions, who possess wisdom and regal grace. This utopia, with its lush landscapes and ancient secrets, faces a dire threat from Glitch, a former lion of the pride who seeks to conquer the island. As Glitch gathers his ruthless generals, the peaceful Lazy Lions must defend their home, not with violence, but by uncovering the island's forgotten mysteries. Embarking on a journey of bravery and discovery, they strive to protect the island's soul and preserve the harmony that defines their enchanted sanctuary.
             `,
             storyLink: '',
-            primaryThumbnail: '/Upcoming.avif',
-            secondaryThumbnail: 'Upcoming.avif',
-            descriptionImage: 'Upcoming.avif'
+            primaryThumbnail: '/titlePicture/Collabs/LazyLions1.avif',
+            secondaryThumbnail: '/titlePicture/Collabs/LazyLions2.avif',
+            descriptionImage: '/descriptionPicture/Collabs/LazyLions.avif'
           },
           {
             title: 'Tempest: The era of an Empire',
@@ -247,9 +247,9 @@ const stories = [
               When a cosmic storm crash-lands a spaceship carrying their enemies, they embark on a mission to defeat the evil Empire, sparking an epic battle for redemption and freedom, to restore peace to the Galactic Empire.
             `,
             storyLink: '',
-            primaryThumbnail: '/Upcoming.avif',
-            secondaryThumbnail: 'Upcoming.avif',
-            descriptionImage: 'Upcoming.avif'
+            primaryThumbnail: '/titlePicture/Collabs/Tempest1.avif',
+            secondaryThumbnail: '/titlePicture/Collabs/Tempest2.avif',
+            descriptionImage: '/descriptionPicture/Collabs/Tempest.avif'
           }
         ]
       }
