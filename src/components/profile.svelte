@@ -519,13 +519,13 @@
     margin-left: 1vw;
     width: 3vw;
     height: 3vw;
-    background-image: url('/icons/invisibleicon.avif');
+    background-image: url('/icons/invisibleicon.png');
     background-size: contain;
     background-repeat: no-repeat;
   }
 
   .password-visibility-button:active {
-    background-image: url('/icons/visibleicon.avif');
+    background-image: url('/icons/visibleicon.png');
   }
 
   .edit-buttons {
@@ -604,12 +604,12 @@
   }
 
   .continue-shaping-delete {
-    background-image: url('/icons/delete.avif');
+    background-image: url('/icons/delete.png');
     margin-right: 0.75vw;
   }
 
   .continue-shaping-play {
-    background-image: url('/icons/play.avif');
+    background-image: url('/icons/play.png');
   }
 
   /* Referral codes container */
@@ -662,13 +662,13 @@
   .copy-button {
     width: 2vw;
     height: 2vw;
-    background-image: url('/icons/copyicon.avif');
+    background-image: url('/icons/copyicon.png');
     background-size: contain;
     background-repeat: no-repeat;
   }
 
   .copy-button:active {
-    background-image: url('/icons/checkmark.avif');
+    background-image: url('/icons/checkmark.png');
   }
 
   .used {

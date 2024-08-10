@@ -133,7 +133,7 @@ const stories = [
             storyLink: '',
             primaryThumbnail: '/titlePicture/DischordianSaga/TheTerminusSwarm1.avif',
             secondaryThumbnail: '/titlePicture/DischordianSaga/TheTerminusSwarm2.avif',
-            descriptionImage: '/Upcoming.avif'
+            descriptionImage: '/descriptionPicture/DischordianSaga/TheTerminusSwarm.avif'
           },
           {
             title: 'Awaken the Clone',
@@ -168,7 +168,7 @@ const stories = [
             storyLink: '',
             primaryThumbnail: '/titlePicture/DischordianSaga/Ayylmao1.avif',
             secondaryThumbnail: '/titlePicture/DischordianSaga/Ayylmao2.avif',
-            descriptionImage: '/Upcoming.avif'
+            descriptionImage: '/descriptionPicture/DischordianSaga/Ayylmao.avif'
           },
           {
             title: 'The Mascoteers',
