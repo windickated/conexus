@@ -591,7 +591,7 @@
   }
 
   #continue-shaping option {
-    text-align: center;
+    text-align: left;
     cursor: pointer;
   }
 
