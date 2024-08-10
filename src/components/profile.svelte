@@ -589,6 +589,10 @@
     margin: 0 1vw;
   }
 
+  #continue-shaping option {
+    text-align: center;
+  }
+
   .continue-shaping-delete, .continue-shaping-play {
     width: 5vw;
     height: 5vw;
