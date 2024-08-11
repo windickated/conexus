@@ -31,12 +31,16 @@
     src={primaryThumbnail}
     alt="{storyName}"
     draggable="false"
+    height="1024"
+    width="1024"
   />
   <img
     class="tile-picture {!isPrimary ? 'visible' : ''}"
     src={secondaryThumbnail}
     alt="{storyName}"
     draggable="false"
+    height="1024"
+    width="1024"
   />
   <p class="title">{ storyName }</p>
 </div>
@@ -84,6 +88,7 @@
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
     border-radius: 1vw;
     flex: 1;
+    background-color: rgba(0, 0, 0, 0.9);
   }
 
   .visible {
