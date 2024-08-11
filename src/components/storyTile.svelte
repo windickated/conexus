@@ -26,8 +26,18 @@
   on:touchstart={tileHover}
   on:touchend={tileHover}
 >
-  <img class="tile-picture {isPrimary ? 'visible' : ''}" src={primaryThumbnail} alt="{storyName}"/>
-  <img class="tile-picture {!isPrimary ? 'visible' : ''}" src={secondaryThumbnail} alt="{storyName}"/>
+  <img
+    class="tile-picture {isPrimary ? 'visible' : ''}"
+    src={primaryThumbnail}
+    alt="{storyName}"
+    draggable="false"
+  />
+  <img
+    class="tile-picture {!isPrimary ? 'visible' : ''}"
+    src={secondaryThumbnail}
+    alt="{storyName}"
+    draggable="false"
+  />
   <p class="title">{ storyName }</p>
 </div>
 
