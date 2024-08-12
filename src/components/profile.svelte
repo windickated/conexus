@@ -6,8 +6,8 @@
 
 	$: if (dialog && showModal) dialog.showModal();
 
-  let isLogged = true; //remember change to false
-  let signUp = false;
+  let isLogged = false;
+  let signUp = true;
 
   function copyRefCode(event) {
     navigator.clipboard.writeText(event.target.id);
@@ -18,6 +18,15 @@
   const passwordInvisible = () =>
     document.getElementById('password').type = 'password';
 
+
+  const continueShapingStories = ['Escape', 'Inception Ark', 'Mascoteers', 'North Pole Inc.', 'GLMR Apes', 'The Terminus Swarm']
+  function removeShapingStory() {
+    let shapingStory = document.getElementById('continue-shaping');
+    if (shapingStory.value != "") shapingStory.remove(shapingStory.selectedIndex);
+    if (shapingStory.length === 1) shapingStory.value = "";
+  }
+
+  
   let isEditing = false;
   function changeUserData(event) {
     let editUsernameBtn = document.querySelector('.edit-username');
@@ -73,12 +82,6 @@
     }
   }
 
-  function removeShapingStory() {
-    let shapingStory = document.getElementById('continue-shaping');
-    if (shapingStory.value != "") shapingStory.remove(shapingStory.selectedIndex);
-    if (shapingStory.length === 1) shapingStory.value = "";
-  }
-
   let walletConnected = false;
   let walletAddress;
   function connectWallet() {
@@ -90,8 +93,6 @@
       walletAddress = '0xeb0a...60c1';
     }
   }
-
-  const continueShapingStories = ['Escape', 'Inception Ark', 'Mascoteers', 'North Pole Inc.', 'GLMR Apes', 'The Terminus Swarm']
 </script>
 
 
@@ -102,13 +103,25 @@
 <dialog class="profile-container"
 	bind:this={dialog}
 	on:close={() => (showModal = false)}
-	on:click|self={() => dialog.close()}
+	on:click|self={() => {
+    dialog.close();
+    isLogged = false;
+    //signUp = false;
+  }}
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div on:click|stopPropagation>
 
       <div class="log-in">
-        <button class="close-button" on:click|stopPropagation={() => dialog.close()}>Close</button>
+        <button
+          class="close-button"
+          on:click|stopPropagation={() => {
+            dialog.close();
+            isLogged = false;
+            //signUp = false;
+          }}
+
+        >Close</button>
         {#if isLogged}
           <button class="login-button" on:click={() => {
             isLogged = false;
@@ -121,6 +134,8 @@
   
       <hr>
   
+      <!-- USER PROFILE -->
+
       {#if isLogged}
 
         <div class="story-games-container">
@@ -270,6 +285,8 @@
           {/each}
         </div>
 
+      <!-- LOGIN WINDOW -->
+
       {:else if !isLogged && !signUp}
 
         <form class="login-form">
@@ -289,6 +306,8 @@
           <button class="submit-button" type="submit" on:click={() => signUp = true}>Sign-up</button>
         </form>
   
+      <!-- SIGNUP WINDOW -->
+
       {:else if !isLogged && signUp}
 
         <form class="signup-form">
@@ -301,8 +320,30 @@
           <input class="user-input" type="text" id="user-first-name" placeholder="Your First name">
           <label class="input-label" for="user-last-name">Last name</label>
           <input class="user-input" type="text" id="user-last-name" placeholder="Your Last name">
+          <div class="agreements-container">
+            <div class="agreement">
+              <input type="checkbox" id="terms">
+              <label for="terms" class="terms">
+                * I accept <a href="https://docs.google.com/document/d/1fEemq6HVM_h8ZTbc_Fl_k3RvlPdjYd70TI1iloT5gXA/edit?usp=sharing" target="_blank">
+                  T&C
+                </a> and <a href="https://docs.google.com/document/d/1kkIY-86y2LtoM4IXzp80E5H7Op1YSezw8nPBG1AQ2uo/edit?usp=sharing" target="_blank">
+                  privacy policy
+                </a>
+              </label>
+            </div>
+            <div class="agreement">
+              <input type="checkbox" id="newsletter">
+              <label for="newsletter" class="newsletter">
+                I'd like to sign up for a weekly newsletter to be reminded of the newest events on CoNexus
+              </label>
+            </div>
+          </div>
           <p class="validation-check">Fill in all required fields!</p>
-          <button class="submit-button" type="submit" on:click={() => isLogged = true}>Create account</button>
+          <button
+            class="submit-button"
+            type="submit"
+            on:click={() => isLogged = true}
+          >Create account</button>
         </form>
 
       {/if}
@@ -461,6 +502,36 @@
 
   .log-in {
     justify-content: space-between;
+  }
+
+  .agreements-container {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 80%;
+    padding-bottom: 2vw;
+  }
+
+  .agreement {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 1vw;
+  }
+
+  #terms, #newsletter {
+    transform: scale(1.5);
+    accent-color: rgba(51, 226, 230, 1);
+  }
+
+  .terms, .newsletter {
+    font-size: 1.75vw;
+    line-height: 3vw;
+    padding-left: 1vw;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .terms > a {
+    color: rgba(255, 255, 255, 0.75);
   }
   
   /* User logged in */
@@ -737,6 +808,17 @@
       font-size: 1.4em;
       line-height: 1.6em;
       margin-bottom: 1em;
+    }
+
+    .agreements-container {
+      width: 95%;
+      padding-bottom: 1em;
+    }
+
+    .terms, .newsletter {
+      font-size: 1em;
+      line-height: 1.5em;
+      padding-left: 1em;
     }
 
     .submit-button {
