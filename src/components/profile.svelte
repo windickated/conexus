@@ -296,6 +296,7 @@
           <input class="user-input" type="password" id="user-password" placeholder="Enter your password" minlength="8" required>
           <p class="validation-check">Invalid credentials!</p>
           <button class="submit-button" type="submit" on:click={() => isLogged = true}>Log-in</button>
+          <button class="submit-button google-login" type="submit" on:click={() => isLogged = true}>Log-in with Google</button>
         </form>
 
         <hr>
@@ -304,6 +305,7 @@
           <input class="user-input" type="text" id="refferal-code" placeholder="Enter your refferal code" minlength="16" maxlength="16" required>
           <p class="validation-check">This code is not valid!</p>
           <button class="submit-button" type="submit" on:click={() => signUp = true}>Sign-up</button>
+          <button class="submit-button google-signup" type="submit" on:click={() => signUp = true}>Sign-up with Google</button>
         </form>
   
       <!-- SIGNUP WINDOW -->
@@ -491,6 +493,10 @@
     color: rgba(51, 226, 230, 0.75);
     background-color: rgba(51, 226, 230, 0.1);
     cursor: pointer;
+  }
+
+  .google-login, .google-signup {
+    margin-top: 2vw;
   }
 
   .user-profile-info, .log-in, .wallet-connect, .google-connect {
@@ -827,6 +833,11 @@
 
     .submit-button {
       width: 50vw;
+    }
+
+    .google-login, .google-signup {
+      margin-top: 1em;
+      width: 75vw;
     }
 
     .story-games-number-label {
