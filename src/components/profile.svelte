@@ -519,6 +519,7 @@
   }
 
   #terms, #newsletter {
+    -webkit-transform: scale(1.5);
     transform: scale(1.5);
     accent-color: rgba(51, 226, 230, 1);
   }
