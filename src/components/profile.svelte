@@ -515,6 +515,7 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    justify-content: baseline;
     padding: 1vw;
   }
 
@@ -529,7 +530,7 @@
     font-size: 1.75vw;
     line-height: 3vw;
     padding-left: 1vw;
-    flex: 2;
+    flex: 10;
     color: rgba(255, 255, 255, 0.65);
   }
 
@@ -816,10 +817,6 @@
     .agreements-container {
       width: 95%;
       padding-bottom: 1em;
-    }
-
-    #terms, #newsletter {
-      transform: none;
     }
 
     .terms, .newsletter {
