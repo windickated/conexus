@@ -523,7 +523,7 @@
     -webkit-transform: scale(1.5);
     transform: scale(1.5);
     flex: 1;
-    accent-color: rgba(51, 226, 230, 1);
+    accent-color: rgba(51, 226, 230, 0.75);
   }
 
   .terms, .newsletter {
