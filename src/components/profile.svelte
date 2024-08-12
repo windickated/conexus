@@ -521,7 +521,7 @@
   #terms, #newsletter {
     -webkit-transform: scale(1.5);
     transform: scale(1.5);
-    min-width: 20px;
+    flex: 1;
     accent-color: rgba(51, 226, 230, 1);
   }
 
@@ -529,6 +529,7 @@
     font-size: 1.75vw;
     line-height: 3vw;
     padding-left: 1vw;
+    flex: 2;
     color: rgba(255, 255, 255, 0.65);
   }
 
