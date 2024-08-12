@@ -7,7 +7,7 @@
 	$: if (dialog && showModal) dialog.showModal();
 
   let isLogged = false;
-  let signUp = true;
+  let signUp = false;
 
   function copyRefCode(event) {
     navigator.clipboard.writeText(event.target.id);
@@ -106,7 +106,7 @@
 	on:click|self={() => {
     dialog.close();
     isLogged = false;
-    //signUp = false;
+    signUp = false;
   }}
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -118,7 +118,7 @@
           on:click|stopPropagation={() => {
             dialog.close();
             isLogged = false;
-            //signUp = false;
+            signUp = false;
           }}
 
         >Close</button>
@@ -814,6 +814,10 @@
     .agreements-container {
       width: 95%;
       padding-bottom: 1em;
+    }
+
+    #terms, #newsletter {
+      transform: none;
     }
 
     .terms, .newsletter {
