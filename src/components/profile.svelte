@@ -818,6 +818,7 @@
 
     #terms, #newsletter {
       transform: none;
+      min-width: 0.25em;
     }
 
     .terms, .newsletter {
