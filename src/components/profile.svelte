@@ -521,6 +521,7 @@
   #terms, #newsletter {
     -webkit-transform: scale(1.5);
     transform: scale(1.5);
+    min-width: 20px;
     accent-color: rgba(51, 226, 230, 1);
   }
 
@@ -818,7 +819,6 @@
 
     #terms, #newsletter {
       transform: none;
-      min-width: 20px;
     }
 
     .terms, .newsletter {
