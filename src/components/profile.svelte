@@ -19,6 +19,18 @@
     document.getElementById('password').type = 'password';
 
 
+  function validate(event) { //test imitation
+    const mandatoryCheckbox = document.getElementById('terms');
+    const submitButton = document.querySelector('.submit-button');
+    console.log(submitButton)
+    if (mandatoryCheckbox.checked) {
+      submitButton.disabled = false;
+    } else {
+      submitButton.disabled = true;
+    }
+  }
+
+
   const continueShapingStories = ['Escape', 'Inception Ark', 'Mascoteers', 'North Pole Inc.', 'GLMR Apes', 'The Terminus Swarm']
   function removeShapingStory() {
     let shapingStory = document.getElementById('continue-shaping');
@@ -324,27 +336,24 @@
           <input class="user-input" type="text" id="user-last-name" placeholder="Your Last name">
           <div class="agreements-container">
             <div class="agreement">
-              <input type="checkbox" id="terms">
+              <input type="checkbox" id="terms" on:click={validate}>
               <label for="terms" class="terms">
-                * I accept <a href="https://docs.google.com/document/d/1fEemq6HVM_h8ZTbc_Fl_k3RvlPdjYd70TI1iloT5gXA/edit?usp=sharing" target="_blank">
-                  T&C
-                </a> and <a href="https://docs.google.com/document/d/1kkIY-86y2LtoM4IXzp80E5H7Op1YSezw8nPBG1AQ2uo/edit?usp=sharing" target="_blank">
-                  privacy policy
-                </a>
+                * I have read and agree to the <a href="https://docs.google.com/document/d/1fEemq6HVM_h8ZTbc_Fl_k3RvlPdjYd70TI1iloT5gXA/edit?usp=sharing" target="_blank">
+                  Terms of Service</a>.
               </label>
             </div>
             <div class="agreement">
               <input type="checkbox" id="newsletter">
               <label for="newsletter" class="newsletter">
-                I'd like to sign up for a weekly newsletter to be reminded of the newest events on CoNexus
+                I'd like to receive news 1-4 times a month.
               </label>
             </div>
           </div>
           <p class="validation-check">Fill in all required fields!</p>
           <button
             class="submit-button"
-            type="submit"
-            on:click={() => isLogged = true}
+            on:click={() => {isLogged = true}}
+            disabled
           >Create account</button>
         </form>
 
@@ -371,6 +380,16 @@
     background-color: rgba(51, 226, 230, 0.5);
     filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.4));
   }
+
+  button:disabled,
+  button:disabled:hover,
+  button:disabled:active {
+    opacity: 0.5;
+    color: rgba(51, 226, 230, 0.75);
+    background-color: rgba(51, 226, 230, 0.1);
+    filter: drop-shadow(0 0 0.1vw rgba(51, 226, 230, 0.4));
+    cursor: not-allowed;
+  } 
 
   hr {
     margin: 2vw 0;
@@ -513,7 +532,7 @@
   .agreements-container {
     display: flex;
     flex-flow: column nowrap;
-    width: 80%;
+    width: 85%;
     padding-bottom: 2vw;
   }
 
