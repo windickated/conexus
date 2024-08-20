@@ -1,5 +1,5 @@
-import { new_error } from "./errors";
-import { background_music, background_image, story, loading } from "../stores/conexus";
+import { new_error } from "@lib/errors";
+import { background_music, background_image, story, loading } from "@stores/conexus";
 
 const url = import.meta.env.PUBLIC_BACKEND;
 
@@ -17,7 +17,6 @@ type Category = {
 export type ContinuableStory = {
     story_id: string
     category: string
-    created: string
 }
 
 type Available = {
@@ -66,6 +65,9 @@ const shuffle = <T, >(array: T[]) => {
 export class CoNexus {
     step_data: StepData;
     readonly #id: string;
+	hasFetched = false;
+	jobID = null;
+	interval: NodeJS.Timer | null = null;
 
     private constructor(id: string) {
         this.#id       = id;
@@ -133,7 +135,6 @@ export class CoNexus {
         const story = new CoNexus(game_data.id);
         await story.#set(game_data);
 
-
         return story;
     }
 
@@ -149,7 +150,9 @@ export class CoNexus {
     
     static #formatFileName(category: string): string {
         let fileName = category.toLowerCase();
-        let formattedFileName = fileName.replace(/[\s.\-\/]+/g, '');
+        let formattedFileName = fileName.replace(/[\s.\-\/:]+/g, '');
+
+        console.log(formattedFileName);
 
         return formattedFileName;
     }
@@ -157,8 +160,7 @@ export class CoNexus {
     static  #categoryTrack = (category: string) => {
         const formattedFileName = CoNexus.#formatFileName(category);
 
-        // return `https://playground.degenerousdao.com/conexus-categories/music/${formattedFileName}.mp3`;
-        return `/conexus-categories/music/${formattedFileName}.mp3`;
+        return `/music/categories/${formattedFileName}.mp3`;
     }
 
     static async #play_music(category?: string) {
@@ -195,8 +197,7 @@ export class CoNexus {
     static #background_image(category: string) {
         let formattedFileName = CoNexus.#formatFileName(category);
 
-        // let url =  `https://playground.degenerousdao.com/conexus-categories/images/${formattedFileName}.avif`;
-        let url =  `/conexus-categories/images/${formattedFileName}.avif`;
+        let url =  `/images/categories/${formattedFileName}.avif`;
 
         CoNexus.#isValidImageUrl(url).then((valid) => {
             if (valid) {
@@ -222,6 +223,65 @@ export class CoNexus {
 
         await this.#set(await response.json());
     }
+
+	async #check_image_status() {
+		try {
+			const response = await fetch(`${url}/new-image-status/${this.jobID}`);
+	
+			const data = await response.json();
+	
+			if (data.status === "error") {
+				this.#clear_interval();
+				return;
+			}
+	
+			if (data.status === "ready") {
+				this.step_data.image = data.image;
+				story.set(this);
+				loading.set(false);
+				this.#clear_interval();
+			}
+		} catch (error) {
+			console.error("Failed to check image status:", error);
+		} finally {
+			setTimeout(() => {
+				this.hasFetched = false;
+			}, 500); // Adjust the delay as needed
+		}
+	}
+	
+	#start_interval() {
+		this.interval = setInterval(async () => {
+			await this.#check_image_status();
+		}, 10000);
+	}
+	
+	#clear_interval() {
+		if (this.interval) {
+			clearInterval(this.interval);
+			this.interval = null;
+		}
+	}
+	
+	async #new_generate_image() {
+		try {
+			const response = await fetch(`${url}/new-image`, {
+				method: "POST",
+				body: JSON.stringify({ story_id: this.#id }),
+			});
+	
+			if (!response.ok) {
+				throw new Error(await response.text());
+			}
+	
+			const data = await response.json();
+			this.jobID = data.jobID;
+			this.hasFetched = true;
+			this.#start_interval();
+		} catch (error) {
+			console.error("Image generation failed:", error);
+		}
+	}
 
     async #generate_image() {
         const response = await fetch(`${url}/image`, {
@@ -261,6 +321,6 @@ export class CoNexus {
         story.set(this);
         loading.set(false);
 
-        await Promise.all([this.#generate_image(), this.#tts()])
+        await Promise.all([this.#new_generate_image(), this.#tts()])
     }
 }

@@ -1,6 +1,6 @@
-import { Web3Provider } from "./ethers";
-import { new_error } from "./errors";
-import { loggedIn } from "../stores/account";
+import { Web3Provider } from "@lib/ethers";
+import { new_error } from "@lib/errors";
+import { loggedIn } from "@stores/account";
 
 const url = import.meta.env.PUBLIC_BACKEND;
 

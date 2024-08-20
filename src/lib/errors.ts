@@ -1,4 +1,4 @@
-import { toastStore } from '../stores/toast';
+import { toastStore } from '@stores/toast';
 
 export type ArcadeError = {
     code: number,
