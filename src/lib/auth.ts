@@ -15,6 +15,7 @@ ${nonce}`;
 export class Account {
 	#username: string;
 	#admin: boolean;
+	#user?: User;
 
 	private constructor(username: string, admin: boolean) {
 		this.#username = username;
@@ -39,17 +40,17 @@ export class Account {
 	}
 
 	static async log_in(): Promise<Account> {
-		// const provider = await Web3Provider.init();
-		//
-		// const nonce = await Account.get_nonce();
-		//
-		// const signature = await provider.sign(message(nonce));
+		const provider = await Web3Provider.init();
+
+		const nonce = await Account.get_nonce();
+
+		const signature = await provider.sign(message(nonce));
 
 		const response = await fetch(`${url}/login`, {
 			method: "POST",
 			body: JSON.stringify({
-				// wallet:    await provider.userAddress(),
-				// signature: signature
+				wallet: await provider.userAddress(),
+				signature: signature,
 			}),
 		});
 
@@ -95,6 +96,7 @@ export class Account {
 	}
 
 	static async signin(data: SignIn) {
+		console.log(data);
 		const response = await fetch(`${url}/signin`, {
 			method: "POST",
 			body: JSON.stringify(data),
@@ -103,6 +105,8 @@ export class Account {
 		if (!response.ok) {
 			new_error({ code: response.status, error: await response.text() });
 		}
+
+		const { data: user } = await response.json();
 
 		loggedIn.set(true);
 	}
@@ -117,18 +121,22 @@ export class Account {
 			new_error({ code: response.status, error: await response.text() });
 		}
 
+		const { data: user } = await response.json();
+		
 		loggedIn.set(true);
 	}
-
+	
 	static async signupReferral(data: ReferralSignUp) {
 		const response = await fetch(`${url}/signup-referral`, {
 			method: "POST",
 			body: JSON.stringify(data),
 		});
-
+		
 		if (!response.ok) {
 			new_error({ code: response.status, error: await response.text() });
 		}
+
+		const { data: user } = await response.json();
 
 		loggedIn.set(true);
 	}
