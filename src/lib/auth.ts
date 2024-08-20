@@ -96,7 +96,6 @@ export class Account {
 	}
 
 	static async signin(data: SignIn) {
-		console.log(data);
 		const response = await fetch(`${url}/signin`, {
 			method: "POST",
 			body: JSON.stringify(data),

@@ -1,6 +1,5 @@
 <script>
-  import { user, codes } from "../components/userData.js"
-  import { Account } from "@lib/auth";
+  import { user, codes } from "@components/userData.js"
 
 	let showModal;
 	let dialog; // HTMLDialogElement
@@ -308,8 +307,7 @@
           <label class="input-label" for="user-password">Password</label>
           <input class="user-input" type="password" id="user-password" placeholder="Enter your password" minlength="8" required>
           <p class="validation-check">Invalid credentials!</p>
-          <!-- <button class="submit-button" type="submit" on:click={() => isLogged = true}>Log-in</button> -->
-          <button class="submit-button" type="submit" on:click={() => Account.signin({email:"testuser@gmail.com", password:"12345678"})}>Log-in</button>
+          <button class="submit-button" type="submit" on:click={() => isLogged = true}>Log-in</button>
           <button class="submit-button google-login" type="submit" on:click={() => isLogged = true}>Log-in with Google</button>
         </form>
 
