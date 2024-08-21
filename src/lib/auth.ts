@@ -1,6 +1,6 @@
 import { Web3Provider } from "@lib/ethers";
 import { new_error } from "@lib/errors";
-import { loggedIn } from "@stores/account";
+import { loggedIn, authUser } from "@stores/account";
 
 const url = import.meta.env.PUBLIC_BACKEND;
 
@@ -12,7 +12,7 @@ It will not cause a blockchain transaction, nor any gas fees.
 Nonce:
 ${nonce}`;
 
-export class Account {
+class Account {
 	#username: string;
 	#admin: boolean;
 	#user?: User;
@@ -95,7 +95,8 @@ export class Account {
 		loggedIn.set(false);
 	}
 
-	static async signin(data: SignIn) {
+	static async signin(data: SignIn): Promise<void> {
+		console.log(data);
 		const response = await fetch(`${url}/signin`, {
 			method: "POST",
 			body: JSON.stringify(data),
@@ -107,10 +108,11 @@ export class Account {
 
 		const { data: user } = await response.json();
 
+		authUser.set(user);
 		loggedIn.set(true);
 	}
 
-	static async signup(data: SignUp) {
+	static async signup(data: SignUp): Promise<void> {
 		const response = await fetch(`${url}/signup`, {
 			method: "POST",
 			body: JSON.stringify(data),
@@ -121,11 +123,12 @@ export class Account {
 		}
 
 		const { data: user } = await response.json();
-		
+
+		authUser.set(user);
 		loggedIn.set(true);
 	}
 	
-	static async signupReferral(data: ReferralSignUp) {
+	static async signupReferral(data: ReferralSignUp): Promise<void> {
 		const response = await fetch(`${url}/signup-referral`, {
 			method: "POST",
 			body: JSON.stringify(data),
@@ -137,10 +140,11 @@ export class Account {
 
 		const { data: user } = await response.json();
 
+		authUser.set(user);
 		loggedIn.set(true);
 	}
 
-	static async signout() {
+	static async signout(): Promise<void> {
 		const response = await fetch(`${url}/logout`, {
 			method: "POST",
 		});
@@ -149,6 +153,9 @@ export class Account {
 			new_error({ code: response.status, error: await response.text() });
 		}
 
+		authUser.set(null);
 		loggedIn.set(false);
 	}
 }
+
+export default Account;
