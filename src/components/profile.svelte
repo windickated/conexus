@@ -1,11 +1,21 @@
 <script>
   import { user, codes } from "@components/userData.js"
   import Account from '@lib/auth'
+  import { referralCodes, authUser } from "@stores/account";
+	import { onMount } from "svelte";
 
 	let showModal;
 	let dialog; // HTMLDialogElement
 
 	$: if (dialog && showModal) dialog.showModal();
+
+  // let user = $authUser
+
+  Account.me()
+
+  onMount(() => {
+    Account.referraLCodes();
+  })
 
   let isLogged = Account.logged_in();
   let signUp = false;
@@ -97,14 +107,16 @@
 
   let walletConnected = false;
   let walletAddress;
+
   function connectWallet() {
-    if(walletConnected) {
-      walletConnected = false;
-    } else {
-      walletConnected = true;
-      alert('Wallet connected.')
-      walletAddress = '0xeb0a...60c1';
-    }
+    Account.log_in()
+    // if(walletConnected) {
+    //   walletConnected = false;
+    // } else {
+    //   walletConnected = true;
+    //   alert('Wallet connected.')
+    //   walletAddress = '0xeb0a...60c1';
+    // }
   }
 </script>
 
@@ -137,7 +149,8 @@
         >Close</button>
         {#if isLogged}
           <button class="login-button" on:click={() => {
-            isLogged = false;
+            // isLogged = false;
+            Account.signout();
             signUp = false;
           }}>Log out</button>
         {:else if !isLogged}
@@ -191,7 +204,7 @@
               class="user-prop-value"
               id="mail"
               type="email"
-              value={user.mail}
+              value={user.email}
               disabled
             />
             <label for="password" class="user-prop">Password</label>
@@ -278,7 +291,7 @@
 
         <p class="refferal-codes-legend">Your referral codes</p>
         <div class="refferal-codes">
-          {#each codes as code}
+          {#each $referralCodes as code}
             <div class="ref-code-container">
               <input
                 class="ref-code"

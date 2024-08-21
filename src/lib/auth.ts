@@ -1,6 +1,6 @@
 import { Web3Provider } from "@lib/ethers";
 import { new_error } from "@lib/errors";
-import { loggedIn, authUser } from "@stores/account";
+import { loggedIn, authUser, referralCodes } from "@stores/account";
 
 const url = import.meta.env.PUBLIC_BACKEND;
 
@@ -23,20 +23,43 @@ class Account {
 	}
 
 	static async logged_in(): Promise<boolean> {
+		// if (loggedIn) {
+		// 	try {
+		// 		const response = await fetch(`${url}/logged-in`, {
+		// 			method: "POST",
+		// 		});
+
+		// 		const logged_in = response.ok;
+
+		// 		if (logged_in) {
+		// 			return true;
+		// 		}
+		// 		loggedIn.set(false);
+		// 	} catch (error) {
+		// 		loggedIn.set(false);
+		// 	}
+		// }
+
+		return true;
+	}
+
+	static async me() {
 		if (loggedIn) {
-			const response = await fetch(`${url}/logged-in`, {
-				method: "POST",
-			});
+			try {
+				const response = await fetch(`${url}/me`);
 
-			const logged_in = response.ok;
+				if (!response.ok) {
+					new_error({ code: response.status, error: await response.text() });
+				}
 
-			if (logged_in) {
-				return true;
+				const data = await response.json();
+
+				authUser.set(data.user);
+				loggedIn.set(true);
+			} catch (error) {
+				loggedIn.set(false);
 			}
-			loggedIn.set(false);
 		}
-
-		return false;
 	}
 
 	static async log_in(): Promise<Account> {
@@ -96,7 +119,6 @@ class Account {
 	}
 
 	static async signin(data: SignIn): Promise<void> {
-		console.log(data);
 		const response = await fetch(`${url}/signin`, {
 			method: "POST",
 			body: JSON.stringify(data),
@@ -106,9 +128,9 @@ class Account {
 			new_error({ code: response.status, error: await response.text() });
 		}
 
-		const { data: user } = await response.json();
+		const resp = await response.json();
 
-		authUser.set(user);
+		authUser.set(resp.user);
 		loggedIn.set(true);
 	}
 
@@ -122,25 +144,25 @@ class Account {
 			new_error({ code: response.status, error: await response.text() });
 		}
 
-		const { data: user } = await response.json();
+		const resp = await response.json();
 
-		authUser.set(user);
+		authUser.set(resp.user);
 		loggedIn.set(true);
 	}
-	
+
 	static async signupReferral(data: ReferralSignUp): Promise<void> {
 		const response = await fetch(`${url}/signup-referral`, {
 			method: "POST",
 			body: JSON.stringify(data),
 		});
-		
+
 		if (!response.ok) {
 			new_error({ code: response.status, error: await response.text() });
 		}
 
-		const { data: user } = await response.json();
+		const resp = await response.json();
 
-		authUser.set(user);
+		authUser.set(resp.user);
 		loggedIn.set(true);
 	}
 
@@ -155,6 +177,26 @@ class Account {
 
 		authUser.set(null);
 		loggedIn.set(false);
+	}
+
+	static async referraLCodes(): Promise<void> {
+		if (loggedIn) {
+			try {
+				const response = await fetch(`${url}/referral/get`, {
+					method: "GET",
+				});
+
+				if (!response.ok) {
+					new_error({ code: response.status, error: await response.text() });
+				}
+
+				const referralC = await response.json();
+
+				referralCodes.set(referralC.codes);
+			} catch (error) {
+				console.log(error);
+			}
+		}
 	}
 }
 
