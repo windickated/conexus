@@ -1,6 +1,6 @@
-import { Web3Provider } from "@lib/ethers";
 import { new_error } from "@lib/errors";
-import { loggedIn, authUser, referralCodes } from "@stores/account";
+import { Web3Provider } from "@lib/ethers";
+import { web3LoggedIn, referralCodes, authenticated } from "@stores/account";
 
 const url = import.meta.env.PUBLIC_BACKEND;
 
@@ -23,43 +23,24 @@ class Account {
 	}
 
 	static async logged_in(): Promise<boolean> {
-		// if (loggedIn) {
-		// 	try {
-		// 		const response = await fetch(`${url}/logged-in`, {
-		// 			method: "POST",
-		// 		});
-
-		// 		const logged_in = response.ok;
-
-		// 		if (logged_in) {
-		// 			return true;
-		// 		}
-		// 		loggedIn.set(false);
-		// 	} catch (error) {
-		// 		loggedIn.set(false);
-		// 	}
-		// }
-
-		return true;
-	}
-
-	static async me() {
-		if (loggedIn) {
+		if (web3LoggedIn) {
 			try {
-				const response = await fetch(`${url}/me`);
+				const response = await fetch(`${url}/logged-in`, {
+					method: "POST",
+				});
 
-				if (!response.ok) {
-					new_error({ code: response.status, error: await response.text() });
+				const logged_in = response.ok;
+
+				if (logged_in) {
+					return true;
 				}
-
-				const data = await response.json();
-
-				authUser.set(data.user);
-				loggedIn.set(true);
+				web3LoggedIn.set(false);
 			} catch (error) {
-				loggedIn.set(false);
+				web3LoggedIn.set(false);
 			}
 		}
+
+		return false;
 	}
 
 	static async log_in(): Promise<Account> {
@@ -81,7 +62,7 @@ class Account {
 			new_error({ code: response.status, error: await response.text() });
 		}
 
-		loggedIn.set(true);
+		web3LoggedIn.set(true);
 
 		type Account = {
 			username: string;
@@ -115,23 +96,42 @@ class Account {
 			method: "POST",
 		});
 
-		loggedIn.set(false);
+		web3LoggedIn.set(false);
 	}
 
 	static async signin(data: SignIn): Promise<void> {
-		const response = await fetch(`${url}/signin`, {
-			method: "POST",
-			body: JSON.stringify(data),
-		});
+		try {
+			const response = await fetch(`${url}/signin`, {
+				method: "POST",
+				body: JSON.stringify(data),
+			});
 
-		if (!response.ok) {
-			new_error({ code: response.status, error: await response.text() });
+			if (!response.ok) {
+				new_error({ code: response.status, error: await response.text() });
+			}
+
+			const resp = await response.json();
+
+			authenticated.set({ user: resp.user, loggedIn: true });
+		} catch (error) {
+			new_error({ code: 500, error: error });
 		}
+	}
 
-		const resp = await response.json();
+	static async me() {
+		try {
+			const response = await fetch(`${url}/me`);
 
-		authUser.set(resp.user);
-		loggedIn.set(true);
+			if (!response.ok) {
+				new_error({ code: response.status, error: await response.text() });
+			}
+
+			const resp = await response.json();
+
+			authenticated.set({ user: resp.user, loggedIn: true });
+		} catch (error) {
+			new_error({ code: 500, error: `Error fetching user: ${error}` });
+		}
 	}
 
 	static async signup(data: SignUp): Promise<void> {
@@ -146,8 +146,7 @@ class Account {
 
 		const resp = await response.json();
 
-		authUser.set(resp.user);
-		loggedIn.set(true);
+		authenticated.set({ user: resp.user, loggedIn: true });
 	}
 
 	static async signupReferral(data: ReferralSignUp): Promise<void> {
@@ -162,8 +161,7 @@ class Account {
 
 		const resp = await response.json();
 
-		authUser.set(resp.user);
-		loggedIn.set(true);
+		authenticated.set({ user: resp.user, loggedIn: true });
 	}
 
 	static async signout(): Promise<void> {
@@ -175,27 +173,24 @@ class Account {
 			new_error({ code: response.status, error: await response.text() });
 		}
 
-		authUser.set(null);
-		loggedIn.set(false);
+		authenticated.set({ user: null, loggedIn: false });
 	}
 
 	static async referraLCodes(): Promise<void> {
-		if (loggedIn) {
-			try {
-				const response = await fetch(`${url}/referral/get`, {
-					method: "GET",
-				});
+		try {
+			const response = await fetch(`${url}/referral/get`, {
+				method: "GET",
+			});
 
-				if (!response.ok) {
-					new_error({ code: response.status, error: await response.text() });
-				}
-
-				const referralC = await response.json();
-
-				referralCodes.set(referralC.codes);
-			} catch (error) {
-				console.log(error);
+			if (!response.ok) {
+				new_error({ code: response.status, error: await response.text() });
 			}
+
+			const referralC = await response.json();
+
+			referralCodes.set(referralC.codes);
+		} catch (error) {
+			new_error({ code: 500, error: error });
 		}
 	}
 }

@@ -1,15 +1,7 @@
 ---
-import Layout from "../layouts/Layout.astro"
-import stories from "../components/tilesData.js";
-import MenuTile from "../components/menuTile.svelte";
-import { get_cookie } from "@lib/cookies";
-import { loggedIn } from "@stores/account";
-import { onMount } from "svelte";
-
-onMount(() => {
-	const cookie = get_cookie("token") === "true";
-	loggedIn.set(cookie);
-});
+import stories from "@components/tilesData.js";
+import MenuTile from "@components/menuTile.svelte";
+import Layout from "@layouts/Layout.astro"
 
 const title = 'CoNexus | DeGenerous';
 const header = 'CoNexus';

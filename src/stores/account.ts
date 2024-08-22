@@ -1,5 +1,8 @@
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
-export const loggedIn = writable<boolean>(false);
-export const authUser = writable<Nullable<User>>(null);
+export const web3LoggedIn = writable<boolean>(false);
+export const authenticated = writable<{
+	user: Nullable<User>;
+	loggedIn: boolean;
+}>({ user: null, loggedIn: false });
 export const referralCodes = writable<ReferralCode[]>([]);
