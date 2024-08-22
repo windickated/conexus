@@ -15,7 +15,6 @@ ${nonce}`;
 class Account {
 	#username: string;
 	#admin: boolean;
-	#user?: User;
 
 	private constructor(username: string, admin: boolean) {
 		this.#username = username;

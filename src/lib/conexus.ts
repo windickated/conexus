@@ -62,7 +62,7 @@ const shuffle = <T, >(array: T[]) => {
     return array;
 }
 
-export class CoNexus {
+class CoNexus {
     step_data: StepData;
     readonly #id: string;
 	hasFetched = false;
@@ -324,3 +324,5 @@ export class CoNexus {
         await Promise.all([this.#new_generate_image(), this.#tts()])
     }
 }
+
+export default CoNexus;

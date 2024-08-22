@@ -1,8 +1,10 @@
 <script>
 	import Account from "@lib/auth";
-	import { authenticated, referralCodes } from "@stores/account";
+	import CoNexus from "@lib/conexus";
+	import { authenticated, referralCodes, web3LoggedIn } from "@stores/account";
 
 	Account.me();
+	Account.logged_in();
 
 	let showModal;
 	let dialog; // HTMLDialogElement
@@ -146,7 +148,6 @@
 	on:close={() => (showModal = false)}
 	on:click|self={() => {
 		dialog.close();
-		// isLogged = false;
 		signUp = false;
 	}}
 >
@@ -157,7 +158,6 @@
 				class="close-button"
 				on:click|stopPropagation={() => {
 					dialog.close();
-					// isLogged = false;
 					signUp = false;
 				}}>Close</button
 			>
@@ -165,7 +165,6 @@
 				<button
 					class="login-button"
 					on:click={() => {
-						// isLogged = false;
 						Account.signout();
 						signUp = false;
 					}}>Log out</button
@@ -185,38 +184,52 @@
 		<!-- USER PROFILE -->
 
 		{#if isLogged}
-			<div class="story-games-container">
-				<p class="story-games-number-label">
-					You have used
-					<span class="story-games-number"> 0 / 7 weekly </span>
-					stories
-				</p>
+			{#if $web3LoggedIn}
+				{#await CoNexus.available()}
+					Loading...
+				{:then available}
+					<div class="story-games-container">
+						<p class="story-games-number-label">
+							You have used
+							<span class="story-games-number"
+								>{available.used} / {available.available} weekly</span
+							>
+							stories
+						</p>
 
-				<form class="continue-shaping-container">
-					<label class="continue-shaping-label" for="continue-shaping">
-						Continue shaping:
-					</label>
-					<div>
-						<button
-							class="continue-shaping-delete"
-							on:click|preventDefault={removeShapingStory}
-						/>
-						<select value="" id="continue-shaping" placeholder="nothing">
-							<option value="" disabled selected>Select story</option>
-							{#each continueShapingStories as story}
-								<option value={story}>{story}</option>
-							{/each}
-						</select>
-						<button class="continue-shaping-play" />
+						{#if available.bonus > 0}
+							<p class="story-games-number-label">
+								You have <strong>{available.bonus} bonus</strong> lives
+							</p>
+						{/if}
+
+						<form class="continue-shaping-container">
+							<label class="continue-shaping-label" for="continue-shaping">
+								Continue shaping:
+							</label>
+							<div>
+								<button
+									class="continue-shaping-delete"
+									on:click|preventDefault={removeShapingStory}
+								/>
+								<select value="" id="continue-shaping" placeholder="nothing">
+									<option value="" disabled selected>Select story</option>
+									{#each continueShapingStories as story}
+										<option value={story}>{story}</option>
+									{/each}
+								</select>
+								<button class="continue-shaping-play" />
+							</div>
+						</form>
 					</div>
-				</form>
-			</div>
+				{/await}
+			{/if}
 
 			<hr />
 
 			<div class="user-profile-info">
 				<div class="user-properties">
-					<label for="mail" class="user-prop">Mail</label>
+					<label for="mail" class="user-prop">Email</label>
 					<input
 						class="user-prop-value"
 						id="mail"
