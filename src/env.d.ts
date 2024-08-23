@@ -93,4 +93,5 @@ type GameData = {
 type ConexusError = {
     code: number,
     error: string
+	log?: boolean
 }

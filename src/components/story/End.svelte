@@ -11,7 +11,7 @@
 	{#if step.image}
 		<img class="image" src={`data:image/png;base64,${step.image}`} alt="" />
 	{:else}
-		<img class="image" src="/loading.svg" alt="" />
+		<img class="image" src="/icons/loading.svg" alt="" />
 	{/if}
 </div>
 
@@ -130,5 +130,68 @@
 		text-decoration: underline white;
 		text-decoration-thickness: 0.2rem;
 		text-underline-offset: 0.2rem;
+	}
+	.buttons {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		align-items: stretch;
+		gap: 0.75rem;
+	}
+
+	.buttons button {
+		text-align: start;
+		font-weight: bold;
+		font-size: 1.2rem;
+		padding: 0.25rem;
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	button::before {
+		content: "";
+		height: 1.5rem;
+		width: 0.25rem;
+		background-color: var(--fg-color);
+		display: inline-block;
+		margin-right: 1rem;
+	}
+
+	button:disabled {
+		filter: brightness(0.7);
+	}
+
+	button:not(:disabled):hover {
+		background: linear-gradient(
+			to right,
+			transparent 1rem,
+			var(--accent-color) 1rem,
+			transparent
+		);
+	}
+
+	button:not(:disabled):hover::before {
+		background-color: var(--accent-color);
+	}
+
+	button:not(:disabled):active,
+	button:not(:disabled):focus {
+		filter: brightness(0.7);
+		background: linear-gradient(
+			to right,
+			transparent 1rem,
+			var(--accent-color) 1rem,
+			transparent
+		);
+	}
+
+	button:not(:disabled):active::before,
+	button:not(:disabled):focus::before {
+		background-color: var(--accent-color);
+	}
+
+	button:focus {
+		filter: brightness(0.65);
 	}
 </style>

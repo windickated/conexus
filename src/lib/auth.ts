@@ -144,7 +144,7 @@ class Account {
 
 			authenticated.set({ user: resp.user, loggedIn: true });
 		} catch (error) {
-			new_error({ code: 500, error: `Error fetching user: ${error}` });
+			new_error({ code: 500, error: `Error fetching user: ${error}`, log: false });
 		}
 	}
 
