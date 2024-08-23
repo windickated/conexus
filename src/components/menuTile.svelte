@@ -98,8 +98,8 @@
     }
 
     .title {
-      font-size: 1.5em;
-      line-height: 1.5em;
+      font-size: 1.3em;
+      line-height: 2em;
     }
   }
 </style>

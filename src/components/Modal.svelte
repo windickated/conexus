@@ -24,12 +24,16 @@
 			<slot name="header" />
 			<hr />
 			<slot />
-			<hr />
 		</div>
 	</dialog>
 </div>
 
 <style>
+	hr {
+		margin: 2vw 0;
+		border: 0.1vw solid rgba(51, 226, 230, 0.5);
+	}
+	
 	.modal-overlay {
 		position: fixed;
 		inset: 0;
@@ -56,6 +60,12 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		color: inherit;
+    background-color: rgba(1, 0, 32, 0.75);
+    border: 0.05vw solid rgba(51, 226, 230, 0.75);
+    border-radius: 2.5vw;
+    -webkit-backdrop-filter: blur(1vw);
+    backdrop-filter: blur(1vw);
 	}
 
 	dialog > div {
@@ -68,7 +78,7 @@
 
 	@keyframes zoom {
 		from {
-			transform: scale(0.95);
+			transform: scale(1.5);
 		}
 		to {
 			transform: scale(1);

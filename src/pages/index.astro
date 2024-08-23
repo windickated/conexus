@@ -1,7 +1,6 @@
 ---
-import stories from "@components/tilesData.js";
-import MenuTile from "@components/menuTile.svelte";
 import Layout from "@layouts/Layout.astro"
+import Menu from "@components/Menu.svelte";
 
 const title = 'CoNexus | DeGenerous';
 const header = 'CoNexus';
@@ -10,16 +9,11 @@ CoNexus is the gateway to a boundless multiverse with immersive and dynamic inte
 const footerText = ['Personalized storylines with endless possibilities lie in your hands.', 'Your choices and actions will shape the course of your unique narratives.', 'V2 will launch soon, allowing you to create your own stories.'];
 const menuText = ['A new world with no limits awaits you.', 'Within CoNexus, you will transcend the boundaries of reality as we know it.'];
 const arrow = false;
-
-let sections: string[] = [];
-stories.map((story, i) => sections[i] = story.section)
 ---
 
 
 <Layout {title} {header} {subheading} {menuText} {footerText} {arrow}>
 
-	{sections.map(sectionName => 
-		<MenuTile {sectionName} slot="menuTiles" client:load/>
-	)}
+	<Menu slot="menuTiles" client:load/>
 
 </Layout>

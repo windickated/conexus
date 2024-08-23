@@ -1,11 +1,7 @@
 <script>
-	import { writable } from "svelte/store";
-
 	import Account from "@lib/auth";
 	import CoNexus from "@lib/conexus";
 	import { authenticated, referralCodes, wallet, web3LoggedIn } from "@stores/account";
-	import { loading } from "@stores/conexus";
-	import Modal from "@components/Modal.svelte";
 	import { onMount } from "svelte";
 
 	Account.me();
@@ -28,6 +24,11 @@
 		isLogged = value.loggedIn;
 	});
 
+	let refCodes;
+	referralCodes.subscribe(codes => {
+		refCodes = codes;
+	})
+
 	let walletAddress;
 
 	wallet.subscribe(value => {
@@ -38,20 +39,6 @@
 
 	$: if (isLogged) {
 		Account.referraLCodes();
-	}
-
-	let showDeleteModal = writable(false);
-
-	let selectedStory;
-
-	function openModal(story) {
-		selectedStory = story;
-		showDeleteModal.set(true);
-	}
-
-	function DeleteStory(story_id) {
-		CoNexus.delete(story_id);
-		showModal.set(false);
 	}
 
 	function copyRefCode(event) {
@@ -191,7 +178,10 @@
 		{#if isLogged}
 			{#if $web3LoggedIn}
 				{#await CoNexus.available()}
-					Loading...
+				<div class="story-games-container">
+					<p class="story-games-number-label">
+						Available story games...
+					</p></div>
 				{:then available}
 					<div class="story-games-container">
 						<p class="story-games-number-label">
@@ -211,51 +201,7 @@
 								lives
 							</p>
 						{/if}
-
-						<form class="continue-shaping-container">
-							<label class="continue-shaping-label" for="continue-shaping">
-								Continue shaping:
-							</label>
-							{#each available.continuable as continuable}
-								<div>
-									<button
-										class="continue-shaping-delete"
-										on:click|preventDefault={() => openModal(continuable)}
-										disabled={$loading}
-									/>
-									<div value="" id="continue-shaping">
-										<p>
-											{continuable.category} - {continuable.story_id.split(
-												"-"
-											)[0]}
-										</p>
-									</div>
-									<button
-										class="continue-shaping-play"
-										on:click={() => CoNexus.continue(continuable)}
-										disabled={$loading}
-									/>
-								</div>
-							{/each}
-						</form>
 					</div>
-
-					<!-- Delete Story Modal -->
-
-					{#if selectedStory}
-						<Modal bind:showModal={$showDeleteModal}>
-							<h2 slot="header">Are you sure you want to delete this story?</h2>
-							<p>
-								This action is irreversible. You will lose all progress on this
-								story.
-							</p>
-							<button
-								class="modal-delete"
-								on:click={() => DeleteStory(selectedStory.story_id)}
-								>Delete story: {selectedStory.category}</button
-							>
-						</Modal>
-					{/if}
 				{/await}
 			{/if}
 
@@ -353,22 +299,28 @@
 			<hr />
 
 			<p class="refferal-codes-legend">Your referral codes</p>
-			<div class="refferal-codes">
-				{#each $referralCodes as code}
-					<div class="ref-code-container">
-						<input
-							class="ref-code"
-							id={code.code}
-							class:used={code.is_used}
-							class:not-used={!code.is_used}
-							value={code.code}
-							disabled
-						/>
-						<!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
-						<button id={code.code} class="copy-button" on:click={copyRefCode} />
-					</div>
-				{/each}
-			</div>
+			{#if refCodes}
+				<div class="refferal-codes">
+					{#each refCodes as code}
+						<div class="ref-code-container">
+							<input
+								class="ref-code"
+								id={code.code}
+								class:used={code.is_used}
+								class:not-used={!code.is_used}
+								value={code.code}
+								disabled
+							/>
+							<!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
+							<button id={code.code} class="copy-button" on:click={copyRefCode} />
+						</div>
+					{/each}
+				</div>
+			{:else}
+				<button on:click={() => {console.log("get codes")}}>
+					Get referral codes
+				</button>
+			{/if}
 
 			<!-- LOGIN WINDOW -->
 		{:else if !isLogged && !signUp}
@@ -553,9 +505,7 @@
 	/* Reset button styling for icons */
 
 	.password-visibility-button,
-	.copy-button,
-	.continue-shaping-delete,
-	.continue-shaping-play {
+	.copy-button {
 		padding: 0;
 		margin: 0;
 		border: none;
@@ -567,11 +517,7 @@
 	.password-visibility-button:hover,
 	.password-visibility-button:active,
 	.copy-button:hover,
-	.copy-button:active,
-	.continue-shaping-delete:hover,
-	.continue-shaping-delete:active,
-	.continue-shaping-play:hover,
-	.continue-shaping-play:active {
+	.copy-button:active {
 		filter: none;
 		background-color: rgba(0, 0, 0, 0);
 		color: rgba(0, 0, 0, 0);
@@ -800,7 +746,7 @@
 		line-height: 2vw;
 	}
 
-	/* Continue shaping */
+	/* Story games number */
 
 	.story-games-container {
 		display: flex;
@@ -809,7 +755,7 @@
 	}
 
 	.story-games-number-label {
-		margin: 1vw 0 2vw 0;
+		margin: 1vw 0;
 		color: rgba(51, 226, 230, 0.65);
 		font-size: 1.5vw;
 	}
@@ -817,61 +763,6 @@
 	.story-games-number {
 		color: rgba(51, 226, 230, 0.9);
 		font-size: 1.6vw;
-	}
-
-	.continue-shaping-container {
-		display: flex;
-		flex-flow: column nowrap;
-		align-items: center;
-	}
-
-	.continue-shaping-label {
-		color: rgba(51, 226, 230, 0.75);
-		font-size: 2vw;
-	}
-
-	.continue-shaping-container > div {
-		display: flex;
-		flex-flow: row nowrap;
-		align-items: center;
-		margin-top: 1vw;
-	}
-
-	#continue-shaping {
-		text-align: center;
-		padding: 1vw 1vw;
-		font-size: 2vw;
-		line-height: 3vw;
-		color: rgba(1, 0, 32, 0.9);
-		outline: none;
-		border: 0.1vw solid rgba(51, 226, 230, 0.5);
-		border-radius: 2vw;
-		background-color: rgba(51, 226, 230, 0.5);
-		cursor: pointer;
-		width: 40vw;
-	}
-
-	#continue-shaping p {
-		text-align: center;
-		cursor: pointer;
-	}
-
-	.continue-shaping-delete,
-	.continue-shaping-play {
-		width: 5vw;
-		height: 5vw;
-		margin: 0 1vw;
-		background-size: contain;
-		background-repeat: no-repeat;
-	}
-
-	.continue-shaping-delete {
-		background-image: url("/icons/delete.png");
-		margin-right: 0.75vw;
-	}
-
-	.continue-shaping-play {
-		background-image: url("/icons/play.png");
 	}
 
 	/* Referral codes container */
@@ -1030,27 +921,6 @@
 
 		.story-games-number {
 			font-size: 1em;
-		}
-
-		.continue-shaping-label {
-			font-size: 1em;
-		}
-
-		.continue-shaping-container > div {
-			margin-top: 0.5em;
-		}
-
-		#continue-shaping {
-			font-size: 1.1em;
-			line-height: 1.1em;
-			padding: 0.5em 1em;
-			margin: 0 0.5em;
-		}
-
-		.continue-shaping-delete,
-		.continue-shaping-play {
-			width: 1.5em;
-			height: 1.5em;
 		}
 
 		.user-prop,

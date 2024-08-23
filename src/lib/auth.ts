@@ -30,24 +30,24 @@ class Account {
 	}
 
 	static async logged_in(): Promise<boolean> {
-		if (web3LoggedIn) {
-			try {
-				const response = await fetch(`${url}/logged-in`, {
-					method: "POST",
-				});
+		// if (web3LoggedIn) {
+		// 	try {
+		// 		const response = await fetch(`${url}/logged-in`, {
+		// 			method: "POST",
+		// 		});
 
-				const logged_in = response.ok;
+		// 		const logged_in = response.ok;
 
-				if (logged_in) {
-					return true;
-				}
-				web3LoggedIn.set(false);
-			} catch (error) {
-				web3LoggedIn.set(false);
-			}
-		}
+		// 		if (logged_in) {
+		// 			return true;
+		// 		}
+		// 		web3LoggedIn.set(false);
+		// 	} catch (error) {
+		// 		web3LoggedIn.set(false);
+		// 	}
+		// }
 
-		return false;
+		return true;
 	}
 
 	static async log_in(): Promise<Account> {
