@@ -60,19 +60,19 @@
 		padding: 2rem;
 	}
 
-	h2 {
+	.heading h2 {
 		margin: 0;
 	}
 
 	.line {
 		height: 0.2rem;
-		/* background-color: imports.$fg-color; */
+		background-color: var(--fg-color);
 		flex-grow: 1;
 	}
 
 	.step_number {
 		padding: 0.75rem 1.5rem;
-		/* border: .2rem solid imports.$fg-color; */
+		border: 0.2rem solid var(--fg-color);
 		border-radius: 1rem;
 	}
 
@@ -87,16 +87,42 @@
 		flex-grow: 1;
 	}
 
-	img {
+	.controls img {
 		height: 2rem;
 		aspect-ratio: 1/1;
 	}
 
-	button {
+	.controls button {
 		cursor: pointer;
+	}
 
-		&:hover {
-			filter: brightness(0.7);
-		}
+	.controls button:hover {
+		filter: brightness(0.7);
+	}
+
+	.image,
+	.image-wrapper {
+		align-self: center;
+		width: 1024px;
+		height: 512px;
+		max-width: calc(90vw - 0.5rem);
+		aspect-ratio: 1/1;
+		object-fit: cover;
+		box-shadow: 0.5rem 0.5rem 0 var(--accent-color);
+	}
+
+	.image-wrapper {
+		width: calc(1024px + 0.5rem);
+		height: calc(512px + 0.5rem);
+		max-width: 90vw;
+		--border-size: 2rem;
+		clip-path: polygon(
+			0 0,
+			calc(100% - var(--border-size)) 0,
+			100% var(--border-size),
+			100% 100%,
+			var(--border-size) 100%,
+			0 calc(100% - var(--border-size))
+		);
 	}
 </style>

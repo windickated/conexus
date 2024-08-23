@@ -1,12 +1,12 @@
 <script>
 	import { writable } from "svelte/store";
 
-	import End from "@components/End.svelte";
+	import End from "@components/story/End.svelte";
 	import Intro from "@components/Intro.svelte";
 	import Modal from "@components/Modal.svelte";
 	import BackgroundMusic from "@components/music/BackgroundMusic.svelte";
 	import Tts from "@components/music/Tts.svelte";
-	import Step from "@components/Step.svelte";
+	import Step from "@components/story/Step.svelte";
 	import CoNexus from "@lib/conexus";
 	import { story, loading } from "@stores/conexus";
 	import { authenticated, web3LoggedIn } from "@stores/account";
