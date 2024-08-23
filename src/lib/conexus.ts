@@ -1,240 +1,209 @@
 import { new_error } from "@lib/errors";
-import { background_music, background_image, story, loading } from "@stores/conexus";
+import {
+	background_music,
+	background_image,
+	story,
+	loading,
+} from "@stores/conexus";
 
 const url = import.meta.env.PUBLIC_BACKEND;
 
-type Topic = {
-    name: string,
-    available: boolean
-}
-
-type Category = {
-    name: string
-    topics: Topic[]
-}
-
-
-export type ContinuableStory = {
-    story_id: string
-    category: string
-}
-
-type Available = {
-    available: number,
-    used: number,
-    bonus: number,
-    continuable: ContinuableStory[]
-    categories: Category[]
-}
-
-export type StepData = {
-    step: number,
-    story: string,
-    end: boolean,
-    summary: string,
-    trait: string,
-    options: string[],
-    image?: string,
-    tts?: Blob
-}
-
-export type GameData = {
-    id: string,
-} & StepData
-
 const tracks = [
-    "/music/coNexus/track01.mp3",
-    "/music/coNexus/track02.mp3",
-    "/music/coNexus/track03.mp3"
+	"/music/coNexus/track01.mp3",
+	"/music/coNexus/track02.mp3",
+	"/music/coNexus/track03.mp3",
 ];
 
-const shuffle = <T, >(array: T[]) => {
-    let currentIndex = array.length, randomIndex;
+const shuffle = <T>(array: T[]) => {
+	let currentIndex = array.length,
+		randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
+	while (currentIndex !== 0) {
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex--;
 
-        [array[currentIndex], array[randomIndex]] =
-            [array[randomIndex], array[currentIndex]];
-    }
+		[array[currentIndex], array[randomIndex]] = [
+			array[randomIndex],
+			array[currentIndex],
+		];
+	}
 
-    return array;
-}
+	return array;
+};
 
 class CoNexus {
-    step_data: StepData;
-    readonly #id: string;
+	step_data: StepData;
+	readonly #id: string;
 	hasFetched = false;
 	jobID = null;
 	interval: NodeJS.Timer | null = null;
 
-    private constructor(id: string) {
-        this.#id       = id;
-        this.step_data = {} as StepData;
-    }
+	private constructor(id: string) {
+		this.#id = id;
+		this.step_data = {} as StepData;
+	}
 
-    static async available(): Promise<Available> {
-        const response = await fetch(`${url}/available`, {
-            method: "POST",
-        });
+	static async available(): Promise<Available> {
+		const response = await fetch(`${url}/available`, {
+			method: "POST",
+		});
 
-        if (!response.ok) {
-            new_error({code: response.status, error: await response.text()});
-        }
+		if (!response.ok) {
+			new_error({ code: response.status, error: await response.text() });
+		}
 
-        const available: Available = await response.json()
+		const available: Available = await response.json();
 
-        available.continuable ??= [];
+		available.continuable ??= [];
 
-        return available;
-    }
+		return available;
+	}
 
-    static async start(category: string): Promise<CoNexus> {
-        CoNexus.#play_music(category);
-        CoNexus.#background_image(category);
-        loading.set(true)
+	static async start(category: string): Promise<CoNexus> {
+		CoNexus.#play_music(category);
+		CoNexus.#background_image(category);
+		loading.set(true);
 
-        const response = await fetch(`${url}/start`, {
-            body:   JSON.stringify({
-                category: category
-            }),
-            method: "POST",
-        });
+		const response = await fetch(`${url}/start`, {
+			body: JSON.stringify({
+				category: category,
+			}),
+			method: "POST",
+		});
 
-        if (!response.ok) {
-            new_error({code: response.status, error: await response.text()});
-        }
+		if (!response.ok) {
+			new_error({ code: response.status, error: await response.text() });
+		}
 
-        const game_data: GameData = await response.json();
+		const game_data: GameData = await response.json();
 
-        const story = new CoNexus(game_data.id);
-        await story.#set(game_data);
+		const story = new CoNexus(game_data.id);
+		await story.#set(game_data);
 
-        return story;
-    }
+		return story;
+	}
 
-    static async continue(continuable: ContinuableStory): Promise<CoNexus> {
-        const story_id = continuable.story_id;
-        const category = continuable.category;
-        
-        CoNexus.#play_music(category);
-        CoNexus.#background_image(category);
+	static async continue(continuable: ContinuableStory): Promise<CoNexus> {
+		const story_id = continuable.story_id;
+		const category = continuable.category;
 
-        const response = await fetch(`${url}/continue`, {
-            body:   JSON.stringify({story_id}),
-            method: "POST",
-        });
+		CoNexus.#play_music(category);
+		CoNexus.#background_image(category);
 
-        if (!response.ok) {
-            new_error({code: response.status, error: await response.text()});
-        }
+		const response = await fetch(`${url}/continue`, {
+			body: JSON.stringify({ story_id }),
+			method: "POST",
+		});
 
-        const game_data: GameData = await response.json();
+		if (!response.ok) {
+			new_error({ code: response.status, error: await response.text() });
+		}
 
-        const story = new CoNexus(game_data.id);
-        await story.#set(game_data);
+		const game_data: GameData = await response.json();
 
-        return story;
-    }
+		const story = new CoNexus(game_data.id);
+		await story.#set(game_data);
 
-    static async delete(story_id: string) {
-        const response = await fetch(`${url}/story/${story_id}`, {
-            method: "DELETE",
-        });
+		return story;
+	}
 
-        if (!response.ok) {
-            new_error({code: response.status, error: await response.text()});
-        }
-    }
-    
-    static #formatFileName(category: string): string {
-        let fileName = category.toLowerCase();
-        let formattedFileName = fileName.replace(/[\s.\-\/:]+/g, '');
+	static async delete(story_id: string) {
+		const response = await fetch(`${url}/story/${story_id}`, {
+			method: "DELETE",
+		});
 
-        console.log(formattedFileName);
+		if (!response.ok) {
+			new_error({ code: response.status, error: await response.text() });
+		}
+	}
 
-        return formattedFileName;
-    }
+	static #formatFileName(category: string): string {
+		let fileName = category.toLowerCase();
+		let formattedFileName = fileName.replace(/[\s.\-\/:]+/g, "");
 
-    static  #categoryTrack = (category: string) => {
-        const formattedFileName = CoNexus.#formatFileName(category);
+		console.log(formattedFileName);
 
-        return `/music/categories/${formattedFileName}.mp3`;
-    }
+		return formattedFileName;
+	}
 
-    static async #play_music(category?: string) {
-        let queue: string[] = JSON.parse(localStorage.getItem("queue") ?? "[]");
+	static #categoryTrack = (category: string) => {
+		const formattedFileName = CoNexus.#formatFileName(category);
 
-        if (category) {
-            const categoryTrack = CoNexus.#categoryTrack(category);
-            const categoryFileExists = await fetch(categoryTrack).then(res => res.ok);
-    
-            if (categoryFileExists) {
-                background_music.set(categoryTrack);
-                return;
-            }
-        }
+		return `/music/categories/${formattedFileName}.mp3`;
+	};
 
-        if (queue.length === 0) {
-            queue = shuffle([...tracks]);
-        }
+	static async #play_music(category?: string) {
+		let queue: string[] = JSON.parse(localStorage.getItem("queue") ?? "[]");
 
-        background_music.set(queue.pop())
+		if (category) {
+			const categoryTrack = CoNexus.#categoryTrack(category);
+			const categoryFileExists = await fetch(categoryTrack).then(res => res.ok);
 
-        localStorage.setItem("queue", JSON.stringify(queue));
-    }
+			if (categoryFileExists) {
+				background_music.set(categoryTrack);
+				return;
+			}
+		}
 
-    static #isValidImageUrl(url: string): Promise<boolean> {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.src = url;
-          img.onload = () => resolve(true);
-          img.onerror = () => resolve(false);
-        });
-    }
+		if (queue.length === 0) {
+			queue = shuffle([...tracks]);
+		}
 
-    static #background_image(category: string) {
-        let formattedFileName = CoNexus.#formatFileName(category);
+		background_music.set(queue.pop());
 
-        let url =  `/images/categories/${formattedFileName}.avif`;
+		localStorage.setItem("queue", JSON.stringify(queue));
+	}
 
-        CoNexus.#isValidImageUrl(url).then((valid) => {
-            if (valid) {
-                background_image.set(url);
-            }
-        });
-    }
+	static #isValidImageUrl(url: string): Promise<boolean> {
+		return new Promise(resolve => {
+			const img = new Image();
+			img.src = url;
+			img.onload = () => resolve(true);
+			img.onerror = () => resolve(false);
+		});
+	}
 
-    async next_step(choice: number) {
-        loading.set(true)
+	static #background_image(category: string) {
+		let formattedFileName = CoNexus.#formatFileName(category);
 
-        const response = await fetch(`${url}/respond`, {
-            method: "POST",
-            body:   JSON.stringify({
-                story_id: this.#id,
-                choice
-            })
-        });
+		let url = `/images/categories/${formattedFileName}.avif`;
 
-        if (!response.ok) {
-            new_error({code: response.status, error: await response.text()});
-        }
+		CoNexus.#isValidImageUrl(url).then(valid => {
+			if (valid) {
+				background_image.set(url);
+			}
+		});
+	}
 
-        await this.#set(await response.json());
-    }
+	async next_step(choice: number) {
+		loading.set(true);
+
+		const response = await fetch(`${url}/respond`, {
+			method: "POST",
+			body: JSON.stringify({
+				story_id: this.#id,
+				choice,
+			}),
+		});
+
+		if (!response.ok) {
+			new_error({ code: response.status, error: await response.text() });
+		}
+
+		await this.#set(await response.json());
+	}
 
 	async #check_image_status() {
 		try {
 			const response = await fetch(`${url}/new-image-status/${this.jobID}`);
-	
+
 			const data = await response.json();
-	
+
 			if (data.status === "error") {
 				this.#clear_interval();
 				return;
 			}
-	
+
 			if (data.status === "ready") {
 				this.step_data.image = data.image;
 				story.set(this);
@@ -249,31 +218,31 @@ class CoNexus {
 			}, 500); // Adjust the delay as needed
 		}
 	}
-	
+
 	#start_interval() {
 		this.interval = setInterval(async () => {
 			await this.#check_image_status();
 		}, 10000);
 	}
-	
+
 	#clear_interval() {
 		if (this.interval) {
 			clearInterval(this.interval);
 			this.interval = null;
 		}
 	}
-	
+
 	async #new_generate_image() {
 		try {
 			const response = await fetch(`${url}/new-image`, {
 				method: "POST",
 				body: JSON.stringify({ story_id: this.#id }),
 			});
-	
+
 			if (!response.ok) {
 				throw new Error(await response.text());
 			}
-	
+
 			const data = await response.json();
 			this.jobID = data.jobID;
 			this.hasFetched = true;
@@ -283,46 +252,45 @@ class CoNexus {
 		}
 	}
 
-    async #generate_image() {
-        const response = await fetch(`${url}/image`, {
-            method: "POST",
-            body:   JSON.stringify({story_id: this.#id})
-        });
+	async #generate_image() {
+		const response = await fetch(`${url}/image`, {
+			method: "POST",
+			body: JSON.stringify({ story_id: this.#id }),
+		});
 
-        if (!response.ok) {
-            new_error({code: response.status, error: await response.text()});
-        }
+		if (!response.ok) {
+			new_error({ code: response.status, error: await response.text() });
+		}
 
-        this.step_data.image = await response.text();
+		this.step_data.image = await response.text();
 
-        story.set(this)
-        loading.set(false)
-    }
+		story.set(this);
+		loading.set(false);
+	}
 
-    async #tts() {
-        const response = await fetch(`${url}/tts`, {
-            method: "POST",
-            body:   JSON.stringify({story_id: this.#id})
-        });
+	async #tts() {
+		const response = await fetch(`${url}/tts`, {
+			method: "POST",
+			body: JSON.stringify({ story_id: this.#id }),
+		});
 
+		if (!response.ok) {
+			new_error({ code: response.status, error: await response.text() });
+		}
 
-        if (!response.ok) {
-            new_error({code: response.status, error: await response.text()});
-        }
+		this.step_data.tts = await response.blob();
 
-        this.step_data.tts = await response.blob();
+		story.set(this);
+	}
 
-        story.set(this)
-    }
+	async #set(data: StepData) {
+		this.step_data = data;
 
-    async #set(data: StepData) {
-        this.step_data = data;
+		story.set(this);
+		loading.set(false);
 
-        story.set(this);
-        loading.set(false);
-
-        await Promise.all([this.#new_generate_image(), this.#tts()])
-    }
+		await Promise.all([this.#new_generate_image(), this.#tts()]);
+	}
 }
 
 export default CoNexus;

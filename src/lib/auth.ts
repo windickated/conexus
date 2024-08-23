@@ -1,6 +1,8 @@
 import { new_error } from "@lib/errors";
 import { Web3Provider } from "@lib/ethers";
-import { web3LoggedIn, referralCodes, authenticated } from "@stores/account";
+import { get_cookie } from "@lib/cookies";
+import { web3LoggedIn, referralCodes, authenticated, wallet } from "@stores/account";
+import { toastStore } from "@stores/toast";
 
 const url = import.meta.env.PUBLIC_BACKEND;
 
@@ -19,6 +21,12 @@ class Account {
 	private constructor(username: string, admin: boolean) {
 		this.#username = username;
 		this.#admin = admin;
+	}
+
+	static async cookie(): Promise<void> {
+		const cookiePresent = get_cookie("logged") === "true";
+
+		web3LoggedIn.set(cookiePresent);
 	}
 
 	static async logged_in(): Promise<boolean> {
@@ -49,10 +57,12 @@ class Account {
 
 		const signature = await provider.sign(message(nonce));
 
+		const userWallet = await provider.userAddress();
+
 		const response = await fetch(`${url}/login`, {
 			method: "POST",
 			body: JSON.stringify({
-				wallet: await provider.userAddress(),
+				wallet: userWallet,
 				signature: signature,
 			}),
 		});
@@ -63,6 +73,11 @@ class Account {
 
 		web3LoggedIn.set(true);
 
+		let maskedWallet = userWallet.slice(0, 6) + "..." + userWallet.slice(-4);
+		wallet.set(maskedWallet);
+
+		toastStore.show("Successfully logged in", "info");
+		
 		type Account = {
 			username: string;
 			admin: boolean;
@@ -164,6 +179,8 @@ class Account {
 	}
 
 	static async signout(): Promise<void> {
+		await Account.log_out();
+		
 		const response = await fetch(`${url}/logout`, {
 			method: "POST",
 		});

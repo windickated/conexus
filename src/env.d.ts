@@ -3,35 +3,35 @@
 type Nullable<T> = T | null | undefined;
 
 type VolumeControl = {
-    muted: boolean;
-    volume: number;
-    restart: boolean;
-}
+	muted: boolean;
+	volume: number;
+	restart: boolean;
+};
 
 interface SignUp {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    role: Roles;
+	first_name: string;
+	last_name: string;
+	email: string;
+	password: string;
+	role: Roles;
 }
 
 interface User extends SignUp {
-    ID?: string;
-    oauth_id?: string;
-    email_confirmed?: boolean;
-    referral_count?: number;
+	ID?: string;
+	oauth_id?: string;
+	email_confirmed?: boolean;
+	referral_count?: number;
 }
 
 interface SignIn {
-    email: string;
-    password: string;
+	email: string;
+	password: string;
 }
 
 enum Roles {
-    ADMIN = "admin",
-    USER = "user",
-    ARTIST = "artist",
+	ADMIN = "admin",
+	USER = "user",
+	ARTIST = "artist",
 }
 
 interface ReferralCode {
@@ -47,4 +47,49 @@ interface ReferralCode {
 interface ReferralSignUp {
 	user: User;
 	referral_code: string;
+}
+
+interface ContinuableStory {
+	story_id: string;
+	category: string;
+}
+
+type Topic = {
+	name: string;
+	available: boolean;
+};
+
+type Category = {
+	name: string;
+	topics: Topic[];
+};
+
+type Available = {
+	available: number;
+	used: number;
+	bonus: number;
+	continuable: ContinuableStory[];
+	categories: Category[];
+};
+
+type StepData = {
+	step: number;
+	story: string;
+	end: boolean;
+	summary: string;
+	trait: string;
+	options: string[];
+	image?: string;
+	tts?: Blob;
+};
+
+type GameData = {
+	id: string;
+} & StepData;
+
+
+// Error
+type ConexusError = {
+    code: number,
+    error: string
 }

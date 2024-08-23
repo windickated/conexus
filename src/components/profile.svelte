@@ -1,10 +1,19 @@
 <script>
+	import { writable } from "svelte/store";
+
 	import Account from "@lib/auth";
 	import CoNexus from "@lib/conexus";
-	import { authenticated, referralCodes, web3LoggedIn } from "@stores/account";
+	import { authenticated, referralCodes, wallet, web3LoggedIn } from "@stores/account";
+	import { loading } from "@stores/conexus";
+	import Modal from "@components/Modal.svelte";
+	import { onMount } from "svelte";
 
 	Account.me();
 	Account.logged_in();
+
+	onMount(async () => {
+		Account.cookie();
+	});
 
 	let showModal;
 	let dialog; // HTMLDialogElement
@@ -19,10 +28,30 @@
 		isLogged = value.loggedIn;
 	});
 
+	let walletAddress;
+
+	wallet.subscribe(value => {
+		walletAddress = value;
+	});
+
 	let signUp = false;
 
 	$: if (isLogged) {
 		Account.referraLCodes();
+	}
+
+	let showDeleteModal = writable(false);
+
+	let selectedStory;
+
+	function openModal(story) {
+		selectedStory = story;
+		showDeleteModal.set(true);
+	}
+
+	function DeleteStory(story_id) {
+		CoNexus.delete(story_id);
+		showModal.set(false);
 	}
 
 	function copyRefCode(event) {
@@ -119,7 +148,7 @@
 	}
 
 	let walletConnected = false;
-	let walletAddress;
+	
 
 	function connectWallet() {
 		Account.log_in();
@@ -207,21 +236,46 @@
 							<label class="continue-shaping-label" for="continue-shaping">
 								Continue shaping:
 							</label>
-							<div>
-								<button
-									class="continue-shaping-delete"
-									on:click|preventDefault={removeShapingStory}
-								/>
-								<select value="" id="continue-shaping" placeholder="nothing">
-									<option value="" disabled selected>Select story</option>
-									{#each continueShapingStories as story}
-										<option value={story}>{story}</option>
-									{/each}
-								</select>
-								<button class="continue-shaping-play" />
-							</div>
+							{#each available.continuable as continuable}
+								<div>
+									<button
+										class="continue-shaping-delete"
+										on:click|preventDefault={() => openModal(continuable)}
+										disabled={$loading}
+									/>
+									<div value="" id="continue-shaping">
+										<p>
+											{continuable.category} - {continuable.story_id.split(
+												"-"
+											)[0]}
+										</p>
+									</div>
+									<button
+										class="continue-shaping-play"
+										on:click={() => CoNexus.continue(continuable)}
+										disabled={$loading}
+									/>
+								</div>
+							{/each}
 						</form>
 					</div>
+
+					<!-- Delete Story Modal -->
+
+					{#if selectedStory}
+						<Modal bind:showModal={$showDeleteModal}>
+							<h2 slot="header">Are you sure you want to delete this story?</h2>
+							<p>
+								This action is irreversible. You will lose all progress on this
+								story.
+							</p>
+							<button
+								class="modal-delete"
+								on:click={() => DeleteStory(selectedStory.story_id)}
+								>Delete story: {selectedStory.category}</button
+							>
+						</Modal>
+					{/if}
 				{/await}
 			{/if}
 
@@ -300,9 +354,9 @@
 				<p class="user-prop">Web3 account:</p>
 
 				<button class="wallet-button" on:click={connectWallet}>
-					{#if !walletConnected}
+					{#if !$web3LoggedIn}
 						Connect Wallet
-					{:else if walletConnected}
+					{:else if $web3LoggedIn}
 						{walletAddress}
 					{/if}
 				</button>
@@ -804,7 +858,7 @@
 
 	#continue-shaping {
 		text-align: center;
-		padding: 1vw 0;
+		padding: 1vw 1vw;
 		font-size: 2vw;
 		line-height: 3vw;
 		color: rgba(1, 0, 32, 0.9);
@@ -813,9 +867,10 @@
 		border-radius: 2vw;
 		background-color: rgba(51, 226, 230, 0.5);
 		cursor: pointer;
+		width: 40vw;
 	}
 
-	#continue-shaping option {
+	#continue-shaping p {
 		text-align: center;
 		cursor: pointer;
 	}
