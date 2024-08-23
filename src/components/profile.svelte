@@ -64,7 +64,6 @@
 		(document.getElementById("password").type = "password");
 
 	function validate(event) {
-		//test imitation
 		const mandatoryCheckbox = document.getElementById("terms");
 		const submitButton = document.querySelector(".submit-button");
 		console.log(submitButton);
@@ -73,21 +72,6 @@
 		} else {
 			submitButton.disabled = true;
 		}
-	}
-
-	const continueShapingStories = [
-		"Escape",
-		"Inception Ark",
-		"Mascoteers",
-		"North Pole Inc.",
-		"GLMR Apes",
-		"The Terminus Swarm",
-	];
-	function removeShapingStory() {
-		let shapingStory = document.getElementById("continue-shaping");
-		if (shapingStory.value != "")
-			shapingStory.remove(shapingStory.selectedIndex);
-		if (shapingStory.length === 1) shapingStory.value = "";
 	}
 
 	let isEditing = false;
@@ -147,20 +131,12 @@
 		}
 	}
 
-	let walletConnected = false;
-	
-
 	function connectWallet() {
 		Account.log_in();
-		// if(walletConnected) {
-		//   walletConnected = false;
-		// } else {
-		//   walletConnected = true;
-		//   alert('Wallet connected.')
-		//   walletAddress = '0xeb0a...60c1';
-		// }
 	}
 </script>
+
+
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <span
@@ -228,7 +204,11 @@
 
 						{#if available.bonus > 0}
 							<p class="story-games-number-label">
-								You have <strong>{available.bonus} bonus</strong> lives
+								You have
+								<span class="story-games-number">
+									{available.bonus} bonus
+								</span>
+								lives
 							</p>
 						{/if}
 
@@ -411,7 +391,6 @@
 					required
 				/>
 				<p class="validation-check">Invalid credentials!</p>
-				<!-- <button class="submit-button" type="submit" on:click={() => isLogged = true}>Log-in</button> -->
 				<button
 					class="submit-button"
 					type="submit"
@@ -525,6 +504,8 @@
 		{/if}
 	</div>
 </dialog>
+
+
 
 <style>
 	button {
