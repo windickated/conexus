@@ -37,4 +37,12 @@
 		margin: 1vw;
 		margin-top: 3vw;
 	}
+
+	@media only screen and (max-width: 600px) {
+		.menu-text-0,
+		.menu-text-1 {
+			font-size: inherit;
+			line-height: 1.6em;
+		}
+	}
 </style>

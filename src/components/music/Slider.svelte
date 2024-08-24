@@ -39,29 +39,57 @@
 	/>
 	{#if restartable}
 		<button class="c" on:click={restart}>
-			<img src="/icons/replay.svg" alt="Adjust volume" />
+			<img src="/icons/replay.png" alt="Adjust volume" />
 		</button>
 	{/if}
 </div>
 
 <style>
 	div {
+		height: 3.5vw;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 1rem;
+		gap: 1vw;
+		padding: 0.5vw 1vw;
+		background-color: rgba(1, 0, 32, 0.5);
+		border: 0.05vw solid rgba(51, 226, 230, 0.5);
+		border-radius: 1em;
 	}
 
 	img {
-		height: 2rem;
-		aspect-ratio: 1/1;
+		height: 2vw;
+		width: auto;
 	}
 
 	button {
 		cursor: pointer;
+		background-color: rgba(0,0,0,0);
+		border: none;
+	}
 
-		&:hover {
-			filter: brightness(0.7);
+	button:hover {
+		opacity: 0.5;
+	}
+
+	input {
+		cursor: pointer;
+		height: 0.5vw;
+	}
+
+	@media screen and (max-width: 600px) {
+		div {
+			height: 2em;
+			padding: 0.1em 0.5em;
+		}
+
+		img {
+			height: 1em;
+		}
+
+		input {
+			width: 20vw;
 		}
 	}
+
 </style>

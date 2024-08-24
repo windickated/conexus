@@ -7,186 +7,220 @@
 	$: step = $story?.step_data as StepData;
 </script>
 
+
 <div class="image-wrapper">
-	<div class="image-wrapper">
-		{#if step.image}
-			<img class="image" src={`data:image/png;base64,${step.image}`} alt="" />
-		{:else}
-			<img class="image" src="/icons/loading.svg" alt="" />
-		{/if}
-	</div>
+	{#if step.image}
+		<img class="image" src={`data:image/png;base64,${step.image}`} alt="" />
+	{:else}
+		<img class="image" src="/icons/loading.svg" alt="" />
+	{/if}
 </div>
 
-<div class="controls">
-	<Slider src="/icons/volume.svg" volume={background_volume} />
-	<Slider src="/icons/volume.svg" volume={tts_volume} restartable />
+<p class="story-text">{step.story}</p>
 
-	<div class="spacer"></div>
-
-	<button class="c" on:click={() => fullscreen.update(old => !old)}>
-		{#if $fullscreen}
-			<img src="/icons/fullscreen_exit.svg" alt="Exit fullscreen mode" />
-		{:else}
-			<img src="/icons/fullscreen.svg" alt="Enter fullscreen mode" />
-		{/if}
-	</button>
-</div>
-
-<p>{step.story}</p>
-
-<div class="heading">
-	<h2>Options</h2>
-	<div class="line"></div>
-	<strong class="step_number"
-		>Step {`${step.step < 10 ? "0" : ""}${step.step}`}</strong
-	>
-</div>
-
-<div class="buttons">
+<div class="options-container">
 	{#each step.options as option, i}
 		<button
 			disabled={$loading}
-			class="c"
-			on:click={() => $story?.next_step(i + 1)}>{option}</button
+			class="option"
+			on:click={() => $story?.next_step(i + 1)}>
+				<img class="option-selector" src="/icons/option-selector.png" alt="Option" />
+				<span>{option}</span>
+			</button
 		>
 	{/each}
 </div>
 
+<div class="control-bar">
+	<div class="step-number">
+		Step {`${step.step < 10 ? "0" : ""}${step.step}`}
+	</div>
+
+	<div class="controls">
+		<Slider src="/icons/volume.png" volume={background_volume} />
+		<Slider src="/icons/voice.png" volume={tts_volume} restartable />
+
+		<div class="fullscreen-wrapper">
+			<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+			<img
+				class="fullscreen"
+				on:click={() => fullscreen.update(old => !old)}
+				src={$fullscreen ? "/icons/fullscreen_exit.png" : "/icons/fullscreen.png"}
+				alt={($fullscreen ? 'Exit' : 'Enter') + ' fullscreen mode'}
+			/>
+		</div>
+	</div>
+</div>
+
+
 <style>
-	.heading {
-		display: flex;
-		gap: 1rem;
-		align-items: center;
-		padding: 2rem;
-	}
-
-	.heading h2 {
-		margin: 0;
-	}
-
-	.line {
-		height: 0.2rem;
-		background-color: var(--fg-color);
-		flex-grow: 1;
-	}
-
-	.step_number {
-		padding: 0.75rem 1.5rem;
-		border: 0.2rem solid var(--fg-color);
-		border-radius: 1rem;
-	}
-
-	.controls {
-		display: flex;
-		align-items: center;
-		margin: 2rem;
-		gap: 3rem;
-	}
-
-	.spacer {
-		flex-grow: 1;
-	}
-
-	.controls img {
-		height: 2rem;
-		aspect-ratio: 1/1;
-	}
-
-	.controls button {
+	button {
+		font-family: 'PT Serif Caption', 'serif';
 		cursor: pointer;
 	}
 
-	.controls button:hover {
-		filter: brightness(0.7);
-	}
-
-	.image,
 	.image-wrapper {
 		align-self: center;
 		width: 1024px;
 		height: 512px;
-		max-width: calc(90vw - 0.5rem);
-		aspect-ratio: 1/1;
+		max-width: calc(100% - 0.5rem);
+		margin-bottom: 2vw;
+		border: 0.05vw solid rgba(51, 226, 230, 0.25);
+		border-radius: 1em;
+		filter: drop-shadow(0 0 0.5vw rgba(51, 226, 230, 0.25));
+	}
+
+	.image {
+		width: 100%;
+		height: 100%;
 		object-fit: cover;
-		box-shadow: 0.5rem 0.5rem 0 var(--accent-color);
+		border-radius: 1em;
 	}
 
-	.image-wrapper {
-		width: calc(1024px + 0.5rem);
-		height: calc(512px + 0.5rem);
-		max-width: 90vw;
-		--border-size: 2rem;
-		clip-path: polygon(
-			0 0,
-			calc(100% - var(--border-size)) 0,
-			100% var(--border-size),
-			100% 100%,
-			var(--border-size) 100%,
-			0 calc(100% - var(--border-size))
-		);
+	.story-text {
+		padding: 1vw 2vw;
+		width: 1024px;
+		max-width: calc(100% - 0.5rem);
+		font-size: 1.5vw;
+		line-height: 3vw;
 	}
 
-	.buttons {
+	.options-container {
+		width: 100%;
 		display: flex;
 		flex-direction: column;
-		width: 100%;
 		align-items: stretch;
-		gap: 0.75rem;
+		padding: 1vw;
+		margin-block: 2vw;
+		border: 0.05vw solid rgba(51, 226, 230, 0.5);
+		border-radius: 1em;
+		background-color: rgba(51, 226, 230, 0.1);
+		-webkit-backdrop-filter: blur(2vw);
+		backdrop-filter: blur(2vw);
 	}
 
-	.buttons button {
+	.option {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		gap: 0.75em;
 		text-align: start;
 		font-weight: bold;
-		font-size: 1.2rem;
-		padding: 0.25rem;
+		font-size: 2vw;
+		line-height: 4vw;
+		padding: 1vw 2vw;
+		color: rgba(51, 226, 230, 0.8);
+		background-color: rgba(0,0,0,0);
+		border: none;
+	}
+
+	.option-selector {
+		height: 2vw;
+		width: auto;
+		opacity: 0.8;
+	}
+
+	.option:hover, .option:active {
+		color: rgba(51, 226, 230, 1);
+		filter: drop-shadow(0 0 0.5vw rgba(51, 226, 230, 0.25));
+	}
+
+	.option:disabled {
+		opacity: 0.5;
+		cursor: auto;
+	}
+
+	.option:disabled:hover,
+	.option:disabled:active {
+		color: rgba(51, 226, 230, 0.8);
+		filter: none;
+	}
+
+	.control-bar {
+		width: 100%;
 		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
 		align-items: center;
+		margin-top: 2vw;
+		padding: 1vw 2vw;
+		background-color: rgba(36, 65, 189, 0.75);
+		border: 0.05vw solid rgba(51, 226, 230, 0.5);
+		border-radius: 1em;
+	}
+
+	.step-number {
+		font-size: 2vw;
+	}
+
+	.controls {
+		display: flex;
+		flex-flow: row nowrap;
+		gap: 1vw;
+	}
+
+	.fullscreen-wrapper {
+		height: 3.5vw;
+		width: 3.5vw;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0.5vw;
+		background-color: rgba(1, 0, 32, 0.5);
+		border: 0.05vw solid rgba(51, 226, 230, 0.5);
+		border-radius: 1em;
+	}
+
+	.fullscreen {
+		height: 2vw;
 		cursor: pointer;
 	}
 
-	button::before {
-		content: "";
-		height: 1.5rem;
-		width: 0.25rem;
-		background-color: var(--fg-color);
-		display: inline-block;
-		margin-right: 1rem;
+	.fullscreen:hover {
+		opacity: 0.5;
 	}
 
-	button:disabled {
-		filter: brightness(0.7);
-	}
 
-	button:not(:disabled):hover {
-		background: linear-gradient(
-			to right,
-			transparent 1rem,
-			var(--accent-color) 1rem,
-			transparent
-		);
-	}
+	@media screen and (max-width: 600px) {
+		.story-text {
+			font-size: 1em;
+			line-height: 1.5em;
+		}
 
-	button:not(:disabled):hover::before {
-		background-color: var(--accent-color);
-	}
+		.option {
+			font-size: 1em;
+			line-height: 2em;
+			padding: 0.5em 1em;
+		}
 
-	button:not(:disabled):active,
-	button:not(:disabled):focus {
-		filter: brightness(0.7);
-		background: linear-gradient(
-			to right,
-			transparent 1rem,
-			var(--accent-color) 1rem,
-			transparent
-		);
-	}
+		.option-selector {
+			height: 1em;
+		}
 
-	button:not(:disabled):active::before,
-	button:not(:disabled):focus::before {
-		background-color: var(--accent-color);
-	}
+		.control-bar {
+			flex-flow: column nowrap;
+			padding: 0.5em;
+			gap: 0.5em;
+		}
 
-	button:focus {
-		filter: brightness(0.65);
+		.step-number {
+			font-size: 1em;
+			line-height: 1.5em;
+		}
+
+		.controls {
+			width: 100%;
+			justify-content: space-between;
+		}
+
+		.fullscreen-wrapper {
+			height: 2em;
+			width: 2em;
+			padding: 0.1em;
+		}
+
+		.fullscreen {
+			height: 1em;
+		}
 	}
 </style>
