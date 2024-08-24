@@ -75,6 +75,7 @@
 	input {
 		cursor: pointer;
 		height: 0.5vw;
+		width: 10vw;
 	}
 
 	@media screen and (max-width: 600px) {

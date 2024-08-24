@@ -2,9 +2,12 @@
 	import Slider from "@components/music/Slider.svelte";
 	import { fullscreen, story } from "@stores/conexus";
 	import { background_volume, tts_volume } from "@stores/volumes";
+	import { storyTitle as _storyTitle } from "@lib/conexus";
 	import type { StepData } from "@stores/types";
 
 	$: step = $story?.step_data as StepData;
+
+	const storyTitle: string = _storyTitle.charAt(0).toUpperCase() + _storyTitle.slice(1);
 </script>
 
 
@@ -30,20 +33,32 @@
 </div>
 
 <div class="control-bar">
-	<div class="step-number">
-		Step {`${step.step < 10 ? "0" : ""}${step.step}`}
+	<div class="story-info-container">
+		<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+		<div class="quit-wrapper" on:click={() => story.set(null)}
+			role="button" tabindex="0">
+			<img
+				class="quit"
+				src="/icons/quit.png"
+				alt="Quit"
+			/>
+		</div>
+
+		<div class="story-info">
+			{storyTitle} - Step {`${step.step < 10 ? "0" : ""}${step.step}`}
+		</div>
 	</div>
 
 	<div class="controls">
 		<Slider src="/icons/volume.png" volume={background_volume} />
 		<Slider src="/icons/voice.png" volume={tts_volume} restartable />
 
-		<div class="fullscreen-wrapper">
-			<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+		<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+		<div class="fullscreen-wrapper" on:click={() => fullscreen.update(old => !old)}
+			role="button" tabindex="0">
 			<img
 				class="fullscreen"
-				on:click={() => fullscreen.update(old => !old)}
-				src={$fullscreen ? "/icons/fullscreen_exit.png" : "/icons/fullscreen.png"}
+				src={$fullscreen ? "/icons/fullscreen-exit.png" : "/icons/fullscreen.png"}
 				alt={($fullscreen ? 'Exit' : 'Enter') + ' fullscreen mode'}
 			/>
 		</div>
@@ -154,7 +169,14 @@
 		border-radius: 1em;
 	}
 
-	.step-number {
+	.story-info-container {
+		width: 100%;
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+	}
+
+	.story-info {
 		font-size: 2vw;
 	}
 
@@ -164,7 +186,7 @@
 		gap: 1vw;
 	}
 
-	.fullscreen-wrapper {
+	.fullscreen-wrapper, .quit-wrapper {
 		height: 3.5vw;
 		width: 3.5vw;
 		display: flex;
@@ -174,15 +196,25 @@
 		background-color: rgba(1, 0, 32, 0.5);
 		border: 0.05vw solid rgba(51, 226, 230, 0.5);
 		border-radius: 1em;
+		cursor: pointer;
+	}
+
+	.quit-wrapper {
+		background-color: rgba(51, 226, 230, 0.25);
+		margin-right: 2vw;
+	}
+
+	.quit {
+		height: 100%;
 	}
 
 	.fullscreen {
 		height: 2vw;
-		cursor: pointer;
 	}
 
-	.fullscreen:hover {
-		opacity: 0.5;
+	.fullscreen-wrapper:hover, .fullscreen-wrapper:active,
+	.quit-wrapper:hover, .quit-wrapper:active {
+		opacity: 0.75;
 	}
 
 
@@ -213,7 +245,7 @@
 			gap: 0.5em;
 		}
 
-		.step-number {
+		.story-info {
 			font-size: 1em;
 			line-height: 1.5em;
 		}
@@ -223,10 +255,18 @@
 			justify-content: space-between;
 		}
 
-		.fullscreen-wrapper {
+		.fullscreen-wrapper, .quit-wrapper {
 			height: 2em;
 			width: 2em;
 			padding: 0.1em;
+		}
+
+		.quit-wrapper {
+			margin-right: 1em;
+		}
+
+		.quit {
+			height: 90%;
 		}
 
 		.fullscreen {

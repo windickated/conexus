@@ -1,3 +1,4 @@
+import StoryTile from "@components/storyTile.svelte";
 import { new_error } from "@lib/errors";
 import {
 	background_music,
@@ -30,6 +31,8 @@ const shuffle = <T>(array: T[]) => {
 
 	return array;
 };
+
+export let storyTitle: string;
 
 class CoNexus {
 	step_data: StepData;
@@ -121,6 +124,7 @@ class CoNexus {
 		let fileName = category.toLowerCase();
 		let formattedFileName = fileName.replace(/[\s.\-\/:]+/g, "");
 
+		storyTitle = formattedFileName;
 		console.log(formattedFileName);
 
 		return formattedFileName;
