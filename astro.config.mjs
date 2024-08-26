@@ -7,5 +7,17 @@ import vercel from "@astrojs/vercel/serverless";
 export default defineConfig({
   integrations: [svelte()],
   output: "server",
-  adapter: vercel()
+  adapter: vercel(),
+  vite: {
+    server: {
+        proxy: {
+            "/api": {
+                target: "http://localhost:8080",
+                changeOrigin: true,
+                secure: false,
+                rewrite: path => path.replace(/^\/api/, '')
+            },
+        },
+    },
+}
 });
