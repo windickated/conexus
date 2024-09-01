@@ -93,10 +93,6 @@
 
     <!-- Intro -->
     <Intro />
-  {:else if $story?.step_data?.end}
-    <!-- Story End -->
-
-    <End />
   {:else}
     <!-- Story -->
 
