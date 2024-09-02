@@ -1,46 +1,45 @@
 <script>
-	export let showModal;
-	let dialog; // HTMLDialogElement
+  export let showModal;
+  let dialog; // HTMLDialogElement
 
-	$: if (dialog && showModal) dialog.showModal();
+  $: if (dialog && showModal) dialog.showModal();
 
   export let storyDescription;
   export let descriptionPicture;
   export let playButton;
   export let storyLink;
   function openGame() {
-    window.open(storyLink, '_blank');
+    window.open(storyLink, "_blank");
   }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-<dialog class="description-tile"
-	bind:this={dialog}
-	on:close={() => (showModal = false)}
-	on:click|self={() => dialog.close()}
+<dialog
+  class="description-tile"
+  bind:this={dialog}
+  on:close={() => (showModal = false)}
+  on:click|self={() => dialog.close()}
 >
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div on:click|stopPropagation>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <div on:click|stopPropagation>
+    <img class="description-image" src={descriptionPicture} alt="Description" />
 
-		<img class="description-image" src={descriptionPicture} alt="Description" />
-    
     <div>
       <p class="description-text">{storyDescription}</p>
       <!-- svelte-ignore a11y-autofocus -->
       <div class="buttons-container">
-        <button class="close-button"
-          on:click|stopPropagation={() => dialog.close()}
-        >CLOSE</button>
-        <button class="play-button"
-          on:click={openGame}
-        >{playButton}</button>
+        <button
+          class="close-button"
+          on:click|stopPropagation={() => dialog.close()}>CLOSE</button
+        >
+        <button class="play-button" on:click={openGame}>{playButton}</button>
       </div>
     </div>
-	</div>
+  </div>
 </dialog>
 
 <style>
-	.description-tile {
+  .description-tile {
     padding: 1.5vw;
     width: 80vw;
     height: 40vw;
@@ -49,19 +48,19 @@
     border-radius: 2.5vw;
     -webkit-backdrop-filter: blur(1vw);
     backdrop-filter: blur(1vw);
-	}
+  }
 
-	.description-tile::backdrop {
-		background: rgba(0, 0, 0, 0.75);
-	}
+  .description-tile::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+  }
 
-	.description-tile[open] {
-		animation: zoom 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
+  .description-tile[open] {
+    animation: zoom 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 
-	.description-tile[open]::backdrop {
-		animation: fade 0.25s ease-out;
-	}
+  .description-tile[open]::backdrop {
+    animation: fade 0.25s ease-out;
+  }
 
   .description-tile > div {
     display: flex;
@@ -79,10 +78,10 @@
   }
 
   .description-image {
-    width: 50%;
+    min-width: 50%;
     height: auto;
     border-radius: 1.75vw;
-    filter: drop-shadow(0 0 0.5vw rgba(51, 226, 230, 0.75))
+    filter: drop-shadow(0 0 0.5vw rgba(51, 226, 230, 0.75));
   }
 
   .description-text {
@@ -117,7 +116,8 @@
     width: 100%;
   }
 
-  .play-button, .close-button {
+  .play-button,
+  .close-button {
     padding: 0.5vw 3vw;
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
     border-radius: 1.75vw;
@@ -129,12 +129,14 @@
     filter: drop-shadow(0 0 0.1vw rgba(51, 226, 230, 0.4));
   }
 
-  .play-button:hover, .close-button:hover, .play-button:active, .close-button:active {
+  .play-button:hover,
+  .close-button:hover,
+  .play-button:active,
+  .close-button:active {
     color: rgba(51, 226, 230, 1);
     background-color: rgba(51, 226, 230, 0.5);
     filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.4));
   }
-
 
   @media only screen and (max-width: 600px) {
     .description-tile {
@@ -174,7 +176,8 @@
       width: 100%;
     }
 
-    .play-button, .close-button {
+    .play-button,
+    .close-button {
       padding: 0.25em 1em;
       font-size: 1.3em;
       line-height: 2em;
@@ -182,22 +185,21 @@
     }
   }
 
-
   @keyframes zoom {
-		from {
-			transform: scale(1.5);
-		}
-		to {
-			transform: scale(1);
-		}
-	}
+    from {
+      transform: scale(1.5);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
 
-	@keyframes fade {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 </style>

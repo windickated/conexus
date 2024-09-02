@@ -300,7 +300,7 @@
       <hr />
 
       <p class="refferal-codes-legend">Your referral codes</p>
-      {#if refCodes.length > 0}
+      {#if refCodes != null}
         <div class="refferal-codes">
           {#each refCodes as code}
             <div class="ref-code-container">
@@ -795,11 +795,11 @@
     text-align: center;
     color: #bebebe;
     font-size: 2vw;
-    margin-block: 1vw 2vw;
+    margin-block: 1vw 3vw;
   }
 
   .signup-label a {
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
   }
 
   #refferal-code {
