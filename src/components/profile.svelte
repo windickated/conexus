@@ -770,8 +770,8 @@
 
   #terms,
   #newsletter {
-    -webkit-transform: scale(1.5);
-    transform: scale(1.5);
+    -webkit-transform: scale(3);
+    transform: scale(3);
     flex: 1;
     accent-color: rgba(51, 226, 230, 0.75);
   }
@@ -1074,6 +1074,12 @@
       font-size: 1em;
       line-height: 1.5em;
       padding-left: 1em;
+    }
+
+    #terms,
+    #newsletter {
+      -webkit-transform: scale(1.5);
+      transform: scale(1.5);
     }
 
     .submit-button {
