@@ -147,6 +147,9 @@
   on:click|self={() => {
     dialog.close();
     signUp = false;
+    isLoggedWithEmail = false;
+    signUpRefCode = false;
+    signUpWithEmail = false;
   }}
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -169,7 +172,6 @@
           class="login-button"
           on:click={() => {
             Account.signout();
-            signUp = false;
           }}>Log out</button
         >
       {/if}
@@ -179,6 +181,7 @@
 
     {#if isLogged}
       {#if $web3LoggedIn}
+        <hr />
         {#await CoNexus.available()}
           <div class="story-games-container">
             <p class="story-games-number-label">Available story games...</p>
