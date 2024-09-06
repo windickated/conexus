@@ -435,22 +435,22 @@
                 <p class="sign-lable">with browser wallet</p></button
               >
             </div>
-
-            <hr />
-
-            <p class="signup-label">Don't have an existing CoNexus account?</p>
-
-            <div class="buttons-container">
-              <button
-                class="sign-button"
-                on:click={() => {
-                  signUp = true;
-                }}
-              >
-                <p class="sign-lable">Sign Up</p>
-              </button>
-            </div>
           {/if}
+
+          <hr />
+
+          <p class="signup-label">Don't have an existing CoNexus account?</p>
+
+          <div class="buttons-container">
+            <button
+              class="sign-button"
+              on:click={() => {
+                signUp = true;
+              }}
+            >
+              <p class="sign-lable">Sign Up</p>
+            </button>
+          </div>
         {:else}
           <!-- SIGNUP WINDOW -->
 
