@@ -7,8 +7,6 @@
 
   export let restartable: boolean = false;
 
-  export let isHidden: boolean = false;
-
   $: v = !$volume.muted ? $volume.volume : 0;
 
   const mute = () => {
@@ -26,7 +24,7 @@
   };
 </script>
 
-<div style="visibility: {isHidden ? 'hidden' : 'visible'}">
+<div>
   <button class="c" on:click={mute}>
     <img {src} alt="Adjust volume" />
   </button>
@@ -76,7 +74,7 @@
   input {
     cursor: pointer;
     height: 0.5vw;
-    width: 10vw;
+    width: 7.5vw;
   }
 
   @media screen and (max-width: 600px) {
@@ -91,7 +89,7 @@
     }
 
     input {
-      width: 20vw;
+      width: 26vw;
     }
   }
 
@@ -104,9 +102,7 @@
     img {
       height: 1.5rem;
     }
-  }
 
-  @media screen and (min-width: 1920px) {
     input {
       width: 10rem;
     }

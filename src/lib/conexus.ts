@@ -79,6 +79,7 @@ export class CoNexus {
   hasFetched = false;
   jobID = null;
   interval: NodeJS.Timer | null = null;
+  maxStep: number = 0;
 
   private constructor(id: string) {
     this.#id = id;
@@ -328,7 +329,7 @@ export class CoNexus {
     } finally {
       setTimeout(() => {
         this.hasFetched = false;
-      }, 500); // Adjust the delay as needed
+      }, 5000); // Adjust the delay as needed
     }
   }
 
@@ -398,6 +399,7 @@ export class CoNexus {
 
   async #set(data: StepData) {
     this.step_data = data;
+    this.maxStep = data.step;
 
     story.set(this);
     loading.set(false);

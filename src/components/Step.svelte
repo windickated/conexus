@@ -1,82 +1,25 @@
 <script lang="ts">
-  import { afterUpdate } from "svelte";
-
   import { fullscreen, story, loading } from "@stores/conexus";
   import { background_volume, tts_volume } from "@stores/volumes";
-  import { storyTitle as _storyTitle, CoNexus } from "../lib/conexus";
-  import type { StepData } from "../lib/conexus";
+  import { storyTitle as _storyTitle } from "@lib/conexus";
+  import type { StepData } from "@lib/conexus";
 
   import Slider from "./music/Slider.svelte";
 
   $: step = $story?.step_data as StepData;
 
-  let stepFont = "Verdana";
+  let stepFont: string = "Verdana";
 
   let width: number;
-  let innerWidth: number;
-
-  let image: HTMLElement;
-  let controlBar: HTMLElement;
-  let quitButton: HTMLElement;
-  let resizeButton: HTMLElement;
-  let fullscreenButton: HTMLElement;
-  let storyInfo: HTMLElement;
-
-  let isFullsize: boolean = false;
-  let isHidden: boolean;
 
   const storyTitle: string =
     _storyTitle.charAt(0).toUpperCase() + _storyTitle.slice(1);
-
-  afterUpdate(() => {
-    if (width > 600) {
-      if (innerWidth >= 1920) {
-        image.style.height = isFullsize ? "60rem" : "40rem";
-      } else {
-        image.style.height = isFullsize ? "90vw" : "50vw";
-      }
-      if ($fullscreen) {
-        hideControlBar();
-      } else {
-        if (isHidden) showControlBar();
-      }
-    } else {
-      image.style.height = "512px";
-      if (isHidden) showControlBar();
-    }
-  });
-
-  const hideControlBar = () => {
-    isHidden = true;
-    controlBar.style.backgroundColor = "rgba(0,0,0,0)";
-    controlBar.style.border = "none";
-    controlBar.style.marginBottom = "0";
-    controlBar.style.backdropFilter = "none";
-    quitButton.style.opacity = "0.5";
-    quitButton.style.backgroundColor = "rgba(1, 0, 32, 0.5)";
-    resizeButton.style.opacity = "0.5";
-    fullscreenButton.style.opacity = "0.5";
-    storyInfo.style.opacity = "0.25";
-  };
-
-  const showControlBar = () => {
-    isHidden = false;
-    controlBar.style.backgroundColor = "rgba(36, 65, 189, 0.75)";
-    controlBar.style.border = "0.05vw solid rgba(51, 226, 230, 0.5)";
-    controlBar.style.marginBottom = "4vw";
-    controlBar.style.backdropFilter = "blur(1em)";
-    quitButton.style.opacity = "1";
-    quitButton.style.backgroundColor = "rgba(51, 226, 230, 0.25)";
-    resizeButton.style.opacity = "1";
-    fullscreenButton.style.opacity = "1";
-    storyInfo.style.opacity = "1";
-  };
 </script>
 
-<svelte:window bind:outerWidth={width} bind:innerWidth />
+<svelte:window bind:outerWidth={width} />
 
 <div class="step-wrapper" style="font-family: {stepFont}">
-  <div class="image-wrapper" bind:this={image}>
+  <div class="image-wrapper">
     {#if step.image}
       <img class="image" src={`data:image/png;base64,${step.image}`} alt="" />
     {:else}
@@ -96,8 +39,9 @@
     <h2 class="trait">AI identified you as <strong>{step.trait}</strong></h2>
 
     <div class="options-container">
-      <button class="option menu-option" on:click={() => story.set(null)}
-        >Return to main menu</button
+      <button
+        class="option menu-option"
+        on:click={() => window.open("/", "_self")}>Return to main menu</button
       >
     </div>
   {:else}
@@ -105,7 +49,7 @@
       {#each step.options as option, i}
         <button
           style="font-family: {stepFont}"
-          disabled={$loading}
+          disabled={$loading || step.step !== $story?.maxStep}
           class="option"
           on:click={() => $story?.next_step(i + 1)}
         >
@@ -114,74 +58,229 @@
             src="/icons/option-selector.png"
             alt="Option"
           />
-          <span>{option}</span>
+          <span
+            class={step.choice
+              ? step.choice - 1 === i
+                ? "active-option"
+                : ""
+              : ""}>{option}</span
+          >
         </button>
       {/each}
     </div>
   {/if}
 
-  <div class="control-bar" bind:this={controlBar}>
-    <div class="story-info-container">
-      <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-      <div
-        bind:this={quitButton}
-        class="quit-wrapper"
-        on:click={() => window.open("/", "_self")}
-        role="button"
-        tabindex="0"
-      >
-        <img class="quit" src="/icons/quit.png" alt="Quit" />
-      </div>
+  <section class="controls-container">
+    {#if width > 600}
+      <!-- PC NORMAL VIEW -->
 
-      <div class="story-info" bind:this={storyInfo}>
-        {storyTitle} - Step {`${step.step < 10 ? "0" : ""}${step.step}`}
+      {#if !$fullscreen}
+        <div class="control-bar">
+          <div class="story-info-container">
+            <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+            <div
+              class="quit-wrapper"
+              on:click={() => window.open("/", "_self")}
+              role="button"
+              tabindex="0"
+            >
+              <img class="quit" src="/icons/quit.png" alt="Quit" />
+            </div>
+
+            <div class="story-title">
+              {storyTitle}
+            </div>
+          </div>
+
+          <div class="controls">
+            <Slider src="/icons/volume.png" volume={background_volume} />
+            <Slider src="/icons/voice.png" volume={tts_volume} restartable />
+
+            <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+            <div
+              class="fullscreen-wrapper"
+              on:click={() => fullscreen.update((old) => !old)}
+              role="button"
+              tabindex="0"
+            >
+              <img
+                class="fullscreen"
+                src="/icons/fullscreen.png"
+                alt="Enter fullscreen mode"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="step-bar">
+          <button
+            class="step-button"
+            on:click={() => $story?.loadStep(step.step - 1)}
+            disabled={step.step === 1}
+          >
+            <img class="previous-step" src="/icons/step-arrow.png" alt="Back" />
+          </button>
+          <p class="step-counter">
+            Step {`${step.step < 10 ? "0" : ""}${step.step}`}
+          </p>
+          <button
+            class="step-button"
+            on:click={() => $story?.loadStep(step.step + 1)}
+            disabled={step.step === $story?.maxStep}
+          >
+            <img
+              class="next-step"
+              src="/icons/step-arrow.png"
+              alt="Next"
+              style="transform: rotate(180deg)"
+            />
+          </button>
+        </div>
+
+        <!-- PC FULLSCREEN VIEW -->
+      {:else}
+        <div class="story-info-container">
+          <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+          <div
+            class="quit-wrapper"
+            on:click={() => window.open("/", "_self")}
+            role="button"
+            tabindex="0"
+            style="background-color: rgba(1, 0, 32, 0.1)"
+          >
+            <img
+              class="quit"
+              src="/icons/quit-fullscreen.png"
+              alt="Quit"
+              style="opacity: 0.5"
+            />
+          </div>
+
+          <div class="story-title" style="opacity: 0.5">
+            {storyTitle}
+          </div>
+        </div>
+
+        <div class="step-bar-fullscreen">
+          <button
+            class="step-button"
+            on:click={() => $story?.loadStep(step.step - 1)}
+            style="background-color: rgba(1, 0, 32, 0.1)"
+            disabled={step.step === 1}
+          >
+            <img
+              class="previous-step"
+              src="/icons/step-arrow-fullscreen.png"
+              alt="Back"
+              style="opacity: 0.5"
+            />
+          </button>
+          <p class="step-counter" style="opacity: 0.5">
+            Step {`${step.step < 10 ? "0" : ""}${step.step}`}
+          </p>
+          <button
+            class="step-button"
+            on:click={() => $story?.loadStep(step.step + 1)}
+            style="background-color: rgba(1, 0, 32, 0.1)"
+            disabled={step.step === $story?.maxStep}
+          >
+            <img
+              class="next-step"
+              src="/icons/step-arrow-fullscreen.png"
+              alt="Next"
+              style="transform: rotate(180deg); opacity: 0.5"
+            />
+          </button>
+        </div>
+
+        <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+        <div
+          class="fullscreen-wrapper"
+          on:click={() => fullscreen.update((old) => !old)}
+          role="button"
+          tabindex="0"
+          style="background-color: rgba(1, 0, 32, 0.1)"
+        >
+          <img
+            class="fullscreen"
+            src="/icons/fullscreen-exit.png"
+            alt="Exit fullscreen mode"
+            style="opacity: 0.5"
+          />
+        </div>
+      {/if}
+
+      <!-- MOBILE VIEW -->
+    {:else}
+      <div class="control-bar">
+        <div class="mobile-controls">
+          <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+          <div
+            class="quit-wrapper"
+            on:click={() => window.open("/", "_self")}
+            role="button"
+            tabindex="0"
+          >
+            <img class="quit" src="/icons/quit.png" alt="Quit" />
+          </div>
+
+          <div class="step-bar">
+            <button
+              class="step-button"
+              on:click={() => $story?.loadStep(step.step - 1)}
+              disabled={step.step === 1}
+            >
+              <img
+                class="previous-step"
+                src="/icons/step-arrow.png"
+                alt="Back"
+              />
+            </button>
+            <p class="step-counter">
+              Step {`${step.step < 10 ? "0" : ""}${step.step}`}
+            </p>
+            <button
+              class="step-button"
+              on:click={() => $story?.loadStep(step.step + 1)}
+              disabled={step.step === $story?.maxStep}
+            >
+              <img
+                class="next-step"
+                src="/icons/step-arrow.png"
+                alt="Next"
+                style="transform: rotate(180deg)"
+              />
+            </button>
+          </div>
+
+          <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+          <div
+            class="fullscreen-wrapper"
+            on:click={() => fullscreen.update((old) => !old)}
+            role="button"
+            tabindex="0"
+          >
+            <img
+              class="fullscreen"
+              src={$fullscreen
+                ? "/icons/fullscreen-exit.png"
+                : "/icons/fullscreen.png"}
+              alt={($fullscreen ? "Exit" : "Enter") + " fullscreen mode"}
+            />
+          </div>
+        </div>
+        <div class="mobile-sliders">
+          <Slider src="/icons/volume.png" volume={background_volume} />
+          <Slider src="/icons/voice.png" volume={tts_volume} restartable />
+        </div>
       </div>
+    {/if}
+  </section>
+  {#if width <= 600}
+    <div class="story-title">
+      {storyTitle}
     </div>
-
-    <div class="controls">
-      <Slider {isHidden} src="/icons/volume.png" volume={background_volume} />
-      <Slider
-        {isHidden}
-        src="/icons/voice.png"
-        volume={tts_volume}
-        restartable
-      />
-
-      <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-      <div
-        bind:this={resizeButton}
-        class="resize-wrapper"
-        on:click={() => {
-          isFullsize = !isFullsize;
-        }}
-        role="button"
-        tabindex="0"
-      >
-        <img
-          class="resize"
-          src={isFullsize ? "/icons/smallsize.png" : "/icons/bigsize.png"}
-          alt={isFullsize ? "Big" : "Small"}
-        />
-      </div>
-
-      <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-      <div
-        bind:this={fullscreenButton}
-        class="fullscreen-wrapper"
-        on:click={() => fullscreen.update((old) => !old)}
-        role="button"
-        tabindex="0"
-      >
-        <img
-          class="fullscreen"
-          src={$fullscreen
-            ? "/icons/fullscreen-exit.png"
-            : "/icons/fullscreen.png"}
-          alt={($fullscreen ? "Exit" : "Enter") + " fullscreen mode"}
-        />
-      </div>
-    </div>
-  </div>
+  {/if}
 </div>
 
 <style>
@@ -205,7 +304,7 @@
   .image-wrapper {
     align-self: center;
     width: 95%;
-    height: 50vw;
+    height: auto;
     margin-block: 4vw 2vw;
     margin-inline: auto;
     border: 0.05vw solid rgba(51, 226, 230, 0.25);
@@ -225,7 +324,7 @@
   }
 
   .loading-image {
-    height: 100%;
+    height: 53.4375vw;
     object-fit: contain;
   }
 
@@ -284,6 +383,11 @@
     border: none;
   }
 
+  .active-option {
+    color: rgba(51, 226, 230, 1);
+    filter: drop-shadow(0 0 0.5vw rgba(51, 226, 230, 0.5));
+  }
+
   .menu-option {
     justify-content: center;
   }
@@ -303,6 +407,7 @@
   .option:disabled {
     opacity: 0.5;
     cursor: auto;
+    color: rgba(51, 226, 230, 0.6) !important;
   }
 
   .option:disabled:hover,
@@ -311,21 +416,47 @@
     filter: none;
   }
 
-  .control-bar {
-    width: 91%;
+  .controls-container {
+    position: relative;
+    width: 95%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
     margin-top: 2vw;
-    margin-inline: auto;
     margin-bottom: 4vw;
-    padding: 1vw 2vw;
+    margin-inline: auto;
+  }
+
+  .control-bar,
+  .step-bar {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1vw;
     background-color: rgba(36, 65, 189, 0.75);
     border: 0.05vw solid rgba(51, 226, 230, 0.5);
     border-radius: 1em;
     -webkit-backdrop-filter: blur(1em);
     backdrop-filter: blur(1em);
+  }
+
+  .control-bar {
+    width: 73%;
+  }
+
+  .step-bar {
+    width: 21%;
+  }
+
+  .step-bar-fullscreen {
+    width: 35%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 5vw;
   }
 
   .story-info-container {
@@ -335,8 +466,15 @@
     align-items: center;
   }
 
-  .story-info {
-    font-size: 2vw;
+  .story-title,
+  .step-counter {
+    font-size: 1.75vw;
+    line-height: 3vw;
+    font-weight: normal;
+  }
+
+  .story-title {
+    padding-right: 1rem;
   }
 
   .controls {
@@ -347,8 +485,8 @@
   }
 
   .fullscreen-wrapper,
-  .resize-wrapper,
-  .quit-wrapper {
+  .quit-wrapper,
+  .step-button {
     height: 3.5vw;
     width: 3.5vw;
     display: flex;
@@ -361,28 +499,40 @@
     cursor: pointer;
   }
 
-  .quit-wrapper {
+  .quit-wrapper,
+  .step-button {
     background-color: rgba(51, 226, 230, 0.25);
     margin-right: 2vw;
     flex-shrink: 0;
   }
 
-  .quit {
+  .step-button {
+    margin: 0;
+    height: 4.6vw;
+    width: 4.6vw;
+  }
+
+  .quit,
+  .previous-step,
+  .next-step {
     height: 100%;
   }
 
-  .fullscreen,
-  .resize {
+  .fullscreen {
     height: 2vw;
   }
 
   .fullscreen-wrapper:hover,
   .fullscreen-wrapper:active,
-  .resize-wrapper:hover,
-  .resize-wrapper:active,
   .quit-wrapper:hover,
-  .quit-wrapper:active {
+  .quit-wrapper:active,
+  .step-button:hover,
+  .step-button:active {
     opacity: 0.75 !important;
+  }
+
+  .step-button:disabled {
+    opacity: 0.4 !important;
   }
 
   @media screen and (max-width: 600px) {
@@ -395,7 +545,12 @@
       height: 512px;
     }
 
-    .story-info {
+    .loading-image {
+      height: 512px;
+    }
+
+    .story-title,
+    .step-counter {
       font-size: 1em;
       line-height: 1.5em;
     }
@@ -426,17 +581,56 @@
       height: 1em;
     }
 
+    .controls-container {
+      margin-block: 1em 0.5em;
+    }
+
     .control-bar {
-      margin-top: 1em;
       flex-flow: column nowrap;
       padding: 0.5em;
       gap: 0.5em;
       border-radius: 0.5em;
     }
 
-    .story-info {
+    .control-bar {
+      width: 100%;
+    }
+
+    .step-bar {
+      width: 50%;
+      gap: 0.5em;
+      border-radius: 0.5em;
+    }
+
+    .mobile-controls {
+      width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mobile-sliders {
+      width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .story-title,
+    .step-counter {
       font-size: 1em;
       line-height: 1.5em;
+    }
+
+    .story-title {
+      width: 90%;
+      text-align: center;
+      font-weight: bold;
+      color: rgba(51, 226, 230, 0.75);
+      margin-bottom: 4vw;
+      margin-inline: 5%;
     }
 
     .controls {
@@ -445,28 +639,21 @@
     }
 
     .fullscreen-wrapper,
-    .resize-wrapper,
-    .quit-wrapper {
+    .quit-wrapper,
+    .step-button {
       height: 2em;
       width: 2em;
       padding: 0.1em;
       border-radius: 0.5em;
     }
 
-    .resize-wrapper {
-      display: none;
-    }
-
-    .quit-wrapper {
-      margin-right: 1em;
-    }
-
-    .quit {
+    .quit,
+    .previous-step,
+    .next-step {
       height: 90%;
     }
 
-    .fullscreen,
-    .resize {
+    .fullscreen {
       height: 1em;
     }
   }
@@ -480,8 +667,11 @@
 
     .image-wrapper {
       width: 100rem;
-      max-height: 60rem;
       margin-block: 2rem 1rem;
+    }
+
+    .loading-image {
+      height: 56.25rem;
     }
 
     .story-text,
@@ -522,26 +712,57 @@
       margin-bottom: 2rem;
     }
 
-    .control-bar {
-      width: 96rem;
+    .controls-container {
+      width: 100rem;
       margin-top: 2rem;
-      padding: 1rem 2rem;
     }
 
-    .story-info {
+    .control-bar,
+    .step-bar {
+      padding: 1rem;
+    }
+
+    .control-bar {
+      width: 78%;
+    }
+
+    .step-bar {
+      width: 16%;
+    }
+
+    .step-bar-fullscreen {
+      width: 20%;
+      margin-right: 5rem;
+    }
+
+    .controls {
+      gap: 1rem;
+    }
+
+    .story-title,
+    .step-counter {
       font-size: 1.5rem;
+      line-height: 3rem;
     }
 
     .fullscreen-wrapper,
-    .resize-wrapper,
-    .quit-wrapper {
+    .quit-wrapper,
+    .step-button {
       height: 2rem;
       width: 2rem;
       padding: 0.5rem;
     }
 
-    .fullscreen,
-    .resize {
+    .step-button {
+      height: 3.1rem;
+      width: 3.1rem;
+    }
+
+    .quit-wrapper {
+      margin-right: 2rem;
+    }
+
+    .fullscreen {
       height: 1.5rem;
     }
   }
