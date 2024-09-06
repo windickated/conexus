@@ -1,13 +1,14 @@
-<script>
-  export let showModal;
-  let dialog; // HTMLDialogElement
+<script lang="ts">
+  export let showModal: boolean;
+  let dialog: HTMLDialogElement;
 
   $: if (dialog && showModal) dialog.showModal();
 
-  export let storyDescription;
-  export let descriptionPicture;
-  export let playButton;
-  export let storyLink;
+  export let storyDescription: string;
+  export let descriptionPicture: string;
+  export let playButton: string;
+  export let storyLink: string;
+
   function openGame() {
     window.open(storyLink, "_blank");
   }

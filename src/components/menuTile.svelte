@@ -1,18 +1,20 @@
-<script>
-  export let sectionName;
-  let sectionLink = sectionName.replace(/\s+/g, '');
+<script lang="ts">
+  export let sectionName: string;
+  let sectionLink = sectionName.replace(/\s+/g, "");
 
   const primaryThumbnail = `/titlePicture/${sectionLink}1.avif`;
   const secondaryThumbnail = `/titlePicture/${sectionLink}2.avif`;
 
-  let isPrimary = true;
+  let isPrimary: boolean = true;
   function tileHover() {
     isPrimary = !isPrimary;
   }
 </script>
 
-
-<a class="tile" id="{sectionName}" href="/{sectionLink}"
+<a
+  class="tile"
+  id={sectionName}
+  href="/{sectionLink}"
   on:mouseenter={tileHover}
   on:mouseleave={tileHover}
   on:touchstart={tileHover}
@@ -21,18 +23,17 @@
   <img
     class="tile-picture {isPrimary ? 'visible' : ''}"
     src={primaryThumbnail}
-    alt="{sectionName}"
+    alt={sectionName}
     draggable="false"
   />
   <img
     class="tile-picture {!isPrimary ? 'visible' : ''}"
     src={secondaryThumbnail}
-    alt="{sectionName}"
+    alt={sectionName}
     draggable="false"
   />
-  <p class="title">{ sectionName }</p>
+  <p class="title">{sectionName}</p>
 </a>
-
 
 <style>
   .tile {
@@ -53,7 +54,8 @@
     text-decoration: none;
   }
 
-  .tile:hover, .tile:active {
+  .tile:hover,
+  .tile:active {
     background-color: rgba(51, 226, 230, 0.3);
     color: #010020;
     filter: drop-shadow(0 0 0.5vw #33e2e6);
@@ -80,7 +82,6 @@
     white-space: nowrap;
     text-shadow: 0 0 1vw #010020;
   }
-
 
   @media only screen and (max-width: 600px) {
     .tile {

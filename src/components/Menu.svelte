@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { writable } from "svelte/store";
 
   import Intro from "@components/Intro.svelte";
@@ -10,13 +10,13 @@
   import { story, loading } from "@stores/conexus";
   import { authenticated, web3LoggedIn } from "@stores/account";
 
-  let isLogged;
+  let isLogged: boolean;
 
   authenticated.subscribe((value) => {
     isLogged = value.loggedIn;
   });
 
-  let showDeleteModal = writable(false);
+  let showDeleteModal = writable<boolean>(false);
   let selectedStory;
 
   function openModal(story) {
@@ -53,7 +53,7 @@
                   on:click|preventDefault={() => openModal(continuable)}
                   disabled={$loading}
                 />
-                <div value="" id="continue-shaping">
+                <div id="continue-shaping">
                   <p>
                     {continuable.category} - {continuable.story_id.split(
                       "-"
@@ -74,9 +74,10 @@
 
         {#if selectedStory}
           <Modal bind:showModal={$showDeleteModal}>
-            <h2 slot="header" class="modal-text">
+            <h2 class="modal-text">
               Are you sure you want to delete this story?
             </h2>
+            <hr />
             <p class="modal-text">
               This action is irreversible. You will lose all progress on this
               story.
@@ -105,6 +106,11 @@
 {/if}
 
 <style>
+  hr {
+    margin: 2vw 0;
+    border: 0.1vw solid rgba(51, 226, 230, 0.5);
+  }
+
   .continue-shaping-delete,
   .continue-shaping-play {
     padding: 0;
@@ -187,8 +193,8 @@
   }
 
   .modal-text {
-    font-size: 2.5vw;
-    line-height: 5vw;
+    font-size: 2vw;
+    line-height: 4vw;
     text-align: center;
     padding: 1vw 0;
   }
@@ -200,7 +206,7 @@
     padding: 1vw 2vw;
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
     border-radius: 2vw;
-    font-size: 3vw;
+    font-size: 2.5vw;
     line-height: 5vw;
     color: rgba(51, 226, 230, 0.75);
     background-color: rgba(51, 226, 230, 0.1);

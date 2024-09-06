@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Account from "@lib/auth";
   import { CoNexus } from "@lib/conexus";
   import {
@@ -16,72 +16,75 @@
     Account.cookie();
   });
 
-  let showModal;
-  let dialog; // HTMLDialogElement
+  let showModal: boolean;
+  let dialog: HTMLDialogElement;
 
   $: if (dialog && showModal) dialog.showModal();
 
-  let isLogged;
-  let isLoggedWithEmail;
-  let user;
+  let isLogged: boolean;
+  let isLoggedWithEmail: boolean;
+
+  let user: any;
+  let loginMail: HTMLInputElement;
+  let loginPassword: HTMLInputElement;
+
+  let signUp: boolean = false;
+  let signUpRefCode: boolean;
+  let signUpWithEmail: boolean;
 
   authenticated.subscribe((value) => {
     user = value.user;
     isLogged = value.loggedIn;
   });
 
+  $: if (isLogged) {
+    Account.referraLCodes();
+  }
+
   let refCodes;
   referralCodes.subscribe((codes) => {
     refCodes = codes;
   });
 
-  let walletAddress;
+  function copyRefCode(event) {
+    navigator.clipboard.writeText(event.target.id);
+  }
+
+  let walletAddress: string;
 
   wallet.subscribe((value) => {
     walletAddress = value;
   });
 
-  let signUp = false;
-  let signUpRefCode;
-  let signUpWithEmail;
-
-  $: if (isLogged) {
-    Account.referraLCodes();
+  function connectWallet() {
+    Account.log_in();
   }
 
-  function copyRefCode(event) {
-    navigator.clipboard.writeText(event.target.id);
-  }
-
-  const passwordVisible = () =>
-    (document.getElementById("password").type = "text");
-  const passwordInvisible = () =>
-    (document.getElementById("password").type = "password");
-
-  function validate(event) {
-    const mandatoryCheckbox = document.getElementById("terms");
-    const submitButton = document.querySelector(".submit-button");
-    console.log(submitButton);
+  let mandatoryCheckbox: HTMLInputElement;
+  let createAccountButton: HTMLButtonElement;
+  function validate() {
     if (mandatoryCheckbox.checked) {
-      submitButton.disabled = false;
+      createAccountButton.disabled = false;
     } else {
-      submitButton.disabled = true;
+      createAccountButton.disabled = true;
     }
   }
 
+  let firstNameInput: HTMLInputElement;
+  let lastNameInput: HTMLInputElement;
+  let passwordInput: HTMLInputElement;
+  let passwordConfirmInput: HTMLInputElement;
+  let passwordConfirmLabel: HTMLLabelElement;
+  let passwordMatchValidation: HTMLParagraphElement;
+  let editUsernameBtn: HTMLButtonElement;
+  let editPasswordBtn: HTMLButtonElement;
+
+  const passwordVisible = () => (passwordInput.type = "text");
+  const passwordInvisible = () => (passwordInput.type = "password");
+
   let isEditing = false;
-  function changeUserData(event) {
-    let editUsernameBtn = document.querySelector(".edit-username");
-    let editPasswordBtn = document.querySelector(".edit-password");
-    let firstNameInput = document.getElementById("first-name");
-    let lastNameInput = document.getElementById("last-name");
-    let passwordInput = document.getElementById("password");
-    let passwordConfirmLabel = document.getElementById(
-      "password-confirmation-label"
-    );
-    let passwordConfirmInput = document.getElementById("password-confirmation");
-    let validationWarn = document.querySelector(".validation-check");
-    if (event.target.className.match("username")) {
+  function changeUserData(event: Event) {
+    if (this.className.match("username")) {
       if (!isEditing) {
         isEditing = true;
         editUsernameBtn.innerHTML = "Save";
@@ -99,7 +102,7 @@
         lastNameInput.disabled = true;
         lastNameInput.style.border = "0.05vw solid rgba(51, 226, 230, 0.5)";
       }
-    } else if (event.target.className.match("password")) {
+    } else if (this.className.match("password")) {
       if (!isEditing) {
         isEditing = true;
         editUsernameBtn.style.display = "none";
@@ -110,7 +113,7 @@
         passwordConfirmLabel.style.display = "block";
       } else {
         if (passwordInput.value != passwordConfirmInput.value) {
-          validationWarn.style.display = "block";
+          passwordMatchValidation.style.display = "block";
           event.preventDefault();
         } else {
           isEditing = false;
@@ -120,14 +123,10 @@
           passwordInput.style.border = "0.05vw solid rgba(51, 226, 230, 0.5)";
           passwordConfirmInput.style.display = "none";
           passwordConfirmLabel.style.display = "none";
-          validationWarn.style.display = "none";
+          passwordMatchValidation.style.display = "none";
         }
       }
     }
-  }
-
-  function connectWallet() {
-    Account.log_in();
   }
 </script>
 
@@ -224,6 +223,7 @@
           <label for="password" class="user-prop">Password</label>
           <div class="password-container">
             <input
+              bind:this={passwordInput}
               class="user-prop-value"
               id="password"
               type="password"
@@ -267,7 +267,9 @@
         </div>
       </div>
 
-      <p class="validation-check">Passwords do not match!</p>
+      <p bind:this={passwordMatchValidation} class="validation-check">
+        Passwords do not match!
+      </p>
 
       <div class="edit-buttons">
         <button class="edit-username" on:click={changeUserData}>
@@ -373,6 +375,7 @@
           <form class="login-form">
             <label class="input-label" for="user-mail">Email</label>
             <input
+              bind:this={loginMail}
               class="user-input"
               type="email"
               id="user-mail"
@@ -381,6 +384,7 @@
             />
             <label class="input-label" for="user-password">Password</label>
             <input
+              bind:this={loginPassword}
               class="user-input"
               type="password"
               id="user-password"
@@ -394,8 +398,8 @@
               type="submit"
               on:click={() =>
                 Account.signin({
-                  email: document.getElementById("user-mail").value,
-                  password: document.getElementById("user-password").value,
+                  email: loginMail.value,
+                  password: loginPassword.value,
                 })}>Sign in</button
             >
           </form>
@@ -517,7 +521,12 @@
             />
             <div class="agreements-container">
               <div class="agreement">
-                <input type="checkbox" id="terms" on:click={validate} />
+                <input
+                  bind:this={mandatoryCheckbox}
+                  type="checkbox"
+                  id="terms"
+                  on:click={validate}
+                />
                 <label for="terms" class="terms">
                   * I have read and agree to the <a
                     href="https://docs.google.com/document/d/1fEemq6HVM_h8ZTbc_Fl_k3RvlPdjYd70TI1iloT5gXA/edit?usp=sharing"
@@ -536,6 +545,7 @@
             </div>
             <p class="validation-check">Fill in all required fields!</p>
             <button
+              bind:this={createAccountButton}
               class="submit-button"
               on:click={() => {
                 isLogged = true;

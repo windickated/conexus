@@ -1,20 +1,20 @@
-<script>
+<script lang="ts">
   import PopupTile from "./popupTile.svelte";
 
-  export let storyName;
-  export let storyDescription;
-  export let storyLink;
-  export let primaryThumbnail;
-  export let secondaryThumbnail;
-  export let descriptionPicture;
-  export let playButton;
+  export let storyName: string;
+  export let storyDescription: string;
+  export let storyLink: string;
+  export let primaryThumbnail: string;
+  export let secondaryThumbnail: string;
+  export let descriptionPicture: string;
+  export let playButton: string;
 
-  let isPrimary = true;
+  let isPrimary: boolean = true;
   function tileHover() {
     isPrimary = !isPrimary;
   }
 
-  let showModal = false;
+  let showModal: boolean = false;
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
