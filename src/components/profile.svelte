@@ -239,17 +239,20 @@
             />
           </div>
           <label
-            for="first-name"
+            bind:this={passwordConfirmLabel}
+            for="password-confirmation"
             class="user-prop"
             id="password-confirmation-label">Confirm password</label
           >
           <input
+            bind:this={passwordConfirmInput}
             class="user-prop-value"
             id="password-confirmation"
             type="password"
           />
           <label for="first-name" class="user-prop">First name</label>
           <input
+            bind:this={firstNameInput}
             class="user-prop-value"
             id="first-name"
             type="text"
@@ -258,6 +261,7 @@
           />
           <label for="last-name" class="user-prop">Last name</label>
           <input
+            bind:this={lastNameInput}
             class="user-prop-value"
             id="last-name"
             type="text"
@@ -272,10 +276,18 @@
       </p>
 
       <div class="edit-buttons">
-        <button class="edit-username" on:click={changeUserData}>
+        <button
+          bind:this={editUsernameBtn}
+          class="edit-username"
+          on:click={changeUserData}
+        >
           Change name
         </button>
-        <button class="edit-password" on:click={changeUserData}>
+        <button
+          bind:this={editPasswordBtn}
+          class="edit-password"
+          on:click={changeUserData}
+        >
           Change password
         </button>
       </div>
