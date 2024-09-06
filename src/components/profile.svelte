@@ -78,54 +78,27 @@
   let passwordMatchValidation: HTMLParagraphElement;
   let editUsernameBtn: HTMLButtonElement;
   let editPasswordBtn: HTMLButtonElement;
+  let saveChangesBtn: HTMLButtonElement;
 
   const passwordVisible = () => (passwordInput.type = "text");
   const passwordInvisible = () => (passwordInput.type = "password");
 
-  let isEditing = false;
-  function changeUserData(event: Event) {
+  let isEditing: "username" | "password" | boolean = false;
+  function changeUserData() {
     if (this.className.match("username")) {
-      if (!isEditing) {
-        isEditing = true;
-        editUsernameBtn.innerHTML = "Save";
-        editPasswordBtn.style.display = "none";
-        firstNameInput.disabled = false;
-        firstNameInput.style.border = "0.2vw solid rgba(51, 226, 230, 0.9)";
-        lastNameInput.disabled = false;
-        lastNameInput.style.border = "0.2vw solid rgba(51, 226, 230, 0.9)";
-      } else {
-        isEditing = false;
-        editUsernameBtn.innerHTML = "Change name";
-        editPasswordBtn.style.display = "block";
-        firstNameInput.disabled = true;
-        firstNameInput.style.border = "0.05vw solid rgba(51, 226, 230, 0.5)";
-        lastNameInput.disabled = true;
-        lastNameInput.style.border = "0.05vw solid rgba(51, 226, 230, 0.5)";
-      }
+      isEditing = "username";
     } else if (this.className.match("password")) {
-      if (!isEditing) {
-        isEditing = true;
-        editUsernameBtn.style.display = "none";
-        editPasswordBtn.innerHTML = "Save";
-        passwordInput.disabled = false;
-        passwordInput.style.border = "0.2vw solid rgba(51, 226, 230, 0.75)";
-        passwordConfirmInput.style.display = "block";
-        passwordConfirmLabel.style.display = "block";
-      } else {
+      isEditing = "password";
+    } else if (this.className.match("save")) {
+      if (isEditing === "password") {
         if (passwordInput.value != passwordConfirmInput.value) {
           passwordMatchValidation.style.display = "block";
-          event.preventDefault();
+          throw new Error("Passwords do not match!");
         } else {
-          isEditing = false;
-          editUsernameBtn.style.display = "block";
-          editPasswordBtn.innerHTML = "Change password";
-          passwordInput.disabled = true;
-          passwordInput.style.border = "0.05vw solid rgba(51, 226, 230, 0.5)";
-          passwordConfirmInput.style.display = "none";
-          passwordConfirmLabel.style.display = "none";
           passwordMatchValidation.style.display = "none";
         }
       }
+      isEditing = false;
     }
   }
 </script>
@@ -228,7 +201,10 @@
               id="password"
               type="password"
               value={user.password}
-              disabled
+              disabled={isEditing === "password" ? false : true}
+              style={isEditing === "password"
+                ? "border: 0.2vw solid rgba(51, 226, 230, 0.75)"
+                : ""}
             />
             <button
               class="password-visibility-button"
@@ -238,18 +214,20 @@
               on:touchend={passwordInvisible}
             />
           </div>
-          <label
-            bind:this={passwordConfirmLabel}
-            for="password-confirmation"
-            class="user-prop"
-            id="password-confirmation-label">Confirm password</label
-          >
-          <input
-            bind:this={passwordConfirmInput}
-            class="user-prop-value"
-            id="password-confirmation"
-            type="password"
-          />
+          {#if isEditing === "password"}
+            <label
+              bind:this={passwordConfirmLabel}
+              for="password-confirmation"
+              class="user-prop"
+              id="password-confirmation-label">Confirm password</label
+            >
+            <input
+              bind:this={passwordConfirmInput}
+              class="user-prop-value"
+              id="password-confirmation"
+              type="password"
+            />
+          {/if}
           <label for="first-name" class="user-prop">First name</label>
           <input
             bind:this={firstNameInput}
@@ -257,7 +235,10 @@
             id="first-name"
             type="text"
             value={user.first_name}
-            disabled
+            disabled={isEditing === "username" ? false : true}
+            style={isEditing === "username"
+              ? "border: 0.2vw solid rgba(51, 226, 230, 0.75)"
+              : ""}
           />
           <label for="last-name" class="user-prop">Last name</label>
           <input
@@ -266,7 +247,10 @@
             id="last-name"
             type="text"
             value={user.last_name}
-            disabled
+            disabled={isEditing === "username" ? false : true}
+            style={isEditing === "username"
+              ? "border: 0.2vw solid rgba(51, 226, 230, 0.75)"
+              : ""}
           />
         </div>
       </div>
@@ -276,20 +260,30 @@
       </p>
 
       <div class="edit-buttons">
-        <button
-          bind:this={editUsernameBtn}
-          class="edit-username"
-          on:click={changeUserData}
-        >
-          Change name
-        </button>
-        <button
-          bind:this={editPasswordBtn}
-          class="edit-password"
-          on:click={changeUserData}
-        >
-          Change password
-        </button>
+        {#if isEditing}
+          <button
+            bind:this={saveChangesBtn}
+            class="save-changes"
+            on:click={changeUserData}
+          >
+            Save
+          </button>
+        {:else}
+          <button
+            bind:this={editUsernameBtn}
+            class="edit-username"
+            on:click={changeUserData}
+          >
+            Change name
+          </button>
+          <button
+            bind:this={editPasswordBtn}
+            class="edit-password"
+            on:click={changeUserData}
+          >
+            Change password
+          </button>
+        {/if}
       </div>
 
       <hr />
@@ -875,11 +869,6 @@
     margin-bottom: 0;
   }
 
-  #password-confirmation-label,
-  #password-confirmation {
-    display: none;
-  }
-
   #password-confirmation {
     border: 0.2vw solid rgba(51, 226, 230, 0.75);
   }
@@ -904,7 +893,8 @@
   }
 
   .edit-username,
-  .edit-password {
+  .edit-password,
+  .save-changes {
     margin: 2vw 1vw;
     font-size: 1.75vw;
     line-height: 2vw;
@@ -1145,7 +1135,8 @@
     }
 
     .edit-username,
-    .edit-password {
+    .edit-password,
+    .save-changes {
       margin: 1em 0.5em;
       font-size: 1em;
       line-height: 2em;
