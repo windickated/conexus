@@ -41,6 +41,29 @@
     }
   }
 
+  const alternativeSignIn = {
+    google: () => {
+      console.log("Sign in with Google");
+    },
+    coinbaseWallet: () => {
+      console.log("Sign in with Coinbase Smart Wallet");
+    },
+    browserWallet: () => {
+      console.log("Sign in with browser wallet");
+    },
+  };
+  const alternativeSignUp = {
+    google: () => {
+      console.log("Sign up with Google");
+    },
+    coinbaseWallet: () => {
+      console.log("Sign up with Coinbase Smart Wallet");
+    },
+    browserWallet: () => {
+      console.log("Sign up with browser wallet");
+    },
+  };
+
   authenticated.subscribe((value) => {
     user = value.user;
     isLogged = value.loggedIn;
@@ -380,7 +403,7 @@
             </form>
           {:else}
             <div class="buttons-container">
-              <button class="sign-button">
+              <button class="sign-button" on:click={alternativeSignIn.google}>
                 <img class="sign-icon" src="/icons/google.png" alt="Google" />
                 <p class="sign-lable">with Google</p>
               </button>
@@ -393,11 +416,17 @@
                 <img class="sign-icon" src="/icons/email.png" alt="Google" />
                 <p class="sign-lable">with email</p>
               </button>
-              <button class="sign-button">
+              <button
+                class="sign-button"
+                on:click={alternativeSignIn.coinbaseWallet}
+              >
                 <img class="sign-icon" src="/icons/coinbase.png" alt="Google" />
                 <p class="sign-lable">with Coinbase Smart Wallet</p></button
               >
-              <button class="sign-button">
+              <button
+                class="sign-button"
+                on:click={alternativeSignIn.browserWallet}
+              >
                 <img
                   class="sign-icon"
                   src="/icons/walletconnect.png"
@@ -503,7 +532,7 @@
             </form>
           {:else if signUpRefCodeEntered}
             <div class="buttons-container">
-              <button class="sign-button">
+              <button class="sign-button" on:click={alternativeSignUp.google}>
                 <img class="sign-icon" src="/icons/google.png" alt="Google" />
                 <p class="sign-lable">with Google</p>
               </button>
@@ -516,11 +545,17 @@
                 <img class="sign-icon" src="/icons/email.png" alt="Google" />
                 <p class="sign-lable">with email</p>
               </button>
-              <button class="sign-button">
+              <button
+                class="sign-button"
+                on:click={alternativeSignUp.coinbaseWallet}
+              >
                 <img class="sign-icon" src="/icons/coinbase.png" alt="Google" />
                 <p class="sign-lable">with Coinbase Smart Wallet</p></button
               >
-              <button class="sign-button">
+              <button
+                class="sign-button"
+                on:click={alternativeSignUp.browserWallet}
+              >
                 <img
                   class="sign-icon"
                   src="/icons/walletconnect.png"
