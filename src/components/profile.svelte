@@ -22,15 +22,24 @@
   $: if (dialog && showModal) dialog.showModal();
 
   let isLogged: boolean;
-  let isLoggedWithEmail: boolean;
+  let signUp: boolean;
 
-  let user: any;
+  let user;
   let loginMail: HTMLInputElement;
   let loginPassword: HTMLInputElement;
 
-  let signUp: boolean = false;
-  let signUpRefCode: boolean;
+  let signInWithEmail: boolean;
+  let signUpRefCodeEntered: boolean;
   let signUpWithEmail: boolean;
+  function closeProfileWindow() {
+    dialog.close();
+    if (!isLogged) {
+      signUp = false;
+      signInWithEmail = false;
+      signUpRefCodeEntered = false;
+      signUpWithEmail = false;
+    }
+  }
 
   authenticated.subscribe((value) => {
     user = value.user;
@@ -116,26 +125,14 @@
   class="profile-container"
   bind:this={dialog}
   on:close={() => (showModal = false)}
-  on:click|self={() => {
-    dialog.close();
-    signUp = false;
-    isLoggedWithEmail = false;
-    signUpRefCode = false;
-    signUpWithEmail = false;
-  }}
+  on:click|self={closeProfileWindow}
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div on:click|stopPropagation>
     <div class="profile-navigation">
       <button
         class="close-button"
-        on:click|stopPropagation={() => {
-          dialog.close();
-          signUp = false;
-          isLoggedWithEmail = false;
-          signUpRefCode = false;
-          signUpWithEmail = false;
-        }}
+        on:click|stopPropagation={closeProfileWindow}
       >
         ❌
       </button>
@@ -149,9 +146,8 @@
       {/if}
     </div>
 
-    <!-- USER PROFILE -->
-
     {#if isLogged}
+      <!-- USER PROFILE -->
       {#if $web3LoggedIn}
         <hr />
         {#await CoNexus.available()}
@@ -341,224 +337,222 @@
           Get referral codes
         </button>
       {/if}
-
-      <!-- SIGNIN WINDOW -->
-    {:else if !isLogged && !signUp}
+    {:else if !isLogged}
       <section class="signin">
-        <p class="sign-title">Sign in</p>
+        <p class="sign-title">{signUp ? "Sign up" : "Sign in"}</p>
 
         <hr />
 
-        {#if !isLoggedWithEmail}
-          <div class="buttons-container">
-            <button class="sign-button">
-              <img class="sign-icon" src="/icons/google.png" alt="Google" />
-              <p class="sign-lable">with Google</p>
-            </button>
-            <button
-              class="sign-button"
-              on:click={() => {
-                isLoggedWithEmail = true;
-              }}
-            >
-              <img class="sign-icon" src="/icons/email.png" alt="Google" />
-              <p class="sign-lable">with email</p>
-            </button>
-            <button class="sign-button">
-              <img class="sign-icon" src="/icons/coinbase.png" alt="Google" />
-              <p class="sign-lable">with Coinbase Smart Wallet</p></button
-            >
-            <button class="sign-button">
-              <img
-                class="sign-icon"
-                src="/icons/walletconnect.png"
-                alt="Google"
+        {#if !signUp}
+          <!-- SIGNIN WINDOW -->
+
+          {#if signInWithEmail}
+            <form class="login-form">
+              <label class="input-label" for="user-mail">Email</label>
+              <input
+                bind:this={loginMail}
+                class="user-input"
+                type="email"
+                id="user-mail"
+                placeholder="Enter your email"
+                required
               />
-              <p class="sign-lable">with browser wallet</p></button
-            >
-          </div>
-        {:else}
-          <form class="login-form">
-            <label class="input-label" for="user-mail">Email</label>
-            <input
-              bind:this={loginMail}
-              class="user-input"
-              type="email"
-              id="user-mail"
-              placeholder="Enter your email"
-              required
-            />
-            <label class="input-label" for="user-password">Password</label>
-            <input
-              bind:this={loginPassword}
-              class="user-input"
-              type="password"
-              id="user-password"
-              placeholder="Enter your password"
-              minlength="8"
-              required
-            />
-            <p class="validation-check">Invalid credentials!</p>
-            <button
-              class="submit-button"
-              type="submit"
-              on:click={() =>
-                Account.signin({
-                  email: loginMail.value,
-                  password: loginPassword.value,
-                })}>Sign in</button
-            >
-          </form>
-        {/if}
-      </section>
-
-      <hr />
-
-      <p class="signup-label">Don't have an existing CoNexus account?</p>
-
-      <div class="buttons-container">
-        <button
-          class="sign-button"
-          on:click={() => {
-            signUp = true;
-          }}
-        >
-          <p class="sign-lable">Sign Up</p>
-        </button>
-      </div>
-
-      <!-- SIGNUP WINDOW -->
-    {:else if !isLogged && signUp}
-      <section class="signin">
-        <p class="sign-title">Sign up</p>
-
-        <hr />
-
-        {#if signUpRefCode && !signUpWithEmail}
-          <div class="buttons-container">
-            <button class="sign-button">
-              <img class="sign-icon" src="/icons/google.png" alt="Google" />
-              <p class="sign-lable">with Google</p>
-            </button>
-            <button
-              class="sign-button"
-              on:click={() => {
-                signUpWithEmail = true;
-              }}
-            >
-              <img class="sign-icon" src="/icons/email.png" alt="Google" />
-              <p class="sign-lable">with email</p>
-            </button>
-            <button class="sign-button">
-              <img class="sign-icon" src="/icons/coinbase.png" alt="Google" />
-              <p class="sign-lable">with Coinbase Smart Wallet</p></button
-            >
-            <button class="sign-button">
-              <img
-                class="sign-icon"
-                src="/icons/walletconnect.png"
-                alt="Google"
+              <label class="input-label" for="user-password">Password</label>
+              <input
+                bind:this={loginPassword}
+                class="user-input"
+                type="password"
+                id="user-password"
+                placeholder="Enter your password"
+                minlength="8"
+                required
               />
-              <p class="sign-lable">with browser wallet</p></button
-            >
-          </div>
-        {:else if !signUpWithEmail}
-          <form class="ref-code-form">
-            <p class="signup-label">Enter your referral code:</p>
-            <input
-              class="user-input"
-              type="text"
-              id="refferal-code"
-              placeholder="A11A7528D9C82915 "
-              minlength="16"
-              maxlength="16"
-              required
-            />
-            <p class="signup-label">
-              Don't have one yet? Find yours <a
-                href="https://discord.gg/349FgMSUK8">here</a
-              >!
-            </p>
-            <button
-              class="submit-button"
-              type="submit"
-              on:click={() => (signUpRefCode = true)}>Done</button
-            >
-          </form>
-        {:else}
-          <form class="signup-form">
-            <label class="input-label" for="new-user-mail">Mail</label>
-            <input
-              class="user-input"
-              type="email"
-              id="new-user-mail"
-              placeholder="Your email"
-              required
-            />
-            <label class="input-label" for="new-user-password">Password</label>
-            <input
-              class="user-input"
-              type="password"
-              id="new-user-password"
-              placeholder="Your password"
-              minlength="8"
-              required
-            />
-            <input
-              class="user-input"
-              type="password"
-              id="confirm-new-user-password"
-              placeholder="Confirm password"
-              required
-            />
-            <label class="input-label" for="user-first-name">First name</label>
-            <input
-              class="user-input"
-              type="text"
-              id="user-first-name"
-              placeholder="Your First name"
-            />
-            <label class="input-label" for="user-last-name">Last name</label>
-            <input
-              class="user-input"
-              type="text"
-              id="user-last-name"
-              placeholder="Your Last name"
-            />
-            <div class="agreements-container">
-              <div class="agreement">
-                <input
-                  bind:this={mandatoryCheckbox}
-                  type="checkbox"
-                  id="terms"
-                  on:click={validate}
+              <p class="validation-check">Invalid credentials!</p>
+              <button
+                class="submit-button"
+                type="submit"
+                on:click={() =>
+                  Account.signin({
+                    email: loginMail.value,
+                    password: loginPassword.value,
+                  })}>Sign in</button
+              >
+            </form>
+          {:else}
+            <div class="buttons-container">
+              <button class="sign-button">
+                <img class="sign-icon" src="/icons/google.png" alt="Google" />
+                <p class="sign-lable">with Google</p>
+              </button>
+              <button
+                class="sign-button"
+                on:click={() => {
+                  signInWithEmail = true;
+                }}
+              >
+                <img class="sign-icon" src="/icons/email.png" alt="Google" />
+                <p class="sign-lable">with email</p>
+              </button>
+              <button class="sign-button">
+                <img class="sign-icon" src="/icons/coinbase.png" alt="Google" />
+                <p class="sign-lable">with Coinbase Smart Wallet</p></button
+              >
+              <button class="sign-button">
+                <img
+                  class="sign-icon"
+                  src="/icons/walletconnect.png"
+                  alt="Google"
                 />
-                <label for="terms" class="terms">
-                  * I have read and agree to the <a
-                    href="https://docs.google.com/document/d/1fEemq6HVM_h8ZTbc_Fl_k3RvlPdjYd70TI1iloT5gXA/edit?usp=sharing"
-                    target="_blank"
-                  >
-                    Terms of Service</a
-                  >.
-                </label>
-              </div>
-              <div class="agreement">
-                <input type="checkbox" id="newsletter" />
-                <label for="newsletter" class="newsletter">
-                  I'd like to receive news 1-4 times a month.
-                </label>
-              </div>
+                <p class="sign-lable">with browser wallet</p></button
+              >
             </div>
-            <p class="validation-check">Fill in all required fields!</p>
-            <button
-              bind:this={createAccountButton}
-              class="submit-button"
-              on:click={() => {
-                isLogged = true;
-              }}
-              disabled>Create account</button
-            >
-          </form>
+
+            <hr />
+
+            <p class="signup-label">Don't have an existing CoNexus account?</p>
+
+            <div class="buttons-container">
+              <button
+                class="sign-button"
+                on:click={() => {
+                  signUp = true;
+                }}
+              >
+                <p class="sign-lable">Sign Up</p>
+              </button>
+            </div>
+          {/if}
+        {:else}
+          <!-- SIGNUP WINDOW -->
+
+          {#if signUpWithEmail}
+            <form class="signup-form">
+              <label class="input-label" for="new-user-mail">Mail</label>
+              <input
+                class="user-input"
+                type="email"
+                id="new-user-mail"
+                placeholder="Your email"
+                required
+              />
+              <label class="input-label" for="new-user-password">Password</label
+              >
+              <input
+                class="user-input"
+                type="password"
+                id="new-user-password"
+                placeholder="Your password"
+                minlength="8"
+                required
+              />
+              <input
+                class="user-input"
+                type="password"
+                id="confirm-new-user-password"
+                placeholder="Confirm password"
+                required
+              />
+              <label class="input-label" for="user-first-name">First name</label
+              >
+              <input
+                class="user-input"
+                type="text"
+                id="user-first-name"
+                placeholder="Your First name"
+              />
+              <label class="input-label" for="user-last-name">Last name</label>
+              <input
+                class="user-input"
+                type="text"
+                id="user-last-name"
+                placeholder="Your Last name"
+              />
+              <div class="agreements-container">
+                <div class="agreement">
+                  <input
+                    bind:this={mandatoryCheckbox}
+                    type="checkbox"
+                    id="terms"
+                    on:click={validate}
+                  />
+                  <label for="terms" class="terms">
+                    * I have read and agree to the <a
+                      href="https://docs.google.com/document/d/1fEemq6HVM_h8ZTbc_Fl_k3RvlPdjYd70TI1iloT5gXA/edit?usp=sharing"
+                      target="_blank"
+                    >
+                      Terms of Service</a
+                    >.
+                  </label>
+                </div>
+                <div class="agreement">
+                  <input type="checkbox" id="newsletter" />
+                  <label for="newsletter" class="newsletter">
+                    I'd like to receive news 1-4 times a month.
+                  </label>
+                </div>
+              </div>
+              <p class="validation-check">Fill in all required fields!</p>
+              <button
+                bind:this={createAccountButton}
+                class="submit-button"
+                on:click={() => {
+                  isLogged = true;
+                }}
+                disabled>Create account</button
+              >
+            </form>
+          {:else if signUpRefCodeEntered}
+            <div class="buttons-container">
+              <button class="sign-button">
+                <img class="sign-icon" src="/icons/google.png" alt="Google" />
+                <p class="sign-lable">with Google</p>
+              </button>
+              <button
+                class="sign-button"
+                on:click={() => {
+                  signUpWithEmail = true;
+                }}
+              >
+                <img class="sign-icon" src="/icons/email.png" alt="Google" />
+                <p class="sign-lable">with email</p>
+              </button>
+              <button class="sign-button">
+                <img class="sign-icon" src="/icons/coinbase.png" alt="Google" />
+                <p class="sign-lable">with Coinbase Smart Wallet</p></button
+              >
+              <button class="sign-button">
+                <img
+                  class="sign-icon"
+                  src="/icons/walletconnect.png"
+                  alt="Google"
+                />
+                <p class="sign-lable">with browser wallet</p></button
+              >
+            </div>
+          {:else}
+            <form class="ref-code-form">
+              <p class="signup-label">Enter your referral code:</p>
+              <input
+                class="user-input"
+                type="text"
+                id="refferal-code"
+                placeholder="A11A7528D9C82915 "
+                minlength="16"
+                maxlength="16"
+                required
+              />
+              <p class="signup-label">
+                Don't have one yet? Find yours <a
+                  href="https://discord.gg/349FgMSUK8">here</a
+                >!
+              </p>
+              <button
+                class="submit-button"
+                type="submit"
+                on:click={() => (signUpRefCodeEntered = true)}>Done</button
+              >
+            </form>
+          {/if}
         {/if}
       </section>
     {/if}
