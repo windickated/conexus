@@ -1,6 +1,6 @@
 <script lang="ts">
   import stories from "../data/stories.ts";
-  import MenuTile from "@components/menuTile.svelte";
+  import MenuTile from "@components/MenuTile.svelte";
 
   const sections: string[] = [];
   stories.map((story, i) => (sections[i] = story.section));
