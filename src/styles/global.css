@@ -139,6 +139,7 @@ a {
 }
 
 .filter {
+  position: relative;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -156,12 +157,34 @@ a {
   opacity: 0.8;
 }
 
+.genres-list {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 10vw 10vw 10vw;
+  row-gap: 1vw;
+  justify-items: center;
+  padding: 1vw;
+}
+
+.genre {
+  font-size: 1.5vw;
+  line-height: 2vw;
+}
+
+.genre:hover,
+.genre:active {
+  color: rgb(51, 226, 230);
+  filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.25));
+}
+
 .search-field {
   margin-left: 1vw;
   font-size: 2vw;
   line-height: 2.5vw;
   color: rgba(51, 226, 230, 0.9);
-  background-color: rgba(51, 226, 230, 0.25);
+  background-color: rgba(51, 226, 230, 0.2);
   border: 0.1vw solid rgba(51, 226, 230, 0.5);
   border-radius: 0.5vw;
   outline: none;
@@ -175,6 +198,7 @@ a {
 
 .search-field:focus {
   width: 20vw;
+  background-color: rgba(51, 226, 230, 0.3);
 }
 
 @media only screen and (max-width: 600px) {

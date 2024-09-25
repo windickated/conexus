@@ -11,8 +11,8 @@ const stories = [
               Play as Achilles to shape the destiny of the Greeks and Trojans while fighting to claim justice for your fallen comrade Patroclus, and avenge the slight against your honor when the beautiful Helen is stolen.
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar.avif',
-            descriptionImage: '/descriptionPicture/CommunityPicks/TrojanWar.avif',
+            primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
+            descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
               'Action', 'Romance', 'Sci-Fi', 'Fantasy', 'Horror', 'Thriller', 'Comedy', 'History', 'Drama', 'Mystery', 'Sport', 'Biopic', 'Psychological', 'War', 'Crime'
             ]
@@ -23,8 +23,8 @@ const stories = [
               History genre
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar.avif',
-            descriptionImage: '/descriptionPicture/CommunityPicks/TrojanWar.avif',
+            primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
+            descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
               'History'
             ]
@@ -35,8 +35,8 @@ const stories = [
               Action + Romance genre
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar.avif',
-            descriptionImage: '/descriptionPicture/CommunityPicks/TrojanWar.avif',
+            primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
+            descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
               'Action', 'Romance'
             ]
@@ -47,8 +47,8 @@ const stories = [
               Drama + Romance genre
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar.avif',
-            descriptionImage: '/descriptionPicture/CommunityPicks/TrojanWar.avif',
+            primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
+            descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
               'Drama', 'Romance'
             ]
@@ -59,8 +59,8 @@ const stories = [
               Action + Romance genre
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar.avif',
-            descriptionImage: '/descriptionPicture/CommunityPicks/TrojanWar.avif',
+            primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
+            descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
               'Thriller'
             ]
@@ -71,8 +71,8 @@ const stories = [
               History genre
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar.avif',
-            descriptionImage: '/descriptionPicture/CommunityPicks/TrojanWar.avif',
+            primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
+            descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
               'History'
             ]
@@ -83,8 +83,8 @@ const stories = [
               Action + Romance genre
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar.avif',
-            descriptionImage: '/descriptionPicture/CommunityPicks/TrojanWar.avif',
+            primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
+            descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
               'Action', 'Romance'
             ]
@@ -95,8 +95,8 @@ const stories = [
               Drama + Romance genre
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar.avif',
-            descriptionImage: '/descriptionPicture/CommunityPicks/TrojanWar.avif',
+            primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
+            descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
               'Drama', 'Romance'
             ]
@@ -107,8 +107,8 @@ const stories = [
               Action + Romance genre
             `,
             storyLink: '',
-            primaryThumbnail: '/titlePicture/CommunityPicks/TrojanWar.avif',
-            descriptionImage: '/descriptionPicture/CommunityPicks/TrojanWar.avif',
+            primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
+            descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
               'Thriller'
             ]

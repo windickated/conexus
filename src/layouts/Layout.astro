@@ -49,10 +49,6 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
 
     <slot />
 
-    <section class="conexus-menu-tiles blur">
-      <slot name="menuTiles" />
-    </section>
-
     {footerText && footerText.map((text) => <p class="footer-text">{text}</p>)}
 
     <style>
@@ -86,39 +82,6 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
         padding: 0 5vw 3vw 5vw;
         text-shadow: 0 0 1vw #010020;
         filter: drop-shadow(0 0 1vw #010020);
-      }
-
-      .conexus-menu-tiles {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        margin: 1vw 2.5vw;
-        margin-bottom: 3vw;
-        padding: 2vw;
-        background-color: rgba(1, 0, 32, 0.75);
-        border: 0.1vw solid rgba(51, 226, 230, 0.5);
-        border-radius: 2.5vw;
-        filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.25));
-      }
-
-      .menu-text-0,
-      .menu-text-1 {
-        text-align: center;
-        font-size: 2vw;
-        line-height: 2.5vw;
-        color: rgba(255, 255, 255, 0.75);
-      }
-
-      .menu-text-0 {
-        margin: 1vw 15vw;
-        margin-bottom: 3vw;
-      }
-
-      .menu-text-1 {
-        margin: 1vw;
-        margin-top: 3vw;
       }
 
       .footer-text {
@@ -222,20 +185,6 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
           backdrop-filter: blur(2vw);
           border: 0.1vw solid rgba(51, 226, 230, 0.5);
           border-radius: 2.5vw;
-        }
-
-        .menu-text-0,
-        .menu-text-1 {
-          font-size: inherit;
-          line-height: 1.6em;
-        }
-
-        .menu-text-0 {
-          margin: 1em 0 1.5em 0;
-        }
-
-        .menu-text-1 {
-          margin: 1.5em 0 1em 0;
         }
 
         .footer-text {

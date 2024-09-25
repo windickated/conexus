@@ -11,15 +11,32 @@
   ];
 </script>
 
-<p class="menu-text-0">{menuText[0]}</p>
+<section class="conexus-menu-tiles blur">
+  <p class="menu-text-0">{menuText[0]}</p>
 
-{#each sections as sectionName}
-  <MenuTile {sectionName} />
-{/each}
+  {#each sections as sectionName}
+    <MenuTile {sectionName} />
+  {/each}
 
-<p class="menu-text-1">{menuText[1]}</p>
+  <p class="menu-text-1">{menuText[1]}</p>
+</section>
 
 <style>
+  .conexus-menu-tiles {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 1vw 2.5vw;
+    margin-bottom: 3vw;
+    padding: 2vw;
+    background-color: rgba(1, 0, 32, 0.75);
+    border: 0.1vw solid rgba(51, 226, 230, 0.5);
+    border-radius: 2.5vw;
+    filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.25));
+  }
+
   .menu-text-0,
   .menu-text-1 {
     text-align: center;
