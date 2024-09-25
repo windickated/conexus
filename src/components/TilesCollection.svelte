@@ -5,51 +5,71 @@
   export let sectionName: string;
   export let filters: boolean = false;
 
-  let matchingSection = stories.filter(
-    (section) => section.section === sectionName
-  );
-  let matchingSubsection: any = matchingSection[0].subsection;
+  let showGenres: boolean = false;
+  const genresFilterHandle = () => (showGenres = !showGenres);
 
-  console.log(matchingSection);
-  console.log(matchingSubsection);
+  let tilesArray: any = stories.filter(
+    (section) => section.section === sectionName
+  )[0].subsection;
+
+  function genreSelector() {
+    this.classList.toggle("selected");
+    if (this.className.match("selected"))
+      this.style.color = "rgba(51, 226, 230)";
+    else this.style.color = "inherit";
+
+    const selectedGenres = Array.from(
+      document.querySelectorAll(".selected")
+    ).map((genre) => {
+      return genre.innerHTML;
+    });
+
+    console.log(selectedGenres);
+  }
 </script>
 
 {#if filters}
   <section class="filters">
-    <div class="filter blur">
+    <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions
+    a11y-no-static-element-interactions -->
+    <div class="filter blur" on:click={genresFilterHandle}>
       <img
         class="filter-image"
         id="genre-filter"
         src="/icons/filter.png"
         alt="Filter"
       />
-      <ul class="genres-list">
-        <li class="genre">Action</li>
-        <li class="genre">Romance</li>
-        <li class="genre">Sci-Fi</li>
-        <li class="genre">Fantasy</li>
-        <li class="genre">Horror</li>
-        <li class="genre">Thriller</li>
-        <li class="genre">Comedy</li>
-        <li class="genre">History</li>
-        <li class="genre">Drama</li>
-        <li class="genre">Mystery</li>
-        <li class="genre">Sport</li>
-        <li class="genre">Biopic</li>
-        <li class="genre">Psychological</li>
-        <li class="genre">War</li>
-        <li class="genre">Crime</li>
+      <ul
+        class="genres-list"
+        style="display: {showGenres ? 'grid' : 'none'}"
+        on:pointerleave={genresFilterHandle}
+      >
+        <li class="genre" on:click={genreSelector}>Action</li>
+        <li class="genre" on:click={genreSelector}>Romance</li>
+        <li class="genre" on:click={genreSelector}>Sci-Fi</li>
+        <li class="genre" on:click={genreSelector}>Fantasy</li>
+        <li class="genre" on:click={genreSelector}>Horror</li>
+        <li class="genre" on:click={genreSelector}>Thriller</li>
+        <li class="genre" on:click={genreSelector}>Comedy</li>
+        <li class="genre" on:click={genreSelector}>History</li>
+        <li class="genre" on:click={genreSelector}>Drama</li>
+        <li class="genre" on:click={genreSelector}>Mystery</li>
+        <li class="genre" on:click={genreSelector}>Sport</li>
+        <li class="genre" on:click={genreSelector}>Biopic</li>
+        <li class="genre" on:click={genreSelector}>Psychological</li>
+        <li class="genre" on:click={genreSelector}>War</li>
+        <li class="genre" on:click={genreSelector}>Crime</li>
       </ul>
     </div>
 
     <div class="filter blur">
       <img class="filter-image" src="/icons/search.png" alt="Search" />
-      <input class="search-field" placeholder="Search..." />
+      <input class="search-field" placeholder="Search story..." />
     </div>
   </section>
 {/if}
 
-{#each matchingSubsection as subsection}
+{#each tilesArray as subsection}
   <p class="tiles-collection-legend">
     {subsection.name}
   </p>
@@ -134,6 +154,7 @@
   }
 
   .filter {
+    z-index: 1;
     position: relative;
     display: flex;
     flex-flow: row nowrap;
@@ -161,6 +182,9 @@
     row-gap: 1vw;
     justify-items: center;
     padding: 1vw;
+    border: 0.1vw solid rgba(51, 226, 230, 0.5);
+    border-radius: 1vw;
+    background-color: #010020;
   }
 
   .genre {
@@ -179,21 +203,21 @@
     font-size: 2vw;
     line-height: 2.5vw;
     color: rgba(51, 226, 230, 0.9);
-    background-color: rgba(51, 226, 230, 0.2);
+    background-color: rgba(1, 0, 32, 0.4);
     border: 0.1vw solid rgba(51, 226, 230, 0.5);
     border-radius: 0.5vw;
     outline: none;
-    width: 10vw;
+    width: 15vw;
     transition: all 0.15s ease-in-out;
   }
 
   .search-field::placeholder {
-    color: rgba(51, 226, 230, 0.6);
+    color: rgba(51, 226, 230, 0.5);
   }
 
   .search-field:focus {
-    width: 20vw;
-    background-color: rgba(51, 226, 230, 0.3);
+    width: 25vw;
+    background-color: rgba(51, 226, 230, 0.1);
   }
 
   @media only screen and (max-width: 600px) {
@@ -223,6 +247,18 @@
 
     .search-field:focus {
       width: 50vw;
+    }
+
+    .genres-list {
+      bottom: -2.5em;
+      grid-template-columns: 25vw 25vw;
+      row-gap: 0.5em;
+      padding: 0.5em;
+    }
+
+    .genre {
+      font-size: 0.9em;
+      line-height: 1.5em;
     }
   }
 </style>
