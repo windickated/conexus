@@ -1,10 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import stories from "../data/stories"
-import StoryTile from "../components/StoryTile.svelte";
+import TilesCollection from "@components/TilesCollection.svelte";
 
-const title = 'The Dischordian Saga | CoNexus';
-const header = 'The Dischordian Saga';
+const title = "The Dischordian Saga | CoNexus";
+const header = "The Dischordian Saga";
 const subheading = `
 The Dischordian Saga led to the creation of CoNexus and tells the epic narrative of wars between Artificial Intelligence and Humanity.
 <a href="https://magiceden.io/collections/ethereum/0xfa511d5c4cce10321e6e86793cc083213c36278e" target="_blank">Potentials</a>
@@ -15,31 +14,6 @@ weekly, thus activating CoNexus story games and guiding the franchise's directio
 const arrow = true;
 ---
 
-
 <Layout {title} {header} {subheading} {arrow}>
-
-  {stories.filter(section => section.section === header).map(section => 
-    <>
-      {
-        section.subsection.map(subsection => 
-          <p class="tiles-collection-legend">{subsection.name}</p>
-          <section class="tiles-collection blur">
-            {subsection.story.map(story => 
-              <StoryTile 
-                storyName={story.title}
-                storyDescription={story.description}
-                storyLink={story.storyLink}
-                primaryThumbnail={story.primaryThumbnail}
-                secondaryThumbnail={story.secondaryThumbnail}
-                descriptionPicture={story.descriptionImage}
-                playButton="PLAY NOW"
-                client:load
-              />
-            )}
-          </section>
-        )
-      }
-    </>
-  )}
-
+  <TilesCollection sectionName="The Dischordian Saga" client:load />
 </Layout>

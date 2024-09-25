@@ -1,73 +1,20 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import stories from "../data/stories"
-import StoryTile from "../components/StoryTile.svelte";
+import TilesCollection from "@components/TilesCollection.svelte";
 
-const title = 'Community Picks | CoNexus';
-const header = 'Community Picks';
+const title = "Community Picks | CoNexus";
+const header = "Community Picks";
 const subheading = `
 Community Picks are stories that aren't bound to any project or genre but have been demanded, written, or voted in by the
 <a href="https://magiceden.io/collections/ethereum/0xfa511d5c4cce10321e6e86793cc083213c36278e" target="_blank">Potentials</a>
 holders.`;
 const arrow = true;
 
+const filters = true;
+
 let showGenres: boolean = false;
 ---
 
-
 <Layout {title} {header} {subheading} {arrow}>
-
-  <section class="filters">
-    <div class="filter blur">
-      <img class="filter-image" id="genre-filter" src="/icons/filter.png" alt="Filter" />
-      <ul class="genres-list" style=`display: ${showGenres ? 'block' : 'none'}`>
-        <li class="genre">Action</li>
-        <li class="genre">Romance</li>
-        <li class="genre">Sci-Fi</li>
-        <li class="genre">Fantasy</li>
-        <li class="genre">Horror</li>
-        <li class="genre">Thriller</li>
-        <li class="genre">Comedy</li>
-        <li class="genre">History</li>
-        <li class="genre">Drama</li>
-        <li class="genre">Mystery</li>
-        <li class="genre">Sport</li>
-        <li class="genre">Biopic</li>
-        <li class="genre">Psychological</li>
-        <li class="genre">War</li>
-        <li class="genre">Crime</li>
-      </ul>
-    </div>
-  
-    <div class="filter blur">
-      <img class="filter-image" src="/icons/search.png" alt="Search" />
-      <input class="search-field" placeholder="Search..."/>
-    </div>
-  </section>
-
-  {stories.filter(section => section.section === header).map(section => 
-    <>
-      {
-        section.subsection.map(subsection => 
-          <p class="tiles-collection-legend">{subsection.name}</p>
-          <section class="tiles-collection big-collection blur">
-            {subsection.story.map(story => 
-              <StoryTile 
-                storyName={story.title}
-                storyDescription={story.description}
-                storyLink={story.storyLink}
-                primaryThumbnail={story.primaryThumbnail}
-                secondaryThumbnail={story.secondaryThumbnail ? story.secondaryThumbnail : undefined}
-                descriptionPicture={story.descriptionImage}
-                storyGenre={story.genre}
-                playButton="PLAY NOW"
-                client:load
-              />
-            )}
-          </section>
-        )
-      }
-    </>
-  )}
-
+  <TilesCollection sectionName="Community Picks" {filters} client:load />
 </Layout>
