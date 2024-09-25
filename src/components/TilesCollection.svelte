@@ -1,6 +1,7 @@
 <script lang="ts">
   import stories from "../data/stories";
   import StoryTile from "../components/StoryTile.svelte";
+  import { afterUpdate } from "svelte";
 
   export let sectionName: string;
   export let filters: boolean = false;
@@ -12,19 +13,29 @@
     (section) => section.section === sectionName
   )[0].subsection;
 
+  const allStories = tilesArray[0].story;
+  let selectedGenres: string[];
+
+  afterUpdate(() => {
+    if (selectedGenres && selectedGenres.length > 0) {
+      let filteredTiles = allStories.filter((story) =>
+        story.genre.toString().match(selectedGenres)
+      );
+      tilesArray[0].story = filteredTiles;
+    } else tilesArray[0].story = allStories;
+  });
+
   function genreSelector() {
     this.classList.toggle("selected");
     if (this.className.match("selected"))
       this.style.color = "rgba(51, 226, 230)";
     else this.style.color = "inherit";
 
-    const selectedGenres = Array.from(
-      document.querySelectorAll(".selected")
-    ).map((genre) => {
-      return genre.innerHTML;
-    });
-
-    console.log(selectedGenres);
+    selectedGenres = Array.from(document.querySelectorAll(".selected")).map(
+      (genre) => {
+        return genre.innerHTML;
+      }
+    );
   }
 </script>
 
