@@ -2,8 +2,8 @@
   export let sectionName: string;
   let sectionLink = sectionName.replace(/\s+/g, "");
 
-  const primaryThumbnail = `/titlePicture/${sectionLink}1.avif`;
-  const secondaryThumbnail = `/titlePicture/${sectionLink}2.avif`;
+  const primaryThumbnail = `/src/data/titlePicture/${sectionLink}1.avif`;
+  const secondaryThumbnail = `/src//data/titlePicture/${sectionLink}2.avif`;
 
   let isPrimary: boolean = true;
   function tileHover() {
@@ -59,6 +59,8 @@
     background-color: rgba(51, 226, 230, 0.3);
     color: #010020;
     filter: drop-shadow(0 0 0.5vw #33e2e6);
+    transform: scale(1.01);
+    transition: transform 0.15s ease-in-out;
   }
 
   .tile-picture {

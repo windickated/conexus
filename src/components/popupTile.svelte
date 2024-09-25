@@ -16,7 +16,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <dialog
-  class="description-tile"
+  class="description-tile blur"
   bind:this={dialog}
   on:close={() => (showModal = false)}
   on:click|self={() => dialog.close()}
@@ -47,8 +47,6 @@
     background-color: rgba(1, 0, 32, 0.75);
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
     border-radius: 2.5vw;
-    -webkit-backdrop-filter: blur(1vw);
-    backdrop-filter: blur(1vw);
   }
 
   .description-tile::backdrop {
@@ -79,7 +77,7 @@
   }
 
   .description-image {
-    min-width: 50%;
+    width: 50%;
     height: auto;
     border-radius: 1.75vw;
     filter: drop-shadow(0 0 0.5vw rgba(51, 226, 230, 0.75));
@@ -115,6 +113,7 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    min-width: 37.5vw;
   }
 
   .play-button,

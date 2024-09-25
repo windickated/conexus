@@ -15,20 +15,32 @@ const arrow = true;
 
 <Layout {title} {header} {subheading} {arrow}>
 
+  <section class="filters">
+    <div class="filter blur">
+      <img class="filter-image" src="/icons/filter.png" alt="Filter" />
+    </div>
+  
+    <div class="filter blur">
+      <img class="filter-image" src="/icons/search.png" alt="Search" />
+      <input class="search-field" placeholder="Search..."/>
+    </div>
+  </section>
+
   {stories.filter(section => section.section === header).map(section => 
     <>
       {
         section.subsection.map(subsection => 
           <p class="tiles-collection-legend">{subsection.name}</p>
-          <section class="tiles-collection">
+          <section class="tiles-collection big-collection blur">
             {subsection.story.map(story => 
               <StoryTile 
                 storyName={story.title}
                 storyDescription={story.description}
                 storyLink={story.storyLink}
                 primaryThumbnail={story.primaryThumbnail}
-                secondaryThumbnail={story.secondaryThumbnail}
+                secondaryThumbnail={story.secondaryThumbnail ? story.secondaryThumbnail : undefined}
                 descriptionPicture={story.descriptionImage}
+                storyGenre={story.genre}
                 playButton="PLAY NOW"
                 client:load
               />

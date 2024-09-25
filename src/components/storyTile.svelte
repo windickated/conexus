@@ -5,8 +5,9 @@
   export let storyDescription: string;
   export let storyLink: string;
   export let primaryThumbnail: string;
-  export let secondaryThumbnail: string;
+  export let secondaryThumbnail: string | undefined;
   export let descriptionPicture: string;
+  export let storyGenre: string[] | undefined = undefined;
   export let playButton: string;
 
   let isPrimary: boolean = true;
@@ -22,6 +23,7 @@
 <div
   class="tile"
   id={storyName}
+  data-genre={storyGenre}
   on:mouseenter={tileHover}
   on:mouseleave={tileHover}
   on:click|stopPropagation={() => (showModal = true)}
@@ -29,21 +31,27 @@
   on:touchend={tileHover}
 >
   <img
-    class="tile-picture {isPrimary ? 'visible' : ''}"
+    class="tile-picture {secondaryThumbnail
+      ? isPrimary
+        ? 'visible'
+        : ''
+      : 'visible'}"
     src={primaryThumbnail}
     alt={storyName}
     draggable="false"
     height="1024"
     width="1024"
   />
-  <img
-    class="tile-picture {!isPrimary ? 'visible' : ''}"
-    src={secondaryThumbnail}
-    alt={storyName}
-    draggable="false"
-    height="1024"
-    width="1024"
-  />
+  {#if secondaryThumbnail}
+    <img
+      class="tile-picture {!isPrimary ? 'visible' : ''}"
+      src={secondaryThumbnail}
+      alt={storyName}
+      draggable="false"
+      height="1024"
+      width="1024"
+    />
+  {/if}
   <p class="title">{storyName}</p>
 </div>
 
@@ -78,6 +86,8 @@
     background-color: rgba(45, 90, 216, 0.9);
     color: rgba(51, 226, 230, 0.9);
     filter: drop-shadow(0 0 0.5vw rgba(51, 226, 230, 0.5));
+    transform: scale(1.01);
+    transition: transform 0.15s ease-in-out;
   }
 
   .tile-picture {

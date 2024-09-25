@@ -19,7 +19,7 @@
 <svelte:window bind:outerWidth={width} />
 
 <div class="step-wrapper" style="font-family: {stepFont}">
-  <div class="image-wrapper">
+  <div class="image-wrapper blur">
     {#if step.image}
       <img class="image" src={`data:image/png;base64,${step.image}`} alt="" />
     {:else}
@@ -38,7 +38,7 @@
 
     <h2 class="trait">AI identified you as <strong>{step.trait}</strong></h2>
 
-    <div class="options-container">
+    <div class="options-container blur">
       <button
         class="option menu-option"
         on:click={() => window.open("/", "_self")}>Return to main menu</button
@@ -212,7 +212,7 @@
 
       <!-- MOBILE VIEW -->
     {:else}
-      <div class="control-bar">
+      <div class="control-bar blur">
         <div class="mobile-controls">
           <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
           <div
@@ -224,7 +224,7 @@
             <img class="quit" src="/icons/quit.png" alt="Quit" />
           </div>
 
-          <div class="step-bar">
+          <div class="step-bar blur">
             <button
               class="step-button"
               on:click={() => $story?.loadStep(step.step - 1)}
@@ -310,8 +310,6 @@
     border: 0.05vw solid rgba(51, 226, 230, 0.25);
     border-radius: 1em;
     filter: drop-shadow(0 0 0.5vw rgba(51, 226, 230, 0.25));
-    -webkit-backdrop-filter: blur(1em);
-    backdrop-filter: blur(1em);
     background-color: rgba(51, 226, 230, 0.05);
     transition: cubic-bezier(0.19, 1, 0.22, 1) 1s;
   }
@@ -364,8 +362,6 @@
     border: 0.05vw solid rgba(51, 226, 230, 0.5);
     border-radius: 1em;
     background-color: rgba(51, 226, 230, 0.05);
-    -webkit-backdrop-filter: blur(1em);
-    backdrop-filter: blur(1em);
   }
 
   .option {
@@ -438,8 +434,6 @@
     background-color: rgba(36, 65, 189, 0.75);
     border: 0.05vw solid rgba(51, 226, 230, 0.5);
     border-radius: 1em;
-    -webkit-backdrop-filter: blur(1em);
-    backdrop-filter: blur(1em);
   }
 
   .control-bar {

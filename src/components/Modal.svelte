@@ -14,7 +14,12 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-<dialog bind:this={dialog} on:close={closeDialog} on:click|self={closeDialog}>
+<dialog
+  class="blur"
+  bind:this={dialog}
+  on:close={closeDialog}
+  on:click|self={closeDialog}
+>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div on:click|stopPropagation>
     <slot />
@@ -29,8 +34,6 @@
     background-color: rgba(1, 0, 32, 0.75);
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
     border-radius: 2.5vw;
-    -webkit-backdrop-filter: blur(1vw);
-    backdrop-filter: blur(1vw);
   }
 
   dialog > div {

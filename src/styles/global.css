@@ -79,12 +79,16 @@ a {
   color: #33E2E6;
 }
 
+.blur {
+  -webkit-backdrop-filter: blur(1rem);
+  backdrop-filter: blur(1rem);
+}
 
 /* Pages */
 
 .tiles-collection {
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
   justify-content: flex-start;
   overflow-x: scroll;
   height: auto;
@@ -94,8 +98,6 @@ a {
   border: 0.1vw solid rgba(51, 226, 230, 0.5);
   border-radius: 1vw;
   filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.25));
-  -webkit-backdrop-filter: blur(2vw);
-  backdrop-filter: blur(2vw);
   overflow-y: hidden;
 }
 
@@ -112,6 +114,13 @@ a {
   border-radius: 1vw;
 }
 
+.big-collection {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  justify-items: center;
+  overflow-x: hidden;
+}
+
 .tiles-collection-legend {
   font-size: 3vw;
   line-height: 3vw;
@@ -122,9 +131,78 @@ a {
   text-shadow: 0 0 1vw rgba(51, 226, 230, 0.4);
 }
 
+.filters {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  margin-right: 1rem;
+}
+
+.filter {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 0.5vw 1vw;
+  margin-inline: 0.25rem;
+  background-color: rgba(22, 30, 95, 0.75);
+  border: 0.1vw solid rgba(51, 226, 230, 0.5);
+  border-radius: 1vw;
+  cursor: pointer;
+}
+
+.filter-image {
+  height: 2vw;
+  width: auto;
+  opacity: 0.8;
+}
+
+.search-field {
+  margin-left: 1vw;
+  font-size: 2vw;
+  line-height: 2.5vw;
+  color: rgba(51, 226, 230, 0.9);
+  background-color: rgba(51, 226, 230, 0.25);
+  border: 0.1vw solid rgba(51, 226, 230, 0.5);
+  border-radius: 0.5vw;
+  outline: none;
+  width: 10vw;
+  transition: all 0.15s ease-in-out;
+}
+
+.search-field::placeholder {
+  color:rgba(51, 226, 230, 0.6);
+}
+
+.search-field:focus {
+  width: 20vw;
+}
+
 @media only screen and (max-width: 600px) {
   .tiles-collection-legend{
     font-size: 1.5em;
     line-height: 1.5em;
+  }
+
+  .big-collection {
+    grid-template-columns: 50% 50%;
+  }
+
+  .filter {
+    padding: 0.5em;
+  }
+
+  .filter-image {
+    height: 1.5em;
+  }
+
+  .search-field {
+    font-size: 1em;
+    line-height: 1.5em;
+    margin-left: 0.5em;
+    width: 20vw;
+  }
+
+  .search-field:focus {
+    width: 50vw;
   }
 }

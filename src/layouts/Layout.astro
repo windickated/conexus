@@ -37,7 +37,7 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
         header === "CoNexus" ? (
           <picture>
             <source srcset="title.avif" type="image/avif" />
-            <img class="title" src="title.png" alt="CoNexus" />
+            <img class="title blur" src="title.png" alt="CoNexus" />
           </picture>
         ) : (
           <p class="header">{header}</p>
@@ -49,7 +49,7 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
 
     <slot />
 
-    <section class="conexus-menu-tiles">
+    <section class="conexus-menu-tiles blur">
       <slot name="menuTiles" />
     </section>
 
@@ -73,8 +73,6 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
         margin-block: 2.5vw;
         filter: drop-shadow(0 0 0.5vw rgba(51, 226, 230, 0.25));
         background-color: rgba(51, 226, 230, 0.25);
-        -webkit-backdrop-filter: blur(1em);
-        backdrop-filter: blur(1em);
         padding: 1vw 2vw;
         border: 0.05vw solid rgba(51, 226, 230, 0.5);
         border-radius: 2vw;
@@ -103,8 +101,6 @@ const { title, header, subheading, menuText, footerText, arrow } = Astro.props;
         border: 0.1vw solid rgba(51, 226, 230, 0.5);
         border-radius: 2.5vw;
         filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.25));
-        -webkit-backdrop-filter: blur(1vw);
-        backdrop-filter: blur(1vw);
       }
 
       .menu-text-0,

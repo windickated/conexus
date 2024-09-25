@@ -145,7 +145,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <dialog
-  class="profile-container"
+  class="profile-container blur"
   bind:this={dialog}
   on:close={() => (showModal = false)}
   on:click|self={closeProfileWindow}
@@ -611,6 +611,8 @@
     color: rgba(51, 226, 230, 1);
     background-color: rgba(51, 226, 230, 0.5);
     filter: drop-shadow(0 0 1vw rgba(51, 226, 230, 0.4));
+    transform: scale(1.05);
+    transition: transform 0.15s ease-in-out;
   }
 
   button:disabled,
@@ -668,8 +670,6 @@
     background-color: rgba(1, 0, 32, 0.75);
     border: 0.05vw solid rgba(51, 226, 230, 0.75);
     border-radius: 2.5vw;
-    -webkit-backdrop-filter: blur(1vw);
-    backdrop-filter: blur(1vw);
     overflow-x: hidden;
   }
 
