@@ -19,7 +19,7 @@
   afterUpdate(() => {
     if (selectedGenres && selectedGenres.length > 0) {
       let filteredTiles = allStories.filter((story) =>
-        story.genre.toString().match(selectedGenres)
+        story.genre.toString().match(selectedGenres.toString())
       );
       tilesArray[0].story = filteredTiles;
     } else tilesArray[0].story = allStories;
