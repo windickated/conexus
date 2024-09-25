@@ -400,6 +400,7 @@
                     password: loginPassword.value,
                   })}>Sign in</button
               >
+              <a class="forgot-password" href="/">Forgot password?</a>
             </form>
           {:else}
             <div class="buttons-container">
@@ -784,6 +785,12 @@
     outline: none;
   }
 
+  .forgot-password {
+    color: rgba(51, 226, 230, 0.65);
+    font-size: 1.5vw;
+    padding-top: 2vw;
+  }
+
   .submit-button {
     min-width: 30vw;
     padding: 1vw 2vw;
@@ -1085,6 +1092,11 @@
     .validation-check {
       font-size: 0.9em;
       margin: 0.5em 0;
+    }
+
+    .forgot-password {
+      font-size: 0.9em;
+      padding-top: 1.5em;
     }
 
     .profile-container {
