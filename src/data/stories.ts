@@ -14,7 +14,7 @@ const stories = [
             primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
             descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
-              'Action', 'Romance', 'Sci-Fi', 'Fantasy', 'Horror', 'Thriller', 'Comedy', 'History', 'Drama', 'Mystery', 'Sport', 'Biopic', 'Psychological', 'War', 'Crime'
+              'Action', 'History', 'Drama', 'War'
             ]
           },
           {
@@ -30,7 +30,7 @@ const stories = [
             ]
           },
           {
-            title: 'Action',
+            title: 'Action Romance',
             description: `
               Action + Romance genre
             `,
@@ -42,7 +42,7 @@ const stories = [
             ]
           },
           {
-            title: 'Drama',
+            title: 'Drama Romance',
             description: `
               Drama + Romance genre
             `,
@@ -56,7 +56,7 @@ const stories = [
           {
             title: 'Thriller',
             description: `
-              Action + Romance genre
+              Thriller genre
             `,
             storyLink: '',
             primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
@@ -66,51 +66,51 @@ const stories = [
             ]
           },
           {
-            title: 'History',
+            title: 'History Sport',
             description: `
-              History genre
+              History + Sport genre
             `,
             storyLink: '',
             primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
             descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
-              'History'
+              'History', 'Sport'
             ]
           },
           {
-            title: 'Action',
+            title: 'Action Biopic Crime',
             description: `
-              Action + Romance genre
+              Action + Biopic + Crime genre
             `,
             storyLink: '',
             primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
             descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
-              'Action', 'Romance'
+              'Action', 'Biopic', 'Crime'
             ]
           },
           {
-            title: 'Drama',
+            title: 'War Psychological Fantasy Horror',
             description: `
-              Drama + Romance genre
+              War + Psychological + Fantasy + Horror genre
             `,
             storyLink: '',
             primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
             descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
-              'Drama', 'Romance'
+              'War', 'Psychological', 'Fantasy', 'Horror'
             ]
           },
           {
-            title: 'Thriller',
+            title: 'Comedy Horror',
             description: `
-              Action + Romance genre
+              Comedy + Horror genre
             `,
             storyLink: '',
             primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
             descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
-              'Thriller'
+              'Comedy', 'Horror'
             ]
           },
         ]

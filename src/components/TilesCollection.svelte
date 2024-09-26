@@ -18,9 +18,13 @@
 
   afterUpdate(() => {
     if (selectedGenres && selectedGenres.length > 0) {
-      let filteredTiles = allStories.filter((story) =>
-        story.genre.toString().match(selectedGenres.toString())
-      );
+      let filteredTiles = allStories.filter((story) => {
+        let matchingTile: boolean = false;
+        selectedGenres.map((genre) => {
+          if (story.genre.includes(genre)) matchingTile = true;
+        });
+        if (matchingTile) return story;
+      });
       tilesArray[0].story = filteredTiles;
     } else tilesArray[0].story = allStories;
   });
