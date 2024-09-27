@@ -102,7 +102,7 @@ const stories = [
             ]
           },
           {
-            title: 'Comedy Horror',
+            title: 'Comedy Horror Thriller',
             description: `
               Comedy + Horror genre
             `,
@@ -110,7 +110,7 @@ const stories = [
             primaryThumbnail: '/src/data/titlePicture/CommunityPicks/TrojanWar.avif',
             descriptionImage: '/src/data/descriptionPicture/CommunityPicks/TrojanWar.avif',
             genre: [
-              'Comedy', 'Horror'
+              'Comedy', 'Horror', 'Thriller'
             ]
           },
         ]
