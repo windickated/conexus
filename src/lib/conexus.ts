@@ -1,10 +1,10 @@
-import { new_error } from '@lib/errors';
+import { new_error } from './errors';
 import {
   background_music,
   background_image,
   story,
   loading,
-} from '@stores/conexus';
+} from '../stores/conexus';
 
 const url = import.meta.env.PUBLIC_BACKEND;
 

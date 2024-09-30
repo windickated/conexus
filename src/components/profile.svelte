@@ -1,12 +1,12 @@
 <script lang="ts">
-  import Account from "@lib/auth";
-  import { CoNexus } from "@lib/conexus";
+  import Account from "../lib/auth";
+  import { CoNexus } from "../lib/conexus";
   import {
     authenticated,
     referralCodes,
     wallet,
     web3LoggedIn,
-  } from "@stores/account";
+  } from "../stores/account";
   import { onMount } from "svelte";
 
   Account.me();
@@ -24,7 +24,7 @@
   let isLogged: boolean;
   let signUp: boolean;
 
-  let user;
+  let user: any;
   let loginMail: HTMLInputElement;
   let loginPassword: HTMLInputElement;
 
@@ -73,12 +73,12 @@
     Account.referraLCodes();
   }
 
-  let refCodes;
+  let refCodes: any;
   referralCodes.subscribe((codes) => {
     refCodes = codes;
   });
 
-  function copyRefCode(event) {
+  function copyRefCode(event: any) {
     navigator.clipboard.writeText(event.target.id);
   }
 
@@ -116,7 +116,7 @@
   const passwordInvisible = () => (passwordInput.type = "password");
 
   let isEditing: "username" | "password" | boolean = false;
-  function changeUserData() {
+  function changeUserData(this: any) {
     if (this.className.match("username")) {
       isEditing = "username";
     } else if (this.className.match("password")) {
@@ -1057,8 +1057,8 @@
     }
 
     .close-button {
-      padding: 0.5em;
-      font-size: 1.5em;
+      padding: 0.35em;
+      font-size: 1.35em;
       line-height: 1em;
     }
 
@@ -1068,11 +1068,11 @@
     }
 
     .sign-icon {
-      height: 1em;
+      height: 0.8em;
     }
 
     .sign-lable {
-      font-size: 1em;
+      font-size: 0.8em;
       line-height: 1.5em;
     }
 
@@ -1083,7 +1083,7 @@
     }
 
     .signup-label {
-      font-size: 1.1em;
+      font-size: 1em;
       line-height: 1.5em;
       padding-inline: 5vw;
       margin-bottom: 1em;

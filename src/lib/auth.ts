@@ -1,8 +1,8 @@
-import { new_error } from "@lib/errors";
-import { Web3Provider } from "@lib/ethers";
-import { get_cookie } from "@lib/cookies";
-import { web3LoggedIn, referralCodes, authenticated, wallet } from "@stores/account";
-import { toastStore } from "@stores/toast";
+import { new_error } from "./errors";
+import { Web3Provider } from "./ethers";
+import { get_cookie } from "./cookies";
+import { web3LoggedIn, referralCodes, authenticated, wallet } from "../stores/account";
+import { toastStore } from "../stores/toast";
 
 const url = import.meta.env.PUBLIC_BACKEND;
 
@@ -127,7 +127,7 @@ class Account {
 			const resp = await response.json();
 
 			authenticated.set({ user: resp.user, loggedIn: true });
-		} catch (error) {
+		} catch (error: any) {
 			new_error({ code: 500, error: error });
 		}
 	}
@@ -205,7 +205,7 @@ class Account {
 			const referralC = await response.json();
 
 			referralCodes.set(referralC.codes);
-		} catch (error) {
+		} catch (error: any) {
 			new_error({ code: 500, error: error });
 		}
 	}

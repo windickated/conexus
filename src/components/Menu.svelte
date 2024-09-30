@@ -1,14 +1,14 @@
 <script lang="ts">
   import { writable } from "svelte/store";
 
-  import Intro from "@components/Intro.svelte";
-  import Modal from "@components/Modal.svelte";
-  import BackgroundMusic from "@components/music/BackgroundMusic.svelte";
-  import Tts from "@components/music/Tts.svelte";
-  import Step from "@components/Step.svelte";
-  import { CoNexus } from "@lib/conexus";
-  import { story, loading } from "@stores/conexus";
-  import { authenticated, web3LoggedIn } from "@stores/account";
+  import Intro from "./Intro.svelte";
+  import Modal from "./Modal.svelte";
+  import BackgroundMusic from "./music/BackgroundMusic.svelte";
+  import Tts from "./music/Tts.svelte";
+  import Step from "./Step.svelte";
+  import { CoNexus } from "../lib/conexus";
+  import { story, loading } from "../stores/conexus";
+  import { authenticated, web3LoggedIn } from "../stores/account";
 
   let isLogged: boolean;
 
@@ -17,14 +17,14 @@
   });
 
   let showDeleteModal = writable<boolean>(false);
-  let selectedStory;
+  let selectedStory: any;
 
-  function openModal(story) {
+  function openModal(story: any) {
     selectedStory = story;
     showDeleteModal.set(true);
   }
 
-  function DeleteStory(story_id) {
+  function DeleteStory(story_id: any) {
     CoNexus.delete(story_id);
     showDeleteModal.set(false);
   }

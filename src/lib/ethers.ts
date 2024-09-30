@@ -1,5 +1,5 @@
 import { BrowserProvider } from "ethers";
-import detectProvider from '@metamask/detect-provider';
+import detectProvider from '@metamask/detect-provider'
 
 export class Web3Provider {
     #provider: BrowserProvider;

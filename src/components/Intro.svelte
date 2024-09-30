@@ -1,6 +1,6 @@
 <script lang="ts">
   import stories from "../data/stories.ts";
-  // import MenuTile from "@components/MenuTile.svelte";
+  import MenuTile from "./MenuTile.svelte";
 
   const sections: string[] = [];
   stories.map((story, i) => (sections[i] = story.section));
@@ -15,7 +15,7 @@
   <p class="menu-text-0">{menuText[0]}</p>
 
   {#each sections as sectionName}
-    <!-- <MenuTile {sectionName} /> -->
+    <MenuTile {sectionName} />
   {/each}
 
   <p class="menu-text-1">{menuText[1]}</p>

@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import TilesCollection from "@components/TilesCollection.svelte";
+import TilesCollection from "../components/TilesCollection.svelte";
 
 const title = "Community Picks | CoNexus";
 const header = "Community Picks";
@@ -11,10 +11,16 @@ holders.`;
 const arrow = true;
 
 const filters = true;
+const bigCollection = true;
 
 let showGenres: boolean = false;
 ---
 
 <Layout {title} {header} {subheading} {arrow}>
-  <TilesCollection sectionName="Community Picks" {filters} client:load />
+  <TilesCollection
+    sectionName="Community Picks"
+    {filters}
+    {bigCollection}
+    client:load
+  />
 </Layout>
